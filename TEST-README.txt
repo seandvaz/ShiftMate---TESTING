@@ -1,11 +1,11 @@
-ShiftMate TEST v2.1.4
+ShiftMate TEST v2.1.5
 
-TEST BUILD — do not upload to the live ShiftMate repository.
+TEST ENVIRONMENT ONLY — DO NOT UPLOAD TO THE LIVE REPOSITORY.
 
-Changes from TEST v2.1.3:
-- Leave hours now recalculate automatically from actual saved leave entries whenever the selected date range changes.
-- Automatic hours calculation applies to all leave types.
-- If a selected date range contains more than one leave type, ShiftMate separates them into individual leave forms rather than combining leave types.
-- The review sheet shows each leave type and its calculated hours; each hours total remains manually adjustable before generation.
-- Multiple required leave forms are generated as separate A4 pages in the PDF/print output.
-- Regular Transit projection logic remains unchanged pending further standby-line data.
+Changes in this test:
+- Leave-form PDF now uses the official Rosters-issued form itself as the visual template.
+- Official PTA branding, section bars, wording, borders, row/column proportions, approval areas and footer are preserved.
+- ShiftMate overlays only the generated employee/leave data onto the official layout.
+- Example illness dates/comments and example employee/date values from the supplied form are removed from the template.
+- Existing leave range, hours, endorsement and comments controls remain.
+- Regular Transit projected-roster logic remains unchanged pending further user data.
