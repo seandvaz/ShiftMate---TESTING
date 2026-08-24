@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="ShiftMate TEST">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>ShiftMate TEST</title>
+<link rel="stylesheet" href="styles.css?v=2.1.8-test">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png?v=2.1.8-test">
+  <link rel="manifest" href="manifest.json?v=2.1.8-test">
+  <meta name="theme-color" content="#05090b">
+</head>
+<body>
+<div class="test-build-badge">TEST</div>
+<div class="app-shell">
+
+
+<main>
+<section id="home" class="screen active">
+  <div style="margin-bottom:12px">
+    <button id="homeNewCycle" class="primary home-new-cycle" type="button">＋ Start New Cycle</button>
+  </div>
+  <div class="card current-card">
+    <div>
+      <span class="eyebrow">Upcoming pay</span>
+      <select id="homeCycleSelect" class="home-pe-select" aria-label="Select pay cycle"></select><small id="homeCycleRange" class="cycle-range-sub">—</small>
+    </div>
+    <div class="home-net">
+      <span>Estimated deposit</span>
+      <strong id="homeNet">$0.00</strong>
+      <small id="homeCurrentPayday">Payday —</small>
+    </div>
+    <div class="home-roster-status" id="homeRosterStatus">0 shifts entered • 0.0 hrs</div>
+  </div>
+
+  <div class="card upcoming-card fortnight-card">
+    <div class="upcoming-head fortnight-head">
+      <div><span class="eyebrow">Roster</span><h2>Fortnight</h2><small id="homeFortnightRange" class="field-note"></small></div>
+    </div>
+    <div id="homeWeekStrip" class="week-strip fortnight-strip" aria-label="Fourteen day roster"></div>
+  </div>
+
+  <button id="homeGenerateLeave" class="card home-leave-action" type="button" aria-label="Generate leave form">
+    <span class="eyebrow">Documentation</span>
+    <strong>Generate Leave Form</strong>
+    <small>Starts from today</small>
+  </button>
+
+  <button id="homeSettingsSummary" class="card home-settings-summary" type="button" aria-label="Open settings">
+    <span class="eyebrow">Active settings</span>
+    <div id="homeSettingsChips" class="home-settings-chips"></div>
+  </button>
+
+</section>
+
+<section id="roster" class="screen">
+  <div class="card">
+    <div class="screen-heading">
+      <div><span class="eyebrow">Roster</span><h2 id="rosterRange">Fortnight</h2></div>
+      <button id="clearRoster" class="ghost">Clear shifts</button>
+    </div>
+    <div class="form-grid two">
+      <label>Fortnight start<input id="startDate" type="date"></label>
+      <label>Classification / rate<input id="baseRate" type="number" step="0.01" readonly><small id="rosterRateSource" class="field-note">Agreement rate</small></label>
+    </div>
+  </div>
+  <div id="dayList" class="day-list"></div>
+
+  <div class="card roster-complete">
+    <span class="eyebrow">Current estimate</span>
+    <div class="roster-summary">
+      <div><span>Gross</span><strong id="rosterGross">$0.00</strong></div>
+      <div><span>Tax</span><strong id="rosterTax">$0.00</strong></div>
+      <div class="roster-net"><span>Estimated deposit</span><strong id="rosterNet">$0.00</strong></div>
+      <div><span>Hours</span><strong id="rosterHours">0.0</strong></div>
+    </div>
+    <div class="action-grid roster-actions">
+      <button id="rosterSaveCycle" class="primary">Save Pay Cycle</button>
+      <button id="rosterNewCycle" class="secondary">Start Next Pay Cycle</button>
+    </div>
+  </div>
+</section>
+
+
+<section id="calendar" class="screen calendar-screen">
+  <div class="card calendar-card calendar-scroll-card">
+    <div class="calendar-fixed-head">
+      <div class="calendar-scroll-head">
+        <div><span class="eyebrow">Roster calendar</span><h2>Calendar</h2></div>
+        <button id="shareRoster" class="secondary compact-button" type="button">Share Roster</button>
+      </div>
+      <div class="calendar-legend" aria-label="Calendar legend">
+        <span class="legend-swatch solid"></span><span>Actual</span>
+        <span class="legend-swatch outline"></span><span>Projected</span>
+        <span class="legend-stars legend-good">☆</span><span>Good</span>
+        <span class="legend-stars legend-best">★</span><span>Best</span>
+      </div>
+      <small id="otTargetNote" class="ot-target-note">Recommendations optimised for 1 OT shift per fortnight</small>
+      <p id="calendarProjectionStatus" class="helper" hidden></p>
+    </div>
+    <div id="calendarMonths" class="calendar-months"></div>
+    <button id="calendarTodayFloat" class="calendar-today-float" type="button" hidden>Today</button>
+  </div>
+  <div id="calendarContextTray" class="calendar-context-tray" aria-live="polite">
+    <div id="calendarProjectionPay" class="context-panel projected-net-card" hidden></div>
+    <div id="calendarDetail" class="context-panel calendar-detail" hidden></div>
+  </div>
+
+  <div id="shareRosterSheet" class="share-sheet" hidden>
+    <div class="share-sheet-card">
+      <span class="eyebrow">Share actual roster</span><h3>Export range</h3>
+      <button data-share-range="current" type="button">Current fortnight</button>
+      <button data-share-range="4weeks" type="button">Next 4 weeks</button>
+      <button data-share-range="6weeks" type="button">Next 6 weeks</button>
+      <button data-share-range="12weeks" type="button">Next 12 weeks</button>
+      <button data-share-range="future" type="button">All entered future shifts</button>
+      <button id="shareRosterCancel" class="ghost" type="button">Cancel</button>
+      <small>Only entered/actual roster shifts are exported.</small>
+    </div>
+  </div>
+  <div id="bookOffSheet" class="share-sheet book-off-sheet" hidden>
+    <div class="share-sheet-card book-off-sheet-card">
+      <span class="eyebrow">Shift times changed</span>
+      <h3>Roster adjustment or book-off?</h3>
+      <div id="bookOffSummary" class="leave-form-range-summary"></div>
+      <p class="field-note">Choose Roster adjustment for event/operational time changes. Choose Book-off when part of the rostered shift was not worked and leave documentation is required.</p>
+      <button id="bookOffRosterAdjustment" class="ghost" type="button">Roster adjustment</button>
+      <button id="bookOffConfirm" class="primary" type="button">Book-off</button>
+      <button id="bookOffCancel" class="ghost" type="button">Cancel</button>
+    </div>
+  </div>
+
+  <div id="leaveFormSheet" class="share-sheet leave-form-sheet" hidden>
+    <div class="share-sheet-card leave-form-sheet-card">
+      <span class="eyebrow">Leave documentation</span><h3 id="leaveFormSheetTitle">Generate leave form</h3>
+      <div id="leaveFormRangeSummary" class="leave-form-range-summary"></div>
+      <div class="leave-form-edit-grid">
+        <label>Start date<input id="leaveFormStart" type="date"></label>
+        <label>End date<input id="leaveFormEnd" type="date"></label>
+        <div id="leaveFormHoursFields" class="leave-form-hours-fields"></div>
+      </div>
+      <label>Contactable while on leave?
+        <select id="leaveContactable"><option value="yes">Yes</option><option value="no">No</option></select>
+      </label>
+      <label>Evidence attached?
+        <select id="leaveEvidence"><option value="no">No</option><option value="yes">Yes</option></select>
+      </label>
+      <label>Comments (optional)<textarea id="leaveFormComments" rows="2" placeholder="Optional"></textarea></label>
+      <button id="generateLeaveDocument" class="primary" type="button">Generate leave form</button>
+      <button id="leaveFormCancel" class="ghost" type="button">Cancel</button>
+      <small>The generated form opens ready to print or save as PDF. Employee signature remains blank.</small>
+    </div>
+  </div>
+
+</section>
+
+<section id="pay" class="screen">
+  <div class="card pay-summary-card">
+    <div class="screen-heading">
+      <div>
+        <span class="eyebrow" id="payStatusLabel">Upcoming pay</span>
+        <h2 id="payRange">Current fortnight</h2>
+        <small id="payPayday" class="field-note">Payday —</small>
+      </div>
+      <button id="backToUpcomingPay" class="ghost compact-button" type="button" hidden>Upcoming</button>
+    </div>
+
+    <div class="pay-main-net">
+      <span>Estimated bank deposit</span>
+      <strong id="net">$0.00</strong>
+    </div>
+
+    <div class="pay-quick-grid">
+      <div><span>Gross</span><strong id="gross">$0.00</strong></div>
+      <div><span>Estimated tax</span><strong id="tax">$0.00</strong></div>
+      <div><span>Worked hours</span><strong id="hours">0.0</strong></div>
+      <div><span>Net / worked hour</span><strong id="netHourly">$0.00</strong></div>
+    </div>
+
+    <details class="pay-breakdown">
+      <summary>Show calculation breakdown</summary>
+      <div class="pay-breakdown-grid">
+        <div><span>Worked shifts</span><strong id="workedPay">$0.00</strong></div>
+        <div><span>Annual leave</span><strong id="annualLeavePay">$0.00</strong></div>
+        <div><span>Sick / personal leave</span><strong id="sickLeavePay">$0.00</strong></div>
+        <div><span>Long service leave</span><strong id="lslPay">$0.00</strong></div>
+        <div><span>Leave without pay</span><strong id="lwopPay">$0.00</strong></div>
+        <details class="allowance-breakdown public-holiday-breakdown">
+          <summary><span>Public holidays</span><strong id="publicHolidayPay">$0.00</strong></summary>
+          <div id="publicHolidayBreakdownList" class="allowance-breakdown-list"></div>
+        </details>
+        <details class="allowance-breakdown">
+          <summary>
+            <span>Allowances & higher duties</span>
+            <strong id="extrasPay">$0.00</strong>
+          </summary>
+          <div id="allowanceBreakdownList" class="allowance-breakdown-list"></div>
+        </details>
+        <div><span>Additional hours</span><strong id="additionalHoursPay">$0.00</strong></div>
+        <div><span>Taxable pay</span><strong id="taxable">$0.00</strong></div>
+      </div>
+    </details>
+  </div>
+  <div class="card home-stats-card">
+    <div class="screen-heading">
+      <div>
+        <span class="eyebrow">Financial year</span>
+        <h2 id="homeFyLabel">—</h2>
+      </div>
+      <span class="home-cycle-count" id="homeCycleCount">0 pays</span>
+    </div>
+    <div class="home-stats-grid fy-grid">
+      <div><span>Gross saved</span><strong id="homeFyGross">$0.00</strong></div>
+      <div><span>Net saved</span><strong id="homeFyNet">$0.00</strong></div>
+      <div><span>Estimated tax</span><strong id="homeFyTax">$0.00</strong></div>
+      <div><span>Hours recorded</span><strong id="homeFyHours">0.0</strong></div>
+      <div><span>Average net / pay</span><strong id="homeFyAvgNet">$0.00</strong></div>
+      <div><span>Average hours / pay</span><strong id="homeFyAvgHours">0.0</strong></div>
+      <div><span>Actual deposits logged</span><strong id="homeFyActualCount">0</strong></div>
+      <div><span>Total pay difference</span><strong id="homeFyDifference">$0.00</strong></div>
+    </div>
+    <div class="home-payday-row">
+      <span>Next payday</span>
+      <strong id="homePayday">—</strong>
+    </div>
+    <div class="home-last-actual" id="homeLastActual" hidden>
+      <div>
+        <span>Last actual deposit</span>
+        <strong id="homeLastActualAmount">$0.00</strong>
+      </div>
+      <div>
+        <span>Difference</span>
+        <strong id="homeLastActualDifference">$0.00</strong>
+      </div>
+    </div>
+  </div>
+  <div class="card pay-cycles-card">
+    <div class="screen-heading">
+      <div><span class="eyebrow">Pays</span><h2>Pay cycles</h2></div>
+    </div>
+    <div id="payCycleList" class="pay-cycle-list"></div>
+  </div>
+</section>
+
+<section id="saved" class="screen">
+  <div id="savedIndex">
+    <div class="card">
+      <div class="screen-heading">
+        <div><span class="eyebrow">History</span><h2>Saved pays</h2></div>
+      </div>
+      <p class="helper">Open any fortnight later to add overtime, amend shifts, record the actual deposit or add notes.</p>
+      <label class="saved-filter-label">Show
+        <select id="savedFilter">
+          <option value="all">All saved pays</option>
+          <option value="needs-actual">Needs actual deposit</option>
+          <option value="paid">Paid</option>
+          <option value="current">Current / awaiting</option>
+          <option value="future">Future</option>
+          <option value="past">Archived</option>
+        </select>
+      </label>
+      <div id="savedList" class="saved-list"></div>
+    </div>
+  </div>
+
+  <div id="savedDetail" hidden>
+    <button id="backSaved" class="ghost back-button">← Back</button>
+    <div class="card">
+      <div class="saved-detail-head">
+        <div>
+          <span class="eyebrow">Saved cycle</span>
+          <h2 id="detailTitle">Pay cycle</h2>
+          <span id="detailStatusPill" class="status-pill current">Current</span>
+        </div>
+        <strong id="detailEstimate" class="detail-estimate">$0.00</strong>
+      </div>
+
+      <div class="metric-grid compact">
+        <div class="metric"><span>Estimated</span><strong id="detailEstimated">$0.00</strong></div>
+        <div class="metric"><span>Actual</span><strong id="detailActual">—</strong></div>
+        <div class="metric highlight wide"><span>Difference</span><strong id="detailDifference">—</strong></div>
+      </div>
+
+      <div class="form-grid two">
+        <label>Status
+          <select id="detailStatus">
+            <option value="current">Current</option>
+            <option value="awaiting">Awaiting pay</option>
+            <option value="paid">Paid</option>
+          </select>
+        </label>
+        <label>Actual bank deposit<input id="detailActualInput" type="number" step="0.01" placeholder="e.g. 3321.05"></label>
+        <label class="wide">Notes<textarea id="detailNotes" rows="5" placeholder="Overtime, shift swaps, higher duties, approvals..."></textarea></label>
+      </div>
+
+      <div class="action-grid">
+        <button id="editSavedCycle" class="primary">Open roster and edit</button>
+        <button id="saveSavedDetails" class="secondary">Save details</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="settings" class="screen">
+  <div class="card settings-card">
+    <div class="screen-heading">
+      <div><span class="eyebrow">Settings</span><h2>Employment and deductions</h2></div>
+    </div>
+    <p class="helper settings-helper">Select your current PTA level and enter only your personal deductions.</p>
+
+    <details class="settings-section" open>
+      <summary><span>Employment</span><small>Select your current PTA level</small></summary>
+      <div class="form-grid settings-grid employment-level-grid">
+        <label class="settings-wide">Current level<select id="classification">
+          <option value="TRAINEE">Trainee</option><option value="TO1">TO1</option><option value="TO2">TO2</option><option value="TO3">TO3</option><option value="TO4">TO4</option><option value="TO5">TO5</option><option value="FCO">First Class Officer</option><option value="STO1">STO1</option><option value="STO2">STO2</option><option value="STO3">STO3</option>
+        </select></label>
+        <label class="settings-wide">Home line<select id="homeLine">
+          <option value="FREMANTLE">Fremantle</option>
+          <option value="ARMADALE">Armadale</option>
+          <option value="PERTH">Perth</option>
+          <option value="MIDLAND">Midland</option>
+          <option value="AIRPORT">Airport</option>
+          <option value="YANCHEP">Yanchep</option>
+          <option value="MANDURAH">Mandurah</option>
+          <option value="ELLENBROOK">Ellenbrook</option>
+          <option value="YANCHEP_SOUTH">Yanchep South</option>
+          <option value="MANDURAH_NORTH">Mandurah North</option>
+        </select></label>
+        <label class="settings-wide">Current roster line<select id="rosterLineNumber"></select><small class="field-note">Sets the projection anchor for the roster rotation determined by your home line and current level.</small></label>
+        <label class="settings-wide">OT target per fortnight<select id="otTarget"><option value="1">1 shift</option><option value="2">2 shifts</option><option value="3">3 shifts</option><option value="4">4 shifts</option><option value="5">5 shifts</option></select><small class="field-note">Calendar recommendations optimise the selected number of picked-up OT shifts for estimated net pay.</small></label>
+        <div class="settings-note agreement-rate-summary" id="agreementRateSummary">The correct agreement rate will be selected automatically from the pay-cycle date.</div>
+        <p class="settings-note settings-wide">Choose the level shown on your payslip and your permanent home line. ShiftMate automatically selects the correct roster family from those settings. Enter only the roster line you are currently on. If roster office changes your line, update Current roster line and the future prediction will move with it. Actual entered rosters always override projections.</p>
+      </div>
+    </details>
+
+
+
+    <details class="settings-section" open>
+      <summary><span>Personal details</span><small>Used for work documentation</small></summary>
+      <div class="form-grid settings-grid">
+        <label class="settings-wide">Employee name<input id="employeeName" type="text" autocomplete="name" placeholder="Full name"></label>
+        <label class="settings-wide">Service number<input id="serviceNumber" type="text" inputmode="numeric" placeholder="Service number"><small class="field-note">Used for leave documentation only.</small></label>
+      </div>
+    </details>
+
+    <details class="settings-section">
+      <summary><span>Public holidays</span><small>WA holidays and locally proclaimed dates</small></summary>
+      <div class="form-grid settings-grid">
+        <label class="settings-wide">Extra public holiday dates<input id="customPublicHolidays" type="text" placeholder="YYYY-MM-DD, YYYY-MM-DD"></label>
+        <p class="settings-note">Standard statewide WA public holidays and substitute days are detected automatically. Add any special proclaimed or regional dates here.</p>
+      </div>
+    </details>
+
+    <details class="settings-section">
+      <summary><span>Personal deductions</span><small>Amounts specific to your own pay</small></summary>
+      <div class="form-grid settings-grid">
+        <label>Novated lease pre-tax<input id="lease" type="number" step="0.01"></label>
+        <label>Salary sacrifice super pre-tax<input id="gesb" type="number" step="0.01"></label>
+        <label>Other post-tax deductions<input id="postTax" type="number" step="0.01"></label>
+        <label>Extra tax withheld / fortnight<input id="extraTax" type="number" step="0.01"></label>
+      </div>
+    </details>
+
+    <details class="settings-section">
+      <summary><span>Backup and restore</span><small>Save a copy of your roster, settings and pay history</small></summary>
+      <div class="backup-actions">
+        <button id="exportBackup" class="secondary" type="button">Export backup</button>
+        <label class="import-backup-button">Import backup
+          <input id="importBackup" type="file" accept="application/json,.json">
+        </label>
+      </div>
+      <p class="helper backup-helper">Importing replaces the current app data on this device.</p>
+    </details>
+
+    <details class="settings-section">
+      <summary><span>About</span><small>ShiftMate app information</small></summary>
+      <div class="settings-note settings-wide"><strong>ShiftMate TEST</strong><br>Version 2.1.8 TEST</div>
+    </details>
+
+    <div class="action-grid settings-actions">
+      <button id="saveCurrent" class="primary">Save settings</button>
+      <button id="resetApp" class="danger">Reset app data</button>
+    </div>
+  </div>
+</section>
+</main>
+
+<nav class="bottom-nav">
+  <button class="nav-button active" data-go="home"><span class="nav-icon">⌂</span><span>Home</span></button>
+  <button class="nav-button" data-go="calendar"><span class="nav-icon">▦</span><span>Calendar</span></button>
+  <button class="nav-button" data-go="roster"><span class="nav-icon">≡</span><span>Roster</span></button>
+  <button class="nav-button" data-go="pay"><span class="nav-icon">$</span><span>Pay</span></button>
+  <button class="nav-button" data-go="settings"><span class="nav-icon">⚙</span><span>Settings</span></button>
+</nav>
+<datalist id="partnerSuggestions"></datalist>
+<div id="toast" class="toast"></div>
+</div>
+
+<script src="agreementData.js?v=8.3"></script>
+<script src="shiftData.js?v=1.0.14"></script>
+<script src="payCalculator.js?v=1.0.14"></script>
+<script src="storage.js?v=8.3"></script>
+<script src="app.js?v=2.1.8-test"></script>
+</body>
+</html>
