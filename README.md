@@ -1,6 +1,6 @@
 # ShiftMate TEST cleanup baseline
 
-Based exactly on approved LIVE v2.4.0. Cleanup branch: v2.4.1-cleanup-test. Live remains unchanged.
+Based exactly on approved LIVE v2.4.0. Cleanup branch: v2.4.2-p1-cleanup-test. Live remains unchanged.
 
 # ShiftMate
 

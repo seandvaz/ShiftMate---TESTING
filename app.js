@@ -2077,7 +2077,7 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
     saveCurrent();
     const payload={
       app:'PTA ShiftMate',
-      version:'2.4.1-cleanup-test',
+      version:'2.4.2-p1-cleanup-test',
       exportedAt:new Date().toISOString(),
       current:AppStorage.loadCurrent(),
       cycles:AppStorage.loadCycles()

@@ -28,28 +28,10 @@ button{cursor:pointer}
   min-height:100vh;
   padding-bottom:76px
 }
-.topbar{
-  position:sticky;
-  top:0;
-  z-index:20;
-  background:var(--brand);
-  color:#fff;
-  padding:max(12px,env(safe-area-inset-top)) 14px 11px;
-  border-bottom:1px solid #183b52
-}
-.topbar h1{
-  margin:0;
-  font-size:clamp(19px,4.5vw,25px)
-}
-.topbar p{
-  margin:3px 0 0;
-  font-size:11px;
-  opacity:.78
-}
-.topbar small{
-  font-size:10px;
-  opacity:.8
-}
+
+
+
+
 main{padding:10px}
 .screen{display:none}
 .screen.active{display:block}
@@ -234,12 +216,7 @@ textarea{resize:vertical}
   border-radius:12px;
   padding:10px
 }
-.saved-card-head{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  align-items:flex-start
-}
+
 .saved-card small{
   display:block;
   color:var(--muted);
@@ -940,10 +917,7 @@ textarea{resize:vertical}
 
 /* V5.16 final stability fixes */
 /* V6.0 final mobile header fix */
-.topbar{
-  min-height:0;
-  height:auto;
-}
+
 .current-card{
   scroll-margin-top:120px;
 }
@@ -978,15 +952,8 @@ textarea{resize:vertical}
 
 
 /* V6.0 final mobile layout pass */
-.topbar{
-  padding:max(12px,env(safe-area-inset-top)) 14px 11px;
-}
-.topbar h1,
-.topbar p,
-.topbar small{
-  position:relative;
-  z-index:1;
-}
+
+
 main{
   position:relative;
   z-index:1;
@@ -1006,10 +973,7 @@ main{
   -webkit-backdrop-filter:blur(12px);
 }
 @media(max-width:619px){
-  .topbar{
-    position:sticky;
-    top:0;
-  }
+  
   main{
     padding-top:10px;
   }
@@ -1140,14 +1104,13 @@ main{
 
 /* V7.1 agreement-driven employment settings */
 .field-note{display:block;color:var(--muted);font-size:9px;margin-top:4px;line-height:1.25}
-.checkbox-setting{display:flex!important;align-items:center;gap:8px;background:var(--card-soft);border-radius:10px;padding:10px!important}
-.checkbox-setting input{width:18px!important;height:18px;margin:0;flex:0 0 auto}
+
+
 .agreement-rate-summary{font-weight:800;color:var(--ink)}
 .agreement-locked-grid input[readonly],#baseRate[readonly]{opacity:.82;background:#1e2932}
-nn/* V7.2 automatic role and increment profile */
-.employment-profile-grid [hidden]{display:none!important}
+
 .employment-profile-grid .agreement-rate-summary{padding:10px;border-radius:10px;background:var(--card-soft)}
-.classification-override-field,.manual-rate-field,.profile-date{transition:opacity .15s ease}
+
 
 
 /* V7.3 simplified employment settings */
@@ -1160,8 +1123,8 @@ nn/* V7.2 automatic role and increment profile */
 .upcoming-card{overflow:hidden}
 .upcoming-head,.calendar-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .compact-button{padding:7px 10px;font-size:12px;width:auto}
-.week-nav{display:grid;grid-template-columns:30px minmax(0,1fr) 30px;align-items:center;gap:4px;margin-top:10px}
-.week-arrow{width:30px;height:42px;padding:0;border:1px solid var(--line);border-radius:10px;background:#35404b;color:var(--ink);font-size:25px;line-height:1}
+
+
 .week-strip{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px;touch-action:pan-y;user-select:none}
 .week-day{min-width:0;border:1px solid var(--line);border-radius:9px;padding:7px 1px;background:#313a44;color:var(--ink);text-align:center}
 .week-day .week-dow,.week-day .week-date,.week-day small{display:block}
@@ -1173,7 +1136,7 @@ nn/* V7.2 automatic role and increment profile */
 .week-day.leave{background:#3b3b47}
 .week-day.offline{box-shadow:inset 0 0 0 1px #798b9d}
 .week-day.today{border:2px solid #79aee0;padding:6px 0}
-.week-hint{margin-top:8px;text-align:center;color:var(--muted);font-size:10px}
+
 
 .calendar-card{overflow:hidden}
 .calendar-head>div{text-align:center;flex:1}
@@ -1239,8 +1202,8 @@ nn/* V7.2 automatic role and increment profile */
 .week-day.unknown,.calendar-day.unknown{background:#2b333c;border-color:#3d4852}
 .week-day.unknown strong,.calendar-day.unknown strong{color:#75818c}
 .calendar-day.outside-month{opacity:.46}.calendar-day.outside-month.today{opacity:1}
-.calendar-share-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;margin:10px 0 2px}
-.calendar-share-row select{min-width:0}.calendar-share-row button{white-space:nowrap}
+
+
 .pay-cycle-list{display:grid;gap:14px}.pay-history-section{display:grid;gap:8px}
 .pay-history-section h3{margin:2px 2px 0;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
 .read-only-audit{cursor:default}
@@ -1248,9 +1211,9 @@ nn/* V7.2 automatic role and increment profile */
 
 /* V8.3.5 */
 .cycle-range-sub{display:block;margin-top:3px;font-size:11px;font-weight:500;color:var(--muted);line-height:1.2;white-space:nowrap}
-.home-cycle-jump{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:end;margin-top:14px;padding-top:12px;border-top:1px solid var(--border)}
-.home-cycle-jump label{grid-column:1/-1;font-size:11px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.06em}
-.home-cycle-jump select{min-width:0}.home-cycle-jump button{white-space:nowrap}
+
+
+
 
 .calendar-day.working{background:#29343e!important;border-color:#43515d!important;color:#f2f5f7!important}
 .calendar-day.not-working{background:#bfe3c7!important;border-color:#8bc99a!important;color:#173a24!important}
@@ -1262,8 +1225,8 @@ nn/* V7.2 automatic role and increment profile */
 /* ShiftMate 1.0 final UI polish */
 #home .hero-card{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:18px}
 #home .hero-card .home-cycle-jump{grid-column:1/-1;width:100%;margin-top:16px}
-.home-cycle-jump{grid-template-columns:minmax(0,1fr) auto}
-.home-cycle-jump label{text-align:left}
+
+
 .calendar-day.not-working{
   background:#8fbda0!important;
   border-color:#6ea982!important;
@@ -1338,8 +1301,8 @@ nn/* V7.2 automatic role and increment profile */
 .calendar-day.projected-off .calendar-date{color:#173a24!important;font-weight:750}
 .calendar-day.projected-off strong:empty{display:none}
 .calendar-legend{display:flex;align-items:center;justify-content:center;gap:6px;margin:10px 0 5px;color:var(--muted);font-size:9px;flex-wrap:wrap}
-.legend-dot{width:9px;height:9px;border-radius:3px;display:inline-block;margin-left:4px;border:1px solid rgba(255,255,255,.15)}
-.legend-morn{background:#354a5c}.legend-arvo{background:#55482b}.legend-off{background:#789d85}
+
+
 .projected-net-card{display:grid;gap:7px;position:fixed;left:14px;right:14px;bottom:76px;z-index:80;box-shadow:0 12px 30px rgba(0,0,0,.35)}
 .projected-net-card[hidden],.calendar-detail[hidden]{display:none!important}
 .projected-net-row{display:flex;align-items:end;justify-content:space-between;gap:14px}
@@ -1362,10 +1325,10 @@ nn/* V7.2 automatic role and increment profile */
 .legend-swatch{width:11px;height:11px;border-radius:3px;display:inline-block;margin-left:3px}
 .legend-swatch.solid{background:#b9d9ed;border:1px solid #b9d9ed}
 .legend-swatch.outline{background:transparent;border:2px solid #b9d9ed}
-.legend-dot{width:10px;height:10px}
-.legend-morn{background:#b9d9ed;border-color:#8fbcd5}
-.legend-arvo{background:#263846;border-color:#496071}
-.legend-off{background:#8fbda0;border-color:#6ea982}
+
+
+
+
 .legend-stars{font-size:11px;color:#f2d36b;font-weight:900;letter-spacing:-1px}
 .calendar-day{position:relative}
 .calendar-day.actual.shift-morn,.week-day.actual.shift-morn{background:#b9d9ed!important;border-color:#8fbcd5!important;color:#163245!important}
@@ -1387,11 +1350,11 @@ nn/* V7.2 automatic role and increment profile */
 .week-day .today-marker{position:absolute;top:4px;left:50%;transform:translateX(-50%);font-size:6px;line-height:1;font-weight:900;letter-spacing:.04em;padding:3px 4px;border-radius:999px;background:#fff;color:#111;z-index:3}
 .fortnight-card{overflow:hidden}
 .fortnight-head{align-items:center;margin-bottom:8px}
-.mini-certainty-legend{font-size:8px;color:var(--muted);display:flex;align-items:center;gap:4px;white-space:nowrap}
+
 .fortnight-strip{display:flex!important;gap:3px;overflow-x:auto!important;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;touch-action:pan-x;padding-bottom:2px}
 .fortnight-strip>.week-day{flex:0 0 calc((100% - 18px)/7);width:calc((100% - 18px)/7)}
 .fortnight-strip::-webkit-scrollbar{display:none}
-.week-hint,.week-nav,.week-arrow{display:none!important}
+
 .share-sheet{position:fixed;inset:0;z-index:120;background:rgba(10,15,20,.72);display:flex;align-items:flex-end;justify-content:center;padding:12px}
 .share-sheet[hidden]{display:none!important}
 .share-sheet-card{width:min(100%,520px);background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;display:grid;gap:8px;box-shadow:0 18px 50px rgba(0,0,0,.45)}
@@ -1426,11 +1389,11 @@ nn/* V7.2 automatic role and increment profile */
 .calendar-day-back b{font-size:10px;line-height:1.1;color:#fff}
 .calendar-day-back small{font-size:6px;color:#b8c3cb}
 @media (prefers-reduced-motion:reduce){.calendar-flip-inner{transition:none}}
-nn/* ShiftMate 1.0.13 calendar readability + certainty hierarchy */n.calendar-weekdays,.calendar-grid{gap:2px}n.calendar-day{aspect-ratio:.68;border-radius:8px;padding:6px 1px}n.calendar-day .calendar-date{font-size:10px}n.calendar-day strong{font-size:13px}n/* Confirmed off-days remain filled, but no longer dominate the roster visually. */n.calendar-day.actual.shift-off,.week-day.actual.shift-off{background:#557565!important;border-color:#668b76!important;color:#d9eadf!important}n.calendar-day.actual.shift-off .calendar-date,.week-day.actual.shift-off .week-dow,.week-day.actual.shift-off .week-date{color:#d9eadf!important}n/* Projected days are always hollow; the outline carries the shift type. */n.calendar-day.projected,.week-day.projected{background:#29323a!important;border-width:2px!important}n.calendar-day.projected.shift-off,.week-day.projected.shift-off{background:#29323a!important;border-color:#78b38b!important;color:#a9d8b7!important}n.calendar-day.projected.shift-off .calendar-date,.week-day.projected.shift-off .week-dow,.week-day.projected.shift-off .week-date{color:#a9d8b7!important}n.calendar-day-back{padding:5px 2px;gap:2px}n.calendar-day-back .ot-flip-stars{font-size:11px}n.calendar-day-back strong{font-size:8px!important}n.calendar-day-back b{font-size:13px}n.calendar-day-back small{font-size:7px}n.legend-off{background:#557565;border-color:#668b76}n@media(min-width:390px){n  .calendar-day{aspect-ratio:.72}n  .calendar-day-back b{font-size:14px}n}n
+nn/* ShiftMate 1.0.13 calendar readability + certainty hierarchy */n.calendar-weekdays,.calendar-grid{gap:2px}n.calendar-day{aspect-ratio:.68;border-radius:8px;padding:6px 1px}n.calendar-day .calendar-date{font-size:10px}n.calendar-day strong{font-size:13px}n/* Confirmed off-days remain filled, but no longer dominate the roster visually. */n.calendar-day.actual.shift-off,.week-day.actual.shift-off{background:#557565!important;border-color:#668b76!important;color:#d9eadf!important}n.calendar-day.actual.shift-off .calendar-date,.week-day.actual.shift-off .week-dow,.week-day.actual.shift-off .week-date{color:#d9eadf!important}n/* Projected days are always hollow; the outline carries the shift type. */n.calendar-day.projected,.week-day.projected{background:#29323a!important;border-width:2px!important}n.calendar-day.projected.shift-off,.week-day.projected.shift-off{background:#29323a!important;border-color:#78b38b!important;color:#a9d8b7!important}n.calendar-day.projected.shift-off .calendar-date,.week-day.projected.shift-off .week-dow,.week-day.projected.shift-off .week-date{color:#a9d8b7!important}n.calendar-day-back{padding:5px 2px;gap:2px}n.calendar-day-back .ot-flip-stars{font-size:11px}n.calendar-day-back strong{font-size:8px!important}n.calendar-day-back b{font-size:13px}n.calendar-day-back small{font-size:7px}n@media(min-width:390px){n  .calendar-day{aspect-ratio:.72}n  .calendar-day-back b{font-size:14px}n}n
 /* ShiftMate 1.0.14 tactile retro-future UI + smart context tray */
 :root{--bg:#090b0d;--card:#14181b;--card-soft:#1a1f23;--ink:#f1f3f2;--muted:#8e999f;--brand:#0b0e10;--accent:#59d7e8;--line:#2b3338;--good:#7ed7c4;--danger:#df6f72;--money:#f0bf58}
 body{background:radial-gradient(circle at 50% -20%,#171c20 0,#090b0d 48%);color:var(--ink)}
-.topbar{background:linear-gradient(180deg,#0e1215,#090c0e);border-bottom:1px solid #252d32;box-shadow:0 6px 18px rgba(0,0,0,.32)}
+
 .card{background:linear-gradient(145deg,#181d21,#111518);border-color:#30383e;box-shadow:inset 0 1px 0 rgba(255,255,255,.045),inset 0 -1px 0 rgba(0,0,0,.8),0 7px 18px rgba(0,0,0,.24)}
 .secondary,.compact-button,.what-if-actions button{background:linear-gradient(180deg,#232a2f,#171c20);border:1px solid #38434a;color:#e8edef;box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 2px 5px rgba(0,0,0,.45)}
 .secondary:active,.compact-button:active,.what-if-actions button:active{transform:translateY(1px);box-shadow:inset 0 2px 5px rgba(0,0,0,.65)}
