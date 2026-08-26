@@ -47,18 +47,6 @@
     x.setDate(x.getDate()-x.getDay());
     return x;
   };
-  const displayRosterStart=row=>{
-    if(!row?.code)return'';
-    const data=SHIFT_DATA[row.code];
-    if(data?.leaveType)return'';
-    return row.start||'';
-  };
-  const rosterVisualKind=entry=>{
-    if(!entry)return'not-working';
-    const row=entry.row||{};
-    if(!row.code||row.type==='Off'||SHIFT_DATA[row.code]?.leaveType)return'not-working';
-    return'working';
-  };
   function rosterTimeline(){
     const map=new Map();
     const addCycle=(cycle,priority)=>{
@@ -211,7 +199,6 @@
       </div>
       ${isProjected?'<small>Planning estimate based on the projected roster and the same pay calculation used for actual rosters.</small>':''}`;
   }
-  function publicHolidayName(date){return PayCalc.waPublicHolidays(date.getFullYear(),current.settings.customPublicHolidays).get(localISO(date))||''}
   let otRecommendationCache=new Map();
   function overtimeCandidateCodes(date){
     const group=PayCalc.dayGroup(date.getDay()),home=current.settings.homeLine;
@@ -394,31 +381,6 @@
     if(action==='change'&&code)trial.days[info.dayIndex]={...trial.days[info.dayIndex],code,type:'Rostered',entered:true};
     if(action==='swap'&&swapDate){const j=Math.round((startOfRosterDay(swapDate)-startOfRosterDay(info.start))/86400000);if(j<0||j>13)return null;[trial.days[info.dayIndex],trial.days[j]]=[trial.days[j],trial.days[info.dayIndex]]}
     const result=PayCalc.calculate(trial);return {trial,result,baseResult,code};
-  }
-  function renderWhatIfPanel(date,entry,projection){
-    const panel=$('#whatIfPanel');if(!panel)return;
-    const key=localISO(date),state=visualDayState(date),working=state.working;
-    panel.hidden=false;whatIfState.key=key;
-    const candidates=overtimeCandidateCodes(date).slice(0,30);
-    const currentCode=entry?.row?.code||'';
-    panel.innerHTML=`<div class="context-head"><span class="eyebrow">What if · ${date.toLocaleDateString('en-AU',{weekday:'short',day:'numeric',month:'short'})}</span><button class="context-close" type="button" data-what-close>×</button></div>
-      <div class="what-if-actions">
-        ${!working?'<button type="button" data-what="ot">Add OT</button>':''}
-        ${working?'<button type="button" data-what="off">Make off</button>':''}
-        ${working?'<button type="button" data-what="change">Change shift</button>':''}
-        ${working?'<button type="button" data-what="swap">Swap</button>':''}
-      </div><div class="what-if-result"><small>Hypothetical only — your roster will not be changed.</small></div>`;
-    panel.querySelector('[data-what-close]').onclick=()=>{panel.hidden=true;whatIfState={key:'',action:'',swapFrom:''}};
-    panel.querySelectorAll('[data-what]').forEach(btn=>btn.onclick=()=>{
-      const action=btn.dataset.what,resultBox=panel.querySelector('.what-if-result');whatIfState.action=action;
-      if(action==='change'){
-        resultBox.innerHTML=`<label>Try shift<select id="whatIfShift"><option value="">Select shift</option>${candidates.map(c=>`<option value="${c}" ${c===currentCode?'selected':''}>${c}</option>`).join('')}</select></label><div id="whatIfCalc"></div><small>Hypothetical only — your roster will not be changed.</small>`;
-        const sel=resultBox.querySelector('#whatIfShift'),calc=resultBox.querySelector('#whatIfCalc');
-        sel.onchange=()=>{if(!sel.value){calc.innerHTML='';return}const sim=simulateWhatIf(date,'change',sel.value);if(sim)calc.innerHTML=whatIfResultMarkup(sim)};return;
-      }
-      if(action==='swap'){whatIfState.swapFrom=key;resultBox.innerHTML='<strong>Select another day in this fortnight to compare the swap.</strong><small>Nothing will be written to your roster.</small>';return}
-      const sim=simulateWhatIf(date,action);if(sim)resultBox.innerHTML=whatIfResultMarkup(sim);
-    });
   }
   function whatIfResultMarkup(sim){const delta=sim.result.net-sim.baseResult.net,sign=delta>=0?'+':'−';return `<div class="what-if-money"><span>Estimated net change</span><strong class="${delta>=0?'positive':'negative'}">${sign}${money(Math.abs(delta))}</strong></div><div class="what-if-new-net"><span>Fortnight net</span><b>${money(sim.result.net)}</b></div><small>Hypothetical only — your roster will not be changed.</small>`}
   function earliestSavedActualDate(){
@@ -1305,10 +1267,6 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
     window.scrollTo({top:0,behavior:'smooth'});
   }
 
-  function effectiveRosterLine(card){
-    return card.querySelector('.worked-line').value||current.settings.homeLine;
-  }
-
   function refreshShiftOptions(card,date,selected=''){
     const line=card.querySelector('.worked-line').value||current.settings.homeLine;
     const select=card.querySelector('.shift-code');
@@ -2077,7 +2035,7 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
     saveCurrent();
     const payload={
       app:'PTA ShiftMate',
-      version:'2.4.2-p1-cleanup-test',
+      version:'2.4.3-p2-cleanup-test',
       exportedAt:new Date().toISOString(),
       current:AppStorage.loadCurrent(),
       cycles:AppStorage.loadCycles()
@@ -2222,7 +2180,6 @@ function installDismissibleSheets(){
 
   // Tap outside.
   document.addEventListener('click',e=>{
-    const openRoster=e.target.closest?.('#roster .roster-control-module.open');
     const detailBackdrop=e.target.closest?.('#roster .roster-detail-backdrop');
     if(detailBackdrop){ e.preventDefault(); closeRosterDetails(); return; }
 
