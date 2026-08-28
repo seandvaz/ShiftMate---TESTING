@@ -1,0 +1,8 @@
+ShiftMate TEST v2.4.3-P2
+Built from user-tested v2.4.2-P1.
+
+Part 2 scope: JavaScript/supporting-code cleanup only.
+Removed unused app.js declarations: displayRosterStart, rosterVisualKind, effectiveRosterLine, publicHolidayName, renderWhatIfPanel.
+Removed unused popup-listener local variable: True.
+Supporting JS files received whitespace/EOF cleanup only.
+No shift data, times, agreement values, pay calculations, storage schema, roster/settings/navigation behaviour, popup behaviour, or UI/CSS changed.
