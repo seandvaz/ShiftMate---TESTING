@@ -1,0 +1,3170 @@
+
+:root{
+  --bg:#20262d;
+  --card:#2b333d;
+  --card-soft:#333d48;
+  --ink:#f3f6f8;
+  --muted:#aab6c0;
+  --brand:#102b3e;
+  --accent:#3f7fbd;
+  --line:#46525e;
+  --good:#69c08a;
+  --danger:#d97575;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif
+}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.app-shell{
+  width:100%;
+  max-width:1180px;
+  margin:0 auto;
+  min-height:100vh;
+  padding-bottom:76px
+}
+
+
+
+
+main{padding:10px}
+.screen{display:none}
+.screen.active{display:block}
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:12px;
+  margin-bottom:10px;
+  box-shadow:0 3px 12px rgba(0,0,0,.16)
+}
+h2{
+  margin:0;
+  font-size:clamp(18px,3.8vw,24px)
+}
+.eyebrow{
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.06em;
+  margin-bottom:3px
+}
+.screen-heading,.saved-detail-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:10px
+}
+.helper{
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.45
+}
+.action-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:8px;
+  margin-top:11px
+}
+.primary,.secondary,.danger,.ghost{
+  border:0;
+  border-radius:10px;
+  padding:10px 11px;
+  font-weight:800;
+  font-size:14px
+}
+.primary{background:var(--accent);color:#fff}
+.secondary{background:#3b4854;color:#eef4f8}
+.danger{background:#55393d;color:#ffd9dd}
+.ghost{
+  background:transparent;
+  color:#d0dde6;
+  border:1px solid var(--line)
+}
+.form-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:9px
+}
+.form-grid.two{grid-template-columns:1fr}
+.form-grid .wide{grid-column:1/-1}
+label{
+  display:block;
+  color:var(--muted);
+  font-size:11px;
+  min-width:0
+}
+input,select,textarea{
+  display:block;
+  width:100%;
+  min-width:0;
+  margin-top:4px;
+  padding:9px 10px;
+  border:1px solid #596775;
+  border-radius:9px;
+  background:#202832;
+  color:var(--ink);
+  font-size:14px
+}
+textarea{resize:vertical}
+.day-list{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:8px
+}
+.day-card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:13px;
+  padding:10px;
+  overflow:hidden
+}
+.day-head{
+  display:flex;
+  justify-content:space-between;
+  gap:9px;
+  align-items:flex-start;
+  margin-bottom:8px
+}
+.day-head b{
+  display:block;
+  font-size:14px
+}
+.day-head small{
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+  margin-top:2px
+}
+.day-pay{
+  background:#354552;
+  border-radius:999px;
+  padding:5px 8px;
+  font-size:11px;
+  font-weight:800;
+  white-space:nowrap
+}
+.day-main{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:8px;
+  align-items:end
+}
+.details-button{
+  border:0;
+  border-radius:9px;
+  padding:9px 10px;
+  background:#3b4956;
+  color:#e4edf3;
+  font-weight:800;
+  font-size:12px
+}
+.shift-time{
+  font-size:11px;
+  color:#afbdc9;
+  margin-top:5px
+}
+.day-details{
+  display:none;
+  border-top:1px solid var(--line);
+  margin-top:9px;
+  padding-top:9px
+}
+.day-card.open .day-details{display:block}
+.metric-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:10px
+}
+.metric{
+  background:var(--card-soft);
+  border-radius:10px;
+  padding:9px
+}
+.metric span{
+  display:block;
+  color:var(--muted);
+  font-size:10px
+}
+.metric strong{
+  display:block;
+  font-size:17px;
+  margin-top:3px
+}
+.metric.highlight{
+  background:#2d4438
+}
+.metric.highlight strong{
+  color:var(--good)
+}
+.saved-list{
+  display:grid;
+  gap:9px;
+  margin-top:10px
+}
+.saved-card{
+  background:var(--card-soft);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:10px
+}
+
+.saved-card small{
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+  margin-top:3px
+}
+.saved-amount,.detail-estimate{
+  font-size:19px;
+  font-weight:850;
+  color:var(--good);
+  white-space:nowrap
+}
+.saved-meta{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:7px;
+  margin-top:8px
+}
+.saved-meta div{
+  background:#2a343e;
+  border-radius:8px;
+  padding:7px
+}
+.saved-meta span{
+  display:block;
+  font-size:10px;
+  color:var(--muted)
+}
+.saved-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:7px;
+  margin-top:8px
+}
+.saved-actions button{
+  border:0;
+  border-radius:8px;
+  padding:9px;
+  font-weight:800;
+  font-size:12px
+}
+.status-pill{
+  display:inline-block;
+  border-radius:999px;
+  padding:4px 8px;
+  font-size:10px;
+  font-weight:800;
+  margin-top:6px
+}
+.status-pill.current{background:#294a3b;color:#a8e5c0}
+.status-pill.awaiting{background:#554821;color:#f1d78d}
+.status-pill.paid{background:#2d4662;color:#bedcf5}
+.bottom-nav{
+  position:fixed;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:30;
+  display:grid;
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:4px;
+  background:rgba(18,26,34,.98);
+  border-top:1px solid var(--line);
+  padding:6px 6px calc(6px + env(safe-area-inset-bottom))
+}
+.nav-button{
+  min-width:0;
+  border:0;
+  background:transparent;
+  border-radius:9px;
+  padding:8px 2px;
+  color:#aeb7bf;
+  font-size:10px;
+  font-weight:800
+}
+.nav-button.active{
+  background:#30404d;
+  color:#f3f8fb
+}
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:80px;
+  transform:translate(-50%,16px);
+  opacity:0;
+  background:#0d141a;
+  color:#fff;
+  border-radius:999px;
+  padding:9px 12px;
+  z-index:40;
+  transition:.2s;
+  max-width:90%;
+  text-align:center;
+  font-size:12px
+}
+.toast.show{
+  opacity:1;
+  transform:translate(-50%,0)
+}
+@media(min-width:620px){
+  main{padding:14px}
+  .form-grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .action-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .settings-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(min-width:920px){
+  .app-shell{padding-bottom:16px}
+  .bottom-nav{
+    position:sticky;
+    bottom:auto;
+    top:74px;
+    max-width:1180px;
+    margin:0 auto;
+    border:1px solid var(--line);
+    border-radius:0 0 12px 12px;
+    grid-template-columns:repeat(5,150px);
+    justify-content:center
+  }
+  .day-list{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .settings-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+
+
+/* V5.3 home-screen compaction */
+.current-card{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:10px 14px;
+  align-items:center;
+}
+.current-card>div:first-child{
+  min-width:0;
+}
+.current-card h2{
+  font-size:clamp(17px,4vw,22px);
+  line-height:1.15;
+}
+.current-card .home-net{
+  text-align:right;
+}
+.current-card .home-net span{
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+}
+.current-card .home-net strong{
+  display:block;
+  color:var(--good);
+  font-size:clamp(24px,7vw,34px);
+  line-height:1;
+  margin-top:3px;
+}
+.current-card .action-grid{
+  grid-column:1/-1;
+  grid-template-columns:1fr 1fr;
+  margin-top:2px;
+}
+.current-card .action-grid button{
+  padding:9px 8px;
+  font-size:12px;
+}
+#home .card:not(.current-card){
+  padding-top:10px;
+}
+#home .card:not(.current-card) h2{
+  font-size:18px;
+  margin-bottom:7px;
+}
+#home .form-grid{
+  gap:7px;
+}
+#home input{
+  padding:8px 9px;
+}
+@media(max-width:390px){
+  .current-card{
+    grid-template-columns:1fr;
+  }
+  .current-card .home-net{
+    text-align:left;
+  }
+}
+
+
+/* V5.4 roster completion workflow */
+.roster-complete{
+  margin-top:10px;
+}
+.roster-summary{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:7px;
+}
+.roster-summary>div{
+  background:var(--card-soft);
+  border-radius:10px;
+  padding:9px;
+}
+.roster-summary span{
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+}
+.roster-summary strong{
+  display:block;
+  margin-top:3px;
+  font-size:17px;
+}
+.roster-summary .roster-net{
+  grid-column:1/-1;
+  background:#2d4438;
+}
+.roster-summary .roster-net strong{
+  color:var(--good);
+  font-size:26px;
+}
+.roster-actions{
+  grid-template-columns:1fr;
+}
+@media(min-width:430px){
+  .roster-actions{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+
+/* V5.5 compact roster finish */
+.day-card{
+  padding:8px 9px;
+}
+.day-head{
+  margin-bottom:6px;
+}
+.day-head b{
+  font-size:13px;
+}
+.day-main{
+  gap:6px;
+}
+.details-button{
+  padding:8px 9px;
+}
+.shift-time{
+  margin-top:4px;
+}
+.roster-complete{
+  padding:10px;
+}
+.roster-summary{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:7px;
+}
+.roster-summary>div{
+  padding:8px;
+}
+.roster-summary .roster-net{
+  grid-column:1/-1;
+}
+.roster-summary .roster-net strong{
+  font-size:23px;
+}
+.roster-summary strong{
+  font-size:15px;
+}
+.roster-actions{
+  grid-template-columns:1fr 1fr;
+  gap:7px;
+}
+.roster-actions button{
+  padding:9px 7px;
+  font-size:12px;
+}
+@media(max-width:350px){
+  .roster-actions{
+    grid-template-columns:1fr;
+  }
+}
+
+
+/* V5.6 compact saved pay cycles */
+.compact-saved{
+  padding:0;
+  overflow:hidden;
+}
+.saved-card-toggle{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  width:100%;
+  padding:11px 12px;
+  border:0;
+  background:transparent;
+  color:var(--ink);
+  text-align:left;
+}
+.saved-card-toggle b{
+  font-size:14px;
+}
+.saved-card-toggle strong{
+  color:var(--good);
+  font-size:18px;
+  white-space:nowrap;
+}
+.saved-card-collapse{
+  display:none;
+  padding:0 10px 10px;
+  border-top:1px solid var(--line);
+}
+.compact-saved.open .saved-card-collapse{
+  display:block;
+}
+.saved-card-collapse>small{
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+  margin:7px 0 0;
+}
+
+
+/* V5.7 Home dashboard */
+.current-card .home-net strong{
+  font-size:clamp(22px,6vw,30px);
+}
+.home-stats-card{
+  padding:11px;
+}
+.home-stats-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:7px;
+}
+.home-stats-grid>div{
+  background:var(--card-soft);
+  border-radius:10px;
+  padding:9px;
+}
+.home-stats-grid span{
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+}
+.home-stats-grid strong{
+  display:block;
+  margin-top:3px;
+  font-size:16px;
+}
+
+
+/* V5.8 tighter roster cards */
+
+
+
+
+
+
+
+
+
+
+
+#roster .day-details{
+  margin-top:7px;
+  padding-top:7px;
+}
+#roster .day-details input,
+#roster .day-details select{
+  padding:7px 8px;
+  font-size:13px;
+}
+#roster .roster-complete{
+  margin-top:8px;
+}
+
+
+/* V5.9 simplified Pay page */
+.pay-summary-card{
+  padding:12px;
+}
+.pay-main-net{
+  margin-top:10px;
+  padding:14px;
+  border-radius:12px;
+  background:#2d4438;
+}
+.pay-main-net span{
+  display:block;
+  color:var(--muted);
+  font-size:11px;
+}
+.pay-main-net strong{
+  display:block;
+  margin-top:4px;
+  color:var(--good);
+  font-size:clamp(30px,9vw,42px);
+  line-height:1;
+}
+.pay-quick-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:9px;
+}
+.pay-quick-grid>div{
+  background:var(--card-soft);
+  border-radius:10px;
+  padding:9px;
+}
+.pay-quick-grid span,
+.pay-breakdown-grid span{
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+}
+.pay-quick-grid strong{
+  display:block;
+  margin-top:3px;
+  font-size:16px;
+}
+.pay-breakdown{
+  margin-top:10px;
+  border-top:1px solid var(--line);
+  padding-top:10px;
+}
+.pay-breakdown summary{
+  color:#d9e4eb;
+  font-size:12px;
+  font-weight:800;
+  cursor:pointer;
+}
+.pay-breakdown-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:7px;
+  margin-top:9px;
+}
+.pay-breakdown-grid>div{
+  background:var(--card-soft);
+  border-radius:9px;
+  padding:8px;
+}
+.pay-breakdown-grid strong{
+  display:block;
+  margin-top:3px;
+  font-size:14px;
+}
+
+
+/* V5.10 smart saved-pay statuses */
+.saved-card-title{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:4px;
+  min-width:0;
+}
+.saved-card-title .status-pill{
+  margin:0;
+}
+.saved-card-title b{
+  line-height:1.2;
+}
+.status-pill.future{
+  background:#48395b;
+  color:#ddcaf5;
+}
+.status-pill.past{
+  background:#41484f;
+  color:#d7dde1;
+}
+.compact-saved .saved-card-toggle{
+  padding:9px 10px;
+}
+.compact-saved .saved-card-collapse>small+small{
+  margin-top:3px;
+}
+
+
+/* V5.11 financial-year Home dashboard */
+.home-stats-card .screen-heading{
+  align-items:center;
+}
+.home-stats-card h2{
+  font-size:17px;
+}
+.home-cycle-count{
+  padding:5px 8px;
+  border-radius:999px;
+  background:var(--card-soft);
+  color:var(--muted);
+  font-size:10px;
+  font-weight:800;
+  white-space:nowrap;
+}
+.home-stats-grid.fy-grid{
+  margin-top:10px;
+}
+.home-payday-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  margin-top:8px;
+  padding:9px 10px;
+  border-radius:10px;
+  background:#26323c;
+}
+.home-payday-row span{
+  color:var(--muted);
+  font-size:10px;
+}
+.home-payday-row strong{
+  font-size:14px;
+}
+
+
+/* V5.12 dashboard and pay-history refinements */
+.current-card .home-net small{
+  display:block;
+  margin-top:5px;
+  color:var(--muted);
+  font-size:10px;
+}
+.home-roster-status{
+  grid-column:1/-1;
+  margin-top:-2px;
+  text-align:center;
+  color:var(--muted);
+  font-size:10px;
+}
+.difference-positive{color:var(--good)}
+.difference-negative{color:var(--danger)}
+.difference-neutral{color:var(--muted)}
+
+
+/* V5.13 collapsible Settings */
+.settings-card{
+  padding:12px;
+}
+.settings-helper{
+  margin:7px 0 10px;
+}
+.settings-section{
+  border-top:1px solid var(--line);
+  padding:0;
+}
+.settings-section:first-of-type{
+  border-top:0;
+}
+.settings-section summary{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  padding:12px 2px;
+  cursor:pointer;
+  list-style:none;
+}
+.settings-section summary::-webkit-details-marker{
+  display:none;
+}
+.settings-section summary::after{
+  content:"›";
+  position:absolute;
+  right:30px;
+  font-size:22px;
+  color:var(--muted);
+  transform:rotate(90deg);
+  transition:transform .15s ease;
+}
+.settings-section[open] summary::after{
+  transform:rotate(-90deg);
+}
+.settings-section summary span{
+  color:var(--ink);
+  font-size:14px;
+  font-weight:800;
+}
+.settings-section summary small{
+  color:var(--muted);
+  font-size:10px;
+  padding-right:30px;
+}
+.settings-section .settings-grid{
+  padding:0 0 12px;
+}
+.settings-actions{
+  margin-top:12px;
+}
+
+
+/* V5.14 completion and backup tools */
+.saved-filter-label{
+  max-width:240px;
+  margin:10px 0 2px;
+}
+.saved-filter-label select{
+  margin-top:5px;
+}
+.backup-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  padding:0 0 4px;
+}
+.backup-actions button,
+.import-backup-button{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:42px;
+  border-radius:10px;
+  padding:9px 10px;
+  font-weight:800;
+  font-size:13px;
+  text-align:center;
+}
+.import-backup-button{
+  background:#3b4854;
+  color:#eef4f8;
+  cursor:pointer;
+}
+.import-backup-button input{
+  display:none;
+}
+.backup-helper{
+  margin:4px 0 12px;
+}
+@media(max-width:360px){
+  .backup-actions{
+    grid-template-columns:1fr;
+  }
+}
+
+
+/* V5.15 final workflow refinements */
+.home-cycle-count{
+  max-width:190px;
+  white-space:normal;
+  text-align:center;
+  line-height:1.2;
+}
+.home-last-actual{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:8px;
+}
+.home-last-actual[hidden]{
+  display:none;
+}
+.home-last-actual>div{
+  background:var(--card-soft);
+  border-radius:10px;
+  padding:9px 10px;
+}
+.home-last-actual span{
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+}
+.home-last-actual strong{
+  display:block;
+  margin-top:3px;
+  font-size:15px;
+}
+.quick-actual-entry{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:8px;
+  align-items:end;
+  margin-top:9px;
+}
+.quick-actual-entry label{
+  min-width:0;
+}
+.quick-actual-entry input{
+  padding:8px 9px;
+}
+.quick-actual-entry button{
+  min-height:39px;
+  border:0;
+  border-radius:9px;
+  padding:8px 10px;
+  background:#3b4854;
+  color:#eef4f8;
+  font-weight:800;
+  font-size:12px;
+  white-space:nowrap;
+}
+@media(max-width:360px){
+  .quick-actual-entry{
+    grid-template-columns:1fr;
+  }
+}
+
+
+/* V5.16 final stability fixes */
+/* V6.0 final mobile header fix */
+
+.current-card{
+  scroll-margin-top:120px;
+}
+.quick-actual-buttons{
+  display:flex;
+  gap:6px;
+}
+.quick-actual-buttons button{
+  min-height:39px;
+  border:0;
+  border-radius:9px;
+  padding:8px 10px;
+  background:#3b4854;
+  color:#eef4f8;
+  font-weight:800;
+  font-size:12px;
+  white-space:nowrap;
+}
+.quick-actual-buttons .clear-quick-actual{
+  background:#55393d;
+  color:#ffd9dd;
+}
+@media(max-width:390px){
+  .quick-actual-entry{
+    grid-template-columns:1fr;
+  }
+  .quick-actual-buttons{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+
+/* V6.0 final mobile layout pass */
+
+
+main{
+  position:relative;
+  z-index:1;
+}
+.screen.active{
+  padding-top:0;
+}
+#home .current-card,
+#roster .card:first-child,
+#pay .card:first-child,
+#saved .card:first-child,
+#settings .card:first-child{
+  margin-top:0;
+}
+.bottom-nav{
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+}
+@media(max-width:619px){
+  
+  main{
+    padding-top:10px;
+  }
+}
+
+
+/* V6.1 allowance and higher-duties audit trail */
+.pay-breakdown-grid>.allowance-breakdown{
+  grid-column:1/-1;
+  background:var(--card-soft);
+  border-radius:9px;
+  padding:0;
+  overflow:hidden;
+}
+.allowance-breakdown>summary{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:9px;
+  cursor:pointer;
+  list-style:none;
+}
+.allowance-breakdown>summary::-webkit-details-marker{
+  display:none;
+}
+.allowance-breakdown>summary::before{
+  content:"›";
+  color:var(--muted);
+  font-size:18px;
+  transform:rotate(0deg);
+  transition:transform .15s ease;
+}
+.allowance-breakdown[open]>summary::before{
+  transform:rotate(90deg);
+}
+.allowance-breakdown>summary span{
+  flex:1;
+}
+.allowance-breakdown>summary strong{
+  margin:0;
+  font-size:14px;
+}
+.allowance-breakdown-list{
+  border-top:1px solid var(--line);
+  padding:8px;
+}
+.allowance-group+.allowance-group{
+  margin-top:10px;
+}
+.allowance-group-head,
+.allowance-total{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+.allowance-group-head{
+  padding:2px 3px 5px;
+}
+.allowance-group-head b{
+  font-size:12px;
+}
+.allowance-group-head strong{
+  font-size:12px;
+}
+.allowance-audit-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  width:100%;
+  border:0;
+  border-top:1px solid rgba(255,255,255,.06);
+  background:transparent;
+  color:var(--ink);
+  padding:8px 3px;
+  text-align:left;
+}
+.allowance-audit-row span{
+  min-width:0;
+}
+.allowance-audit-row b{
+  display:block;
+  font-size:11px;
+}
+.allowance-audit-row small{
+  display:block;
+  color:var(--muted);
+  font-size:9px;
+  margin-top:2px;
+}
+.allowance-audit-row strong{
+  font-size:12px;
+  white-space:nowrap;
+}
+.allowance-total{
+  margin-top:8px;
+  padding:9px 3px 2px;
+  border-top:1px solid var(--line);
+}
+.allowance-total span{
+  color:var(--ink);
+  font-size:11px;
+  font-weight:800;
+}
+.allowance-total strong{
+  font-size:13px;
+}
+.allowance-empty{
+  color:var(--muted);
+  font-size:11px;
+  padding:4px 2px;
+}
+.day-card.audit-highlight{
+  outline:2px solid var(--accent);
+  outline-offset:2px;
+}
+
+
+/* V7.0 agreement rules */
+.public-holiday-day{box-shadow:inset 3px 0 0 #b58b36}
+.public-holiday-badge{display:block;margin-top:4px;color:#e2bf72;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.05em}
+.public-holiday-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 3px;border-top:1px solid rgba(255,255,255,.06)}
+.public-holiday-row:first-child{border-top:0}
+.public-holiday-row span{min-width:0}.public-holiday-row b{display:block;font-size:11px}.public-holiday-row small{display:block;color:var(--muted);font-size:9px;margin-top:2px}.public-holiday-row strong{font-size:12px;white-space:nowrap}
+.settings-note{grid-column:1/-1;margin:0;color:var(--muted);font-size:10px;line-height:1.4}.settings-wide{grid-column:1/-1}
+
+/* V7.1 agreement-driven employment settings */
+.field-note{display:block;color:var(--muted);font-size:9px;margin-top:4px;line-height:1.25}
+
+
+.agreement-rate-summary{font-weight:800;color:var(--ink)}
+.agreement-locked-grid input[readonly],#baseRate[readonly]{opacity:.82;background:#1e2932}
+
+.employment-profile-grid .agreement-rate-summary{padding:10px;border-radius:10px;background:var(--card-soft)}
+
+
+
+/* V7.3 simplified employment settings */
+.employment-level-grid{grid-template-columns:1fr}
+.employment-level-grid .settings-wide{grid-column:1/-1}
+.employment-level-grid select{font-size:15px;font-weight:800}
+
+
+/* V8.2 roster at a glance */
+.upcoming-card{overflow:hidden}
+.upcoming-head,.calendar-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.compact-button{padding:7px 10px;font-size:12px;width:auto}
+
+
+.week-strip{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px;touch-action:pan-y;user-select:none}
+.week-day{min-width:0;border:1px solid var(--line);border-radius:9px;padding:7px 1px;background:#313a44;color:var(--ink);text-align:center}
+.week-day .week-dow,.week-day .week-date,.week-day small{display:block}
+.week-day .week-dow{color:var(--muted);font-size:8px;font-weight:800;text-transform:uppercase}
+.week-day .week-date{font-size:10px;margin-top:2px;color:#d6dee5}
+.week-day strong{display:block;margin-top:6px;font-size:14px;line-height:1.05;overflow:hidden;text-overflow:ellipsis}
+.week-day small{margin-top:4px;color:#bcc8d2;font-size:8px}
+.week-day.off strong{color:#8e9aa5;font-size:10px}
+.week-day.leave{background:#3b3b47}
+.week-day.offline{box-shadow:inset 0 0 0 1px #798b9d}
+.week-day.today{border:2px solid #79aee0;padding:6px 0}
+
+
+.calendar-card{overflow:hidden}
+.calendar-head>div{text-align:center;flex:1}
+.calendar-head .week-arrow{height:38px}
+.calendar-today{display:block;margin:9px auto 0}
+.calendar-weekdays,.calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px}
+.calendar-weekdays{margin-top:12px;margin-bottom:4px}
+.calendar-weekdays span{text-align:center;color:var(--muted);font-size:8px;font-weight:800;text-transform:uppercase}
+.calendar-day{aspect-ratio:.82;min-width:0;border:1px solid var(--line);border-radius:8px;background:#303944;color:var(--ink);padding:5px 1px;text-align:center;overflow:hidden}
+.calendar-day.blank{border-color:transparent;background:transparent}
+.calendar-day .calendar-date{display:block;color:var(--muted);font-size:9px}
+.calendar-day strong{display:block;margin-top:5px;font-size:12px;line-height:1.05;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.calendar-day small{display:block;margin-top:4px;color:#bdc8d1;font-size:8px}
+.calendar-day.off strong{color:#87939e;font-size:9px}
+.calendar-day.leave{background:#3b3b47}
+.calendar-day.offline{box-shadow:inset 0 0 0 1px #798b9d}
+.calendar-day.today{border:2px solid #79aee0;padding:4px 0}
+.calendar-day.selected{outline:2px solid var(--good);outline-offset:1px}
+.calendar-detail h2{margin-bottom:10px}
+.calendar-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.calendar-detail-grid div{background:var(--card-soft);border-radius:10px;padding:9px}
+.calendar-detail-grid span{display:block;color:var(--muted);font-size:10px}
+.calendar-detail-grid strong{display:block;margin-top:3px;font-size:13px}
+
+/* Six tabs must still fit on an iPhone */
+.bottom-nav .nav-button{min-width:0;padding-left:2px;padding-right:2px;font-size:9px}
+
+@media (min-width:700px){
+  .week-day strong{font-size:17px}
+  .week-day small{font-size:10px}
+  .calendar-day{aspect-ratio:1.15}
+  .calendar-day strong{font-size:15px}
+  .calendar-day small{font-size:9px}
+}
+
+/* V8.2.1 cosmetic cleanup */
+.bottom-nav{
+  grid-template-columns:repeat(5,minmax(0,1fr));
+  gap:2px;
+}
+.bottom-nav .nav-button{
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:clip;
+  font-size:9px;
+  padding:8px 0;
+}
+#pay .home-stats-card{
+  margin-top:12px;
+}
+
+/* V8.3 PTA ShiftMate */
+.home-new-cycle{width:100%;min-height:56px;font-size:17px;font-weight:850;letter-spacing:.1px;box-shadow:0 8px 20px rgba(0,0,0,.22)}
+
+
+
+
+
+.week-day.working,.calendar-day.working{background:#5a481f;border-color:#8a6b28}
+.week-day.working strong,.calendar-day.working strong{color:#f3d783}
+.week-day.not-working,.calendar-day.not-working{background:#243e31;border-color:#356047}
+.week-day.not-working strong,.calendar-day.not-working strong{color:#a9dfbb}
+.week-day.unknown,.calendar-day.unknown{background:#2b333c;border-color:#3d4852}
+.week-day.unknown strong,.calendar-day.unknown strong{color:#75818c}
+.calendar-day.outside-month{opacity:.46}.calendar-day.outside-month.today{opacity:1}
+
+
+.pay-cycle-list{display:grid;gap:14px}.pay-history-section{display:grid;gap:8px}
+.pay-history-section h3{margin:2px 2px 0;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.read-only-audit{cursor:default}
+.bottom-nav{grid-template-columns:repeat(5,minmax(0,1fr))}.bottom-nav .nav-button{font-size:11px;white-space:nowrap}
+
+/* V8.3.5 */
+.cycle-range-sub{display:block;margin-top:3px;font-size:11px;font-weight:500;color:var(--muted);line-height:1.2;white-space:nowrap}
+
+
+
+
+.calendar-day.working{background:#29343e!important;border-color:#43515d!important;color:#f2f5f7!important}
+.calendar-day.not-working{background:#bfe3c7!important;border-color:#8bc99a!important;color:#173a24!important}
+.calendar-day{position:relative}
+.calendar-day .today-marker{position:absolute;top:4px;left:50%;transform:translateX(-50%);font-size:7px;line-height:1;font-weight:900;letter-spacing:.04em;padding:3px 5px;border-radius:999px;background:#fff;color:#111;z-index:3}
+.calendar-day.today{outline:3px solid #fff;outline-offset:-3px;box-shadow:0 0 0 2px #111;z-index:2}
+.calendar-day strong{font-size:12px}
+
+/* ShiftMate 1.0 final UI polish */
+#home .hero-card{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:18px}
+#home .hero-card .home-cycle-jump{grid-column:1/-1;width:100%;margin-top:16px}
+
+
+.calendar-day.not-working{
+  background:#8fbda0!important;
+  border-color:#6ea982!important;
+  color:#173a24!important;
+}
+.calendar-day.not-working strong:empty{display:none}
+
+/* ShiftMate 1.0.1 dashboard selector + consistent availability language */
+.current-card{grid-template-columns:minmax(0,1fr) auto;align-items:start}
+.current-card>div:first-child{align-self:end}
+.home-pe-select{
+  appearance:auto;
+  width:auto;
+  max-width:100%;
+  margin:4px 0 0;
+  padding:0 24px 0 0;
+  border:0;
+  background:transparent;
+  color:var(--text);
+  font:inherit;
+  font-size:clamp(20px,5vw,26px);
+  line-height:1.1;
+  font-weight:850;
+}
+.home-pe-select:focus{outline:none}
+#homeCycleRange{margin-top:5px;font-size:12px}
+.current-card .home-net{align-self:start}
+.week-day.working{background:#29343e!important;border-color:#43515d!important;color:#f2f5f7!important}
+.week-day.working strong{color:#f3d783!important}
+.week-day.not-working{background:#8fbda0!important;border-color:#6ea982!important;color:#173a24!important}
+.week-day.not-working strong:empty{display:none}
+
+
+/* ShiftMate 1.0.2 */
+.week-day.not-working{
+  color:#12331f!important;
+}
+.week-day.not-working .week-dow,
+.week-day.not-working .week-date,
+.week-day.not-working small{
+  color:#214d30!important;
+  opacity:1!important;
+}
+
+/* ShiftMate 1.0.3 */
+.calendar-day.not-working .calendar-date{
+  color:#173a24!important;
+  opacity:1!important;
+  font-weight:750;
+}
+.calendar-day.not-working.outside-month .calendar-date{
+  color:#264c32!important;
+}
+.leave-hours-field[hidden],
+.annual-leave-portion-field[hidden]{display:none!important}
+.day-details .field-note{display:block;margin-top:4px;font-size:9px;line-height:1.25}
+
+/* ShiftMate 1.0.8 integrated rolling calendar */
+.bottom-nav{grid-template-columns:repeat(5,minmax(0,1fr))}
+.calendar-scroll-card{padding-bottom:10px}
+.calendar-scroll-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:4px}
+.calendar-scroll-head h2{margin:2px 0 0}
+.calendar-months{display:grid;gap:18px;margin-top:10px}
+.calendar-month-block{scroll-margin-top:90px}
+.calendar-scroll-month{margin:0 0 7px;padding:4px 1px;font-size:15px;letter-spacing:.01em;color:var(--ink)}
+.calendar-month-block .calendar-weekdays{margin-top:0}
+.calendar-day.projected-morn{background:#354a5c!important;border:1px solid #5d7890!important;color:#eef6fc!important}
+.calendar-day.projected-morn strong{color:#dceefa!important}
+.calendar-day.projected-arvo{background:#55482b!important;border:1px solid #827044!important;color:#fff8e5!important}
+.calendar-day.projected-arvo strong{color:#f5dfa2!important}
+.calendar-day.projected-off{background:#789d85!important;border:1px solid #638b72!important;color:#173a24!important}
+.calendar-day.projected-off .calendar-date{color:#173a24!important;font-weight:750}
+.calendar-day.projected-off strong:empty{display:none}
+.calendar-legend{display:flex;align-items:center;justify-content:center;gap:6px;margin:10px 0 5px;color:var(--muted);font-size:9px;flex-wrap:wrap}
+
+
+.projected-net-card{display:grid;gap:7px;position:fixed;left:14px;right:14px;bottom:76px;z-index:80;box-shadow:0 12px 30px rgba(0,0,0,.35)}
+.projected-net-card[hidden],.calendar-detail[hidden]{display:none!important}
+.projected-net-row{display:flex;align-items:end;justify-content:space-between;gap:14px}
+.projected-net-row span{color:var(--muted);font-size:12px}
+.projected-net-row strong{font-size:28px;line-height:1}
+.projected-net-card small{color:var(--muted);font-size:10px;line-height:1.35}
+
+
+/* ShiftMate 1.0.9 minimalist roster/calendar refinement */
+.calendar-screen{height:calc(100dvh - 122px);overflow:hidden}
+.calendar-scroll-card{height:100%;display:flex;flex-direction:column;overflow:hidden;margin-bottom:0;padding:12px}
+.calendar-fixed-head{flex:0 0 auto;background:var(--card);z-index:4}
+.calendar-scroll-head{margin-bottom:2px}
+.calendar-months{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;margin-top:8px;padding-right:2px;padding-bottom:90px}
+.calendar-month-block{scroll-margin-top:10px}
+.calendar-today-float{position:absolute;right:18px;bottom:18px;z-index:12;border:0;border-radius:999px;background:#fff;color:#17212b;font-weight:850;padding:9px 13px;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.calendar-today-float[hidden]{display:none!important}
+.calendar-card{position:relative}
+.calendar-legend{justify-content:flex-start;margin:8px 0 5px;gap:5px 6px}
+.legend-swatch{width:11px;height:11px;border-radius:3px;display:inline-block;margin-left:3px}
+.legend-swatch.solid{background:#b9d9ed;border:1px solid #b9d9ed}
+.legend-swatch.outline{background:transparent;border:2px solid #b9d9ed}
+
+
+
+
+.legend-stars{font-size:11px;color:#f2d36b;font-weight:900;letter-spacing:-1px}
+.calendar-day{position:relative}
+.calendar-day.actual.shift-morn,.week-day.actual.shift-morn{background:#b9d9ed!important;border-color:#8fbcd5!important;color:#163245!important}
+.calendar-day.actual.shift-morn .calendar-date,.calendar-day.actual.shift-morn strong,.week-day.actual.shift-morn .week-dow,.week-day.actual.shift-morn .week-date,.week-day.actual.shift-morn strong{color:#163245!important}
+.calendar-day.actual.shift-arvo,.week-day.actual.shift-arvo{background:#263846!important;border-color:#496071!important;color:#f3f6f8!important}
+.calendar-day.actual.shift-arvo strong,.week-day.actual.shift-arvo strong{color:#f3f6f8!important}
+.calendar-day.actual.shift-off,.week-day.actual.shift-off{background:#8fbda0!important;border-color:#6ea982!important;color:#173a24!important}
+.calendar-day.actual.shift-off .calendar-date,.week-day.actual.shift-off .week-dow,.week-day.actual.shift-off .week-date{color:#214d30!important}
+.calendar-day.projected,.week-day.projected{background:transparent!important;border-width:2px!important}
+.calendar-day.projected.shift-morn,.week-day.projected.shift-morn{border-color:#8fbcd5!important;color:#cde8f6!important}
+.calendar-day.projected.shift-morn strong,.calendar-day.projected.shift-morn .calendar-date,.week-day.projected.shift-morn strong,.week-day.projected.shift-morn .week-dow,.week-day.projected.shift-morn .week-date{color:#cde8f6!important}
+.calendar-day.projected.shift-arvo,.week-day.projected.shift-arvo{border-color:#496071!important;color:#d5e1e8!important}
+.calendar-day.projected.shift-arvo strong,.calendar-day.projected.shift-arvo .calendar-date,.week-day.projected.shift-arvo strong,.week-day.projected.shift-arvo .week-dow,.week-day.projected.shift-arvo .week-date{color:#d5e1e8!important}
+.calendar-day.projected.shift-off,.week-day.projected.shift-off{border-color:#6ea982!important;color:#9fd4ae!important}
+.calendar-day.projected.shift-off .calendar-date,.week-day.projected.shift-off .week-dow,.week-day.projected.shift-off .week-date{color:#9fd4ae!important}
+.calendar-day .ot-stars{position:absolute;right:4px;bottom:3px;color:#f2d36b;font-size:9px;font-weight:900;line-height:1;letter-spacing:-1px;text-shadow:0 1px 2px rgba(0,0,0,.65)}
+.calendar-day.today,.week-day.today{outline:3px solid #fff!important;outline-offset:-3px;box-shadow:0 0 0 2px #111;z-index:2}
+.week-day{position:relative;scroll-snap-align:start;aspect-ratio:.78;padding-top:18px}
+.week-day .today-marker{position:absolute;top:4px;left:50%;transform:translateX(-50%);font-size:6px;line-height:1;font-weight:900;letter-spacing:.04em;padding:3px 4px;border-radius:999px;background:#fff;color:#111;z-index:3}
+.fortnight-card{overflow:hidden}
+.fortnight-head{align-items:center;margin-bottom:8px}
+
+.fortnight-strip{display:flex!important;gap:3px;overflow-x:auto!important;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;touch-action:pan-x;padding-bottom:2px}
+.fortnight-strip>.week-day{flex:0 0 calc((100% - 18px)/7);width:calc((100% - 18px)/7)}
+.fortnight-strip::-webkit-scrollbar{display:none}
+
+.share-sheet{position:fixed;inset:0;z-index:120;background:rgba(10,15,20,.72);display:flex;align-items:flex-end;justify-content:center;padding:12px}
+.share-sheet[hidden]{display:none!important}
+.share-sheet-card{width:min(100%,520px);background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;display:grid;gap:8px;box-shadow:0 18px 50px rgba(0,0,0,.45)}
+.share-sheet-card h3{margin:0 0 2px}
+.share-sheet-card>button:not(.ghost){border:1px solid var(--line);border-radius:10px;background:#35414c;color:var(--ink);padding:11px;font-weight:800;text-align:left}
+.share-sheet-card small{color:var(--muted);font-size:10px}
+@media(min-width:920px){.calendar-screen{height:auto;min-height:720px}.calendar-scroll-card{height:720px}}
+
+
+/* ShiftMate 1.0.11 viewport + fortnight pager fixes */
+.calendar-screen{position:relative;height:auto;min-height:0;overflow:hidden!important;padding-bottom:0!important}
+.calendar-scroll-card{height:100%!important;max-height:100%;min-height:0;box-sizing:border-box}
+.calendar-months{min-height:0;overflow-y:auto!important;padding-bottom:72px}
+#calendarProjectionPay,#calendarDetail{position:absolute;left:8px;right:8px;bottom:8px;z-index:18;margin:0;max-height:44%;overflow:auto;box-shadow:0 12px 30px rgba(0,0,0,.42)}
+.calendar-today-float{bottom:14px;right:14px;z-index:17}
+.fortnight-strip{display:flex!important;overflow-x:auto!important;overflow-y:hidden!important;scroll-snap-type:x mandatory!important;touch-action:pan-x!important;gap:0!important;width:100%;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+.fortnight-week{flex:0 0 100%;width:100%;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px;scroll-snap-align:start;scroll-snap-stop:always}
+.fortnight-week>.week-day{width:auto!important;min-width:0;flex:none}
+@media(min-width:920px){.calendar-screen{height:720px}.calendar-scroll-card{height:100%!important}}
+
+
+/* ShiftMate 1.0.12 smart OT + calendar interaction */
+.ot-target-note{display:block;margin-top:6px;color:var(--muted);font-size:8px;line-height:1.2}
+.calendar-day.ot-recommended{perspective:500px;overflow:visible}
+.calendar-flip-inner{position:absolute;inset:0;display:block;transform-style:preserve-3d;transition:transform .38s cubic-bezier(.2,.7,.25,1);border-radius:inherit}
+.calendar-day.flipped .calendar-flip-inner{transform:rotateY(180deg)}
+.calendar-day-face{position:absolute;inset:0;border-radius:inherit;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4px;box-sizing:border-box}
+.calendar-day-front{transform:rotateY(0deg)}
+.calendar-day-back{transform:rotateY(180deg);background:#172029;color:#f4f7f9;text-align:center;gap:1px;border:1px solid rgba(255,255,255,.18)}
+.calendar-day-back .ot-flip-stars{color:#f2d36b;font-size:9px;line-height:1}
+.calendar-day-back strong{font-size:7px!important;line-height:1.05;color:#e9eef2!important}
+.calendar-day-back b{font-size:10px;line-height:1.1;color:#fff}
+.calendar-day-back small{font-size:6px;color:#b8c3cb}
+@media (prefers-reduced-motion:reduce){.calendar-flip-inner{transition:none}}
+nn/* ShiftMate 1.0.13 calendar readability + certainty hierarchy */n.calendar-weekdays,.calendar-grid{gap:2px}n.calendar-day{aspect-ratio:.68;border-radius:8px;padding:6px 1px}n.calendar-day .calendar-date{font-size:10px}n.calendar-day strong{font-size:13px}n/* Confirmed off-days remain filled, but no longer dominate the roster visually. */n.calendar-day.actual.shift-off,.week-day.actual.shift-off{background:#557565!important;border-color:#668b76!important;color:#d9eadf!important}n.calendar-day.actual.shift-off .calendar-date,.week-day.actual.shift-off .week-dow,.week-day.actual.shift-off .week-date{color:#d9eadf!important}n/* Projected days are always hollow; the outline carries the shift type. */n.calendar-day.projected,.week-day.projected{background:#29323a!important;border-width:2px!important}n.calendar-day.projected.shift-off,.week-day.projected.shift-off{background:#29323a!important;border-color:#78b38b!important;color:#a9d8b7!important}n.calendar-day.projected.shift-off .calendar-date,.week-day.projected.shift-off .week-dow,.week-day.projected.shift-off .week-date{color:#a9d8b7!important}n.calendar-day-back{padding:5px 2px;gap:2px}n.calendar-day-back .ot-flip-stars{font-size:11px}n.calendar-day-back strong{font-size:8px!important}n.calendar-day-back b{font-size:13px}n.calendar-day-back small{font-size:7px}n@media(min-width:390px){n  .calendar-day{aspect-ratio:.72}n  .calendar-day-back b{font-size:14px}n}n
+/* ShiftMate 1.0.14 tactile retro-future UI + smart context tray */
+:root{--bg:#090b0d;--card:#14181b;--card-soft:#1a1f23;--ink:#f1f3f2;--muted:#8e999f;--brand:#0b0e10;--accent:#59d7e8;--line:#2b3338;--good:#7ed7c4;--danger:#df6f72;--money:#f0bf58}
+body{background:radial-gradient(circle at 50% -20%,#171c20 0,#090b0d 48%);color:var(--ink)}
+
+.card{background:linear-gradient(145deg,#181d21,#111518);border-color:#30383e;box-shadow:inset 0 1px 0 rgba(255,255,255,.045),inset 0 -1px 0 rgba(0,0,0,.8),0 7px 18px rgba(0,0,0,.24)}
+.secondary,.compact-button,.what-if-actions button{background:linear-gradient(180deg,#232a2f,#171c20);border:1px solid #38434a;color:#e8edef;box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 2px 5px rgba(0,0,0,.45)}
+.secondary:active,.compact-button:active,.what-if-actions button:active{transform:translateY(1px);box-shadow:inset 0 2px 5px rgba(0,0,0,.65)}
+.bottom-nav{background:rgba(8,11,13,.97);border-top-color:#293238;box-shadow:0 -8px 24px rgba(0,0,0,.35)}
+.nav-button{display:flex;flex-direction:column;align-items:center;gap:2px;color:#7f898f;background:transparent!important;box-shadow:none!important}
+.nav-icon{font-size:18px;line-height:1;color:#737e84;text-shadow:none}
+.nav-button.active{color:#f3f6f6}.nav-button.active .nav-icon{color:#9ff5ff;text-shadow:0 0 7px rgba(89,215,232,.65)}
+.calendar-screen{display:grid!important;grid-template-rows:minmax(0,1fr) auto;gap:8px}.calendar-screen:not(.active){display:none!important}
+.calendar-scroll-card{min-height:0;margin:0}.calendar-months{padding-bottom:36px}.calendar-month-block{margin-bottom:14px}.calendar-scroll-month{margin:0 0 5px;padding:2px 1px;font-size:13px;color:#c9d0d3}.calendar-month-block+.calendar-month-block{margin-top:10px}
+.calendar-context-tray{min-height:96px;max-height:29vh;overflow:auto;border:1px solid #293238;border-radius:14px;background:linear-gradient(145deg,#13181b,#0d1113);box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 5px 16px rgba(0,0,0,.28)}
+.calendar-context-tray:empty{display:none}.context-panel{padding:10px 12px}.context-panel[hidden]{display:none!important}
+#calendarProjectionPay,#calendarDetail{position:static!important;left:auto;right:auto;bottom:auto;max-height:none;overflow:visible;margin:0;box-shadow:none!important;background:transparent;border:0;border-radius:0}
+.calendar-day,.week-day{background:linear-gradient(145deg,#20262a,#14191c)!important;border:1px solid #353e43!important;color:#dfe4e6!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.055),inset 0 -2px 3px rgba(0,0,0,.5),0 2px 4px rgba(0,0,0,.3);transition:transform .12s ease,box-shadow .16s ease,border-color .16s ease}
+.calendar-day:active,.week-day:active{transform:translateY(1px);box-shadow:inset 0 2px 5px rgba(0,0,0,.65)}
+.calendar-day.actual.shift-morn,.week-day.actual.shift-morn{background:linear-gradient(145deg,#3d454a,#2b3135)!important;border-color:#505a60!important;color:#f0f2f2!important}
+.calendar-day.actual.shift-morn .calendar-date,.calendar-day.actual.shift-morn strong,.week-day.actual.shift-morn *{color:#f0f2f2!important}
+.calendar-day.actual.shift-arvo,.week-day.actual.shift-arvo{background:linear-gradient(145deg,#252b2f,#171b1e)!important;border-color:#3b4449!important;color:#e3e7e8!important}
+.calendar-day.actual.shift-off,.week-day.actual.shift-off{background:linear-gradient(145deg,#1a1f22,#101315)!important;border-color:#292f33!important;color:#929ca1!important}
+.calendar-day.actual.shift-off .calendar-date,.week-day.actual.shift-off *{color:#929ca1!important}
+.calendar-day.projected,.week-day.projected{background:#0e1214!important;border:1px solid #343d42!important;box-shadow:inset 0 2px 5px rgba(0,0,0,.72)!important}
+.calendar-day.projected.shift-morn,.week-day.projected.shift-morn{border-color:#59646a!important;color:#aeb8bc!important}.calendar-day.projected.shift-morn *{color:#aeb8bc!important}
+.calendar-day.projected.shift-arvo,.week-day.projected.shift-arvo{border-color:#3f494e!important;color:#899499!important}.calendar-day.projected.shift-arvo *{color:#899499!important}
+.calendar-day.projected.shift-off,.week-day.projected.shift-off{border-color:#252c30!important;color:#5f696e!important}.calendar-day.projected.shift-off *{color:#687277!important}
+.calendar-day.today,.week-day.today{outline:2px solid #e9ffff!important;outline-offset:-2px;box-shadow:0 0 8px rgba(89,215,232,.38),inset 0 1px 0 rgba(255,255,255,.06)!important}.today-marker{background:#e9ffff!important;color:#101416!important}
+.calendar-day.selected:not(.flipped){border-color:#78e8f4!important;box-shadow:0 0 8px rgba(89,215,232,.34),inset 0 1px 0 rgba(255,255,255,.06)!important}
+.calendar-day .ot-stars,.legend-stars,.ot-flip-stars{color:var(--money)!important;text-shadow:0 0 7px rgba(240,191,88,.45)!important}.calendar-day-back{background:linear-gradient(145deg,#211d14,#111416);border-color:#6d5930!important;box-shadow:inset 0 0 10px rgba(240,191,88,.08)}.calendar-day-back b{color:#ffd77e!important;text-shadow:0 0 7px rgba(240,191,88,.35)}
+.legend-swatch.solid{background:#444c51;border-color:#5b656a}.legend-swatch.outline{background:#0e1214;border-color:#59646a}.calendar-legend{flex-wrap:nowrap!important;white-space:nowrap;overflow:hidden;font-size:8px;gap:3px 4px!important}.ot-target-note{font-size:7px}
+.calendar-day.fortnight-start::before{content:"";position:absolute;left:-2px;right:-2px;top:-5px;height:1px;background:#59646a;box-shadow:0 0 4px rgba(89,215,232,.18);z-index:4}
+.context-head{display:flex;justify-content:space-between;align-items:center}.context-close{border:0;background:transparent;color:#9aa4a9;font-size:20px;padding:0 4px}.what-if-actions{display:flex;gap:6px;flex-wrap:wrap;margin:7px 0}.what-if-actions button{padding:7px 9px;border-radius:8px;font-size:10px;font-weight:800}.what-if-result{display:grid;gap:5px}.what-if-result small{color:var(--muted);font-size:8px}.what-if-money,.what-if-new-net{display:flex;justify-content:space-between;align-items:end;gap:10px}.what-if-money span,.what-if-new-net span{color:var(--muted);font-size:10px}.what-if-money strong{font-size:24px}.what-if-money .positive{color:#ffd77e;text-shadow:0 0 8px rgba(240,191,88,.28)}.what-if-money .negative{color:#e9898b}.what-if-new-net b{font-size:14px}.what-if-result select{margin-top:4px}
+@media(max-width:380px){.calendar-legend{font-size:7px}.calendar-context-tray{min-height:90px}}
+
+
+/* ShiftMate 2.0.1 — stronger tactile / backlit control language
+   projected = raised/unconfirmed; actual = pressed/engaged */
+:root{
+  --neon-morn:#5ce7f2;--neon-arvo:#a77cff;--neon-off:#55e39b;
+  --neon-today:#f1ffff;--neon-action:#63e8f5;
+}
+.primary,.secondary,.compact-button,.share-sheet-card>button:not(.ghost){
+  position:relative;border-radius:10px;
+  background:linear-gradient(180deg,#2a3135 0%,#1b2024 48%,#111518 100%)!important;
+  color:#f1f5f5!important;border:1px solid #465158!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.16),inset 0 -2px 0 rgba(0,0,0,.75),
+    0 4px 0 #080b0d,0 6px 12px rgba(0,0,0,.48),0 0 8px rgba(92,231,242,.10)!important;
+  text-shadow:0 1px 1px #000;transition:transform .08s ease,box-shadow .08s ease,border-color .12s ease;
+}
+.primary::after,.secondary::after,.compact-button::after{
+  content:"";position:absolute;left:10px;right:10px;bottom:-4px;height:2px;border-radius:999px;
+  background:var(--neon-action);opacity:.52;box-shadow:0 0 7px var(--neon-action);
+}
+.primary:active,.secondary:active,.compact-button:active,.share-sheet-card>button:not(.ghost):active{
+  transform:translateY(3px)!important;
+  box-shadow:inset 0 3px 6px rgba(0,0,0,.75),inset 0 1px 0 rgba(255,255,255,.05),
+    0 1px 0 #080b0d,0 0 10px rgba(92,231,242,.18)!important;
+}
+
+/* PROJECTED: raised hardware, low-intensity backlight */
+.calendar-day.projected,.week-day.projected{
+  background:linear-gradient(145deg,#272e32 0%,#1b2024 52%,#121619 100%)!important;
+  border:1px solid #485158!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.12),inset 0 -2px 0 rgba(0,0,0,.70),
+    0 3px 0 #080b0d,0 5px 8px rgba(0,0,0,.38)!important;
+  transform:translateY(-1px);
+}
+.calendar-day.projected.shift-morn,.week-day.projected.shift-morn{
+  border-color:#3b7178!important;color:#cde9ec!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.12),inset 0 -2px 0 rgba(0,0,0,.72),
+    0 3px 0 #080b0d,0 5px 8px rgba(0,0,0,.38),0 4px 8px rgba(92,231,242,.12)!important;
+}
+.calendar-day.projected.shift-arvo,.week-day.projected.shift-arvo{
+  border-color:#665486!important;color:#d4c9e9!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.10),inset 0 -2px 0 rgba(0,0,0,.72),
+    0 3px 0 #080b0d,0 5px 8px rgba(0,0,0,.38),0 4px 8px rgba(167,124,255,.10)!important;
+}
+.calendar-day.projected.shift-off,.week-day.projected.shift-off{
+  border-color:#3f7258!important;color:#afd8c1!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.09),inset 0 -2px 0 rgba(0,0,0,.72),
+    0 3px 0 #080b0d,0 5px 8px rgba(0,0,0,.38),0 4px 8px rgba(85,227,155,.09)!important;
+}
+
+/* ACTUAL: depressed/engaged hardware, stronger emitted light */
+.calendar-day.actual,.week-day.actual{
+  transform:translateY(1px);background:linear-gradient(145deg,#101416,#171c1f)!important;
+  border-width:1px!important;
+  box-shadow:inset 0 4px 8px rgba(0,0,0,.86),inset 0 -1px 0 rgba(255,255,255,.055),
+    0 0 0 1px #07090a!important;
+}
+.calendar-day.actual.shift-morn,.week-day.actual.shift-morn{
+  border-color:#55cbd5!important;color:#f3ffff!important;
+  box-shadow:inset 0 4px 8px rgba(0,0,0,.88),inset 0 -1px 0 rgba(255,255,255,.06),
+    0 0 0 1px #071012,0 0 8px rgba(92,231,242,.42),0 0 2px rgba(92,231,242,.85)!important;
+}
+.calendar-day.actual.shift-morn .calendar-date,.calendar-day.actual.shift-morn strong,
+.week-day.actual.shift-morn .week-dow,.week-day.actual.shift-morn .week-date,
+.week-day.actual.shift-morn strong,.week-day.actual.shift-morn small{
+  color:#f2ffff!important;text-shadow:0 0 5px rgba(92,231,242,.32)!important;
+}
+.calendar-day.actual.shift-arvo,.week-day.actual.shift-arvo{
+  border-color:#8b69d0!important;color:#f4efff!important;
+  box-shadow:inset 0 4px 8px rgba(0,0,0,.88),inset 0 -1px 0 rgba(255,255,255,.05),
+    0 0 0 1px #0c0912,0 0 8px rgba(167,124,255,.34),0 0 2px rgba(167,124,255,.72)!important;
+}
+.calendar-day.actual.shift-arvo .calendar-date,.calendar-day.actual.shift-arvo strong,
+.week-day.actual.shift-arvo .week-dow,.week-day.actual.shift-arvo .week-date,
+.week-day.actual.shift-arvo strong,.week-day.actual.shift-arvo small{
+  color:#f5f0ff!important;text-shadow:0 0 5px rgba(167,124,255,.28)!important;
+}
+.calendar-day.actual.shift-off,.week-day.actual.shift-off{
+  border-color:#4bb67b!important;color:#dff8e9!important;
+  box-shadow:inset 0 4px 8px rgba(0,0,0,.88),inset 0 -1px 0 rgba(255,255,255,.045),
+    0 0 0 1px #07100b,0 0 7px rgba(85,227,155,.27),0 0 2px rgba(85,227,155,.58)!important;
+}
+.calendar-day.actual.shift-off .calendar-date,.calendar-day.actual.shift-off strong,
+.week-day.actual.shift-off .week-dow,.week-day.actual.shift-off .week-date,
+.week-day.actual.shift-off strong,.week-day.actual.shift-off small{color:#dff8e9!important}
+
+/* TODAY: brighter neutral instrument light */
+.calendar-day.today,.week-day.today{
+  outline:2px solid var(--neon-today)!important;outline-offset:-2px;
+  box-shadow:inset 0 4px 8px rgba(0,0,0,.78),0 0 3px rgba(241,255,255,.95),
+    0 0 12px rgba(92,231,242,.58)!important;
+}
+.today-marker{background:#f3ffff!important;color:#0b1113!important;box-shadow:0 0 8px rgba(241,255,255,.65)}
+.calendar-day.selected:not(.flipped){
+  outline:1px solid #aaf7ff!important;outline-offset:-3px;
+  box-shadow:inset 0 3px 7px rgba(0,0,0,.70),0 0 4px rgba(92,231,242,.72),
+    0 0 12px rgba(92,231,242,.35)!important;
+}
+
+/* Console-like backlit navigation */
+.nav-button{position:relative}
+.nav-button.active::after{
+  content:"";position:absolute;left:26%;right:26%;bottom:0;height:2px;border-radius:999px;
+  background:var(--neon-action);box-shadow:0 0 8px var(--neon-action),0 0 14px rgba(92,231,242,.42);
+}
+.nav-button.active .nav-icon{color:#eaffff;text-shadow:0 0 4px #9ff5ff,0 0 10px rgba(92,231,242,.72)}
+.calendar-day .ot-stars,.legend-stars,.ot-flip-stars{
+  color:#ffd46d!important;text-shadow:0 0 3px #f0bf58,0 0 9px rgba(240,191,88,.58)!important;
+}
+.what-if-panel,.what-if-actions,.what-if-result{display:none!important}
+@media (prefers-reduced-motion:reduce){
+  .primary,.secondary,.compact-button,.calendar-day,.week-day{transition:none!important}
+}
+
+
+/* ShiftMate 2.0.2 — calendar density, cycle seams, OT snapshot and stronger physical states */
+/* Reclaim vertical space between months and allocate it to progressive disclosure below. */
+.calendar-month-block{margin-bottom:3px!important}
+.calendar-month-block+.calendar-month-block{margin-top:3px!important}
+.calendar-scroll-month{margin-bottom:3px!important;padding-top:1px!important}
+.calendar-context-tray{min-height:132px;max-height:34vh}
+@media(max-width:380px){.calendar-context-tray{min-height:118px}}
+
+/* A true full-width pay-cycle seam. Cycles normally start on Sunday, so this inserts between rows. */
+.fortnight-divider{
+  grid-column:1/-1;height:2px;margin:3px 3px 2px;border-radius:999px;
+  background:linear-gradient(90deg,transparent 0%,rgba(197,250,255,.55) 10%,#83eff8 50%,rgba(197,250,255,.55) 90%,transparent 100%);
+  box-shadow:0 0 4px rgba(99,232,245,.55),0 0 10px rgba(99,232,245,.18);
+}
+/* The old per-tile marker is only a fallback for a non-Sunday cycle boundary. */
+.calendar-day.fortnight-start::before{opacity:.28;height:1px;top:-3px}
+
+/* Make the physical metaphor unmistakable: raised = projected, depressed = actual. */
+.calendar-day.projected,.week-day.projected{
+  transform:translateY(-3px) scale(1)!important;
+  border-top-color:rgba(225,240,244,.28)!important;
+  box-shadow:
+    inset 1px 1px 0 rgba(255,255,255,.18),
+    inset -1px -2px 0 rgba(0,0,0,.72),
+    0 5px 0 #07090a,
+    0 8px 11px rgba(0,0,0,.52)!important;
+}
+.calendar-day.actual,.week-day.actual{
+  transform:translateY(2px) scale(.975)!important;
+  background:linear-gradient(145deg,#0b0e10 0%,#121719 70%,#171d20 100%)!important;
+  box-shadow:
+    inset 4px 5px 8px rgba(0,0,0,.92),
+    inset -2px -2px 2px rgba(255,255,255,.045),
+    0 0 0 2px #050708!important;
+}
+.calendar-day.actual.shift-morn,.week-day.actual.shift-morn{
+  box-shadow:inset 4px 5px 8px rgba(0,0,0,.92),inset -2px -2px 2px rgba(92,231,242,.12),0 0 0 2px #050708,0 0 7px rgba(92,231,242,.52)!important;
+}
+.calendar-day.actual.shift-arvo,.week-day.actual.shift-arvo{
+  box-shadow:inset 4px 5px 8px rgba(0,0,0,.92),inset -2px -2px 2px rgba(167,124,255,.10),0 0 0 2px #050708,0 0 7px rgba(167,124,255,.45)!important;
+}
+.calendar-day.actual.shift-off,.week-day.actual.shift-off{
+  box-shadow:inset 4px 5px 8px rgba(0,0,0,.92),inset -2px -2px 2px rgba(85,227,155,.09),0 0 0 2px #050708,0 0 6px rgba(85,227,155,.34)!important;
+}
+
+/* OT hierarchy: hollow Good is deliberately quiet; solid Best is a bright signal lamp. */
+.legend-stars.legend-good,.ot-stars.ot-good,.ot-flip-stars.ot-good{
+  color:#aa9469!important;font-size:.88em!important;opacity:.82;text-shadow:none!important;
+}
+.legend-stars.legend-best,.ot-stars.ot-best,.ot-flip-stars.ot-best{
+  color:#ffe079!important;font-size:1.18em!important;opacity:1;
+  text-shadow:0 0 3px #f2c455,0 0 9px rgba(255,207,86,.78),0 0 15px rgba(240,191,88,.34)!important;
+}
+.ot-stars.ot-best{transform:scale(1.08);transform-origin:center}
+
+/* Selected recommended OT day: quick flip on the tile + full-fortnight financial snapshot below. */
+.ot-pay-compare{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:9px;margin-top:8px}
+.ot-pay-base,.ot-pay-with{
+  min-width:0;padding:9px 10px;border-radius:10px;background:#101517;border:1px solid #2d383d;
+  box-shadow:inset 0 2px 5px rgba(0,0,0,.55),inset 0 -1px 0 rgba(255,255,255,.035);
+}
+.ot-pay-base span,.ot-pay-with span{display:block;color:#98a4a9;font-size:9px;line-height:1.2;margin-bottom:5px}
+.ot-pay-base strong,.ot-pay-with strong{display:block;color:#f1f5f5;font-size:18px;line-height:1.05;white-space:nowrap}
+.ot-pay-with b{display:block;margin-top:5px;color:#c9a85d;font-size:11px;font-weight:850}
+.ot-pay-with.good{border-color:#655b43;box-shadow:inset 0 2px 5px rgba(0,0,0,.55),0 0 5px rgba(190,157,85,.12)}
+.ot-pay-with.best{border-color:#b7913c;box-shadow:inset 0 2px 5px rgba(0,0,0,.55),0 0 5px rgba(240,191,88,.32),0 0 12px rgba(240,191,88,.12)}
+.ot-pay-with.best strong,.ot-pay-with.best b{color:#ffe079;text-shadow:0 0 7px rgba(240,191,88,.30)}
+@media(max-width:365px){.ot-pay-base strong,.ot-pay-with strong{font-size:16px}.ot-pay-compare{gap:6px}.ot-pay-base,.ot-pay-with{padding:8px 7px}}
+
+/* ShiftMate 2.0.3 — at-a-glance home, unified console surfaces, tactile controls */
+/* Global masthead removed: content begins below the iOS safe area. */
+main{padding-top:calc(env(safe-area-inset-top) + 10px)!important}
+@media(max-width:619px){main{padding-top:calc(env(safe-area-inset-top) + 10px)!important}}
+
+/* Start New Cycle is a physical raised console switch, not a flat nav-style slab. */
+.home-new-cycle{
+  min-height:62px!important;border-radius:15px!important;
+  background:linear-gradient(180deg,#30383d 0%,#22292d 42%,#121719 100%)!important;
+  border:1px solid #59656b!important;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.20),inset 0 -4px 2px rgba(0,0,0,.72),
+    0 6px 0 #050708,0 9px 15px rgba(0,0,0,.55),0 9px 16px rgba(99,232,245,.12)!important;
+}
+.home-new-cycle::after{left:14%;right:14%;bottom:-7px;height:3px;opacity:.72;filter:blur(.2px)}
+.home-new-cycle:active{transform:translateY(5px)!important;box-shadow:inset 0 5px 9px rgba(0,0,0,.9),inset 0 -1px 0 rgba(255,255,255,.04),0 1px 0 #050708,0 0 13px rgba(99,232,245,.30)!important}
+
+/* Home is a dashboard: the complete actual fortnight is always visible. */
+.fortnight-strip{display:grid!important;grid-template-columns:repeat(7,minmax(0,1fr))!important;grid-template-rows:repeat(2,auto)!important;gap:4px!important;overflow:visible!important;width:100%!important}
+.fortnight-week{display:contents!important}
+.fortnight-week>.week-day{width:auto!important;min-width:0!important;aspect-ratio:.72!important;padding:16px 1px 4px!important}
+.fortnight-card{overflow:visible!important}
+
+/* Compact active-settings verification panel. */
+.home-settings-summary{display:block;width:100%;text-align:left;color:var(--ink);padding:12px 13px!important;cursor:pointer}
+.home-settings-summary:active{transform:translateY(1px)}
+.home-settings-chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px}
+.setting-chip{display:inline-flex;align-items:center;gap:5px;min-height:27px;padding:5px 8px;border-radius:8px;background:#0e1315;border:1px solid #303a3f;box-shadow:inset 0 2px 4px rgba(0,0,0,.62)}
+.setting-chip small{font-size:9px;color:#8f9ba0}.setting-chip b{font-size:10px;color:#edf3f3}
+.status-lamp{width:7px;height:7px;border-radius:50%;display:inline-block;background:#283034;border:1px solid #485258;box-shadow:inset 0 1px 2px rgba(0,0,0,.8)}
+.status-lamp.on{background:#61e7a2;border-color:#b1ffd1;box-shadow:0 0 3px #61e7a2,0 0 8px rgba(97,231,162,.65)}
+
+/* Calendar fixed heading is part of the same console, not a pasted grey panel. */
+.calendar-fixed-head{background:transparent!important;box-shadow:none!important;border:0!important}
+
+/* Non-recommended off days can still be explored as hypothetical OT. */
+.calendar-day.shift-off .calendar-day-back .ot-flip-stars{font-size:7px!important;letter-spacing:.08em;color:#a9f5ff!important;text-shadow:0 0 7px rgba(92,231,242,.5)!important}
+.calendar-day.shift-off.flipped{outline:1px solid rgba(99,232,245,.72)!important}
+
+/* Keep roster/pay/settings in the same hardware family. */
+#roster .card,#pay .card,#settings .card,.day-card{border-color:#303a3f!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.055),inset 0 -2px 3px rgba(0,0,0,.62),0 5px 14px rgba(0,0,0,.28)!important}
+#roster input,#roster select,#settings input,#settings select{background:#11171a!important;border-color:#46535a!important;color:#eef4f4!important;box-shadow:inset 0 3px 6px rgba(0,0,0,.62)!important}
+
+
+/* ShiftMate 2.0.4 — unified hardware styling + safe areas */
+html,body{background:#05090b!important}
+body{min-height:100dvh}
+.app-shell{background:#05090b;min-height:100dvh}
+@supports(padding:max(0px)){body{padding-top:0}}
+
+/* Calendar: keep the full context tray above the nav; only the calendar itself scrolls. */
+.calendar-screen{grid-template-rows:minmax(190px,1fr) auto!important;gap:8px!important}
+.calendar-context-tray{
+  min-height:0!important;max-height:none!important;overflow:visible!important;
+  flex:0 0 auto;
+}
+.calendar-context-tray:has(.context-panel:not([hidden])){min-height:142px!important}
+.calendar-detail-grid{align-items:stretch}
+.calendar-partner-field{
+  display:flex;flex-direction:column;gap:4px;min-width:0;
+  padding:9px 10px;border-radius:10px;background:#101517;border:1px solid #334048;
+  box-shadow:inset 0 3px 6px rgba(0,0,0,.62);
+}
+.calendar-partner-field span{color:#8f9ba0;font-size:9px}
+.calendar-partner-input{
+  width:100%;min-width:0;border:0!important;background:transparent!important;color:#f2f6f6!important;
+  padding:0!important;margin:0!important;font-size:14px!important;font-weight:750;box-shadow:none!important;outline-offset:3px;
+}
+.calendar-partner-input::placeholder{color:#667278;font-weight:600}
+
+/* Roster: actual entries feel engaged/recessed; editing controls remain raised and pressable. */
+
+
+
+
+
+
+
+
+
+
+
+/* Pay: instrument panel rather than flat dashboard blocks. */
+#pay .pay-main-net{
+  background:linear-gradient(145deg,#0d1713,#0a1010)!important;border:1px solid #315a47!important;
+  box-shadow:inset 0 4px 8px rgba(0,0,0,.72),0 0 6px rgba(85,227,155,.18)!important;
+}
+#pay .pay-main-net strong{color:#6fe0a4!important;text-shadow:0 0 8px rgba(85,227,155,.28)}
+#pay .pay-quick-grid>div,#pay .pay-breakdown-grid>div,#pay .metric{
+  background:linear-gradient(145deg,#151b1e,#0d1113)!important;border:1px solid #303b41!important;
+  box-shadow:inset 0 3px 6px rgba(0,0,0,.62),inset 0 -1px 0 rgba(255,255,255,.035)!important;
+}
+#pay .pay-breakdown summary{
+  padding:9px 10px;border-radius:9px;background:linear-gradient(180deg,#242b2f,#151a1d);
+  border:1px solid #3d484e;box-shadow:inset 0 1px 0 rgba(255,255,255,.10),0 3px 0 #06090a;
+}
+
+/* Settings: same console language, with state controls recessed into the panel. */
+#settings .settings-section{
+  margin-top:7px;border:1px solid #2c363b!important;border-radius:11px;padding:0 9px!important;
+  background:linear-gradient(145deg,#12171a,#0c1012);box-shadow:inset 0 2px 5px rgba(0,0,0,.48);
+}
+#settings .settings-section:first-of-type{border-top:1px solid #2c363b!important}
+#settings .settings-section summary{position:relative}
+#settings input,#settings select{
+  background:#0d1316!important;border-color:#455159!important;color:#eef4f4!important;
+  box-shadow:inset 0 3px 7px rgba(0,0,0,.68)!important;
+}
+#settings .primary,#settings .secondary,.import-backup-button{
+  background:linear-gradient(180deg,#293136,#171c1f)!important;border:1px solid #46535a!important;color:#f1f5f5!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.14),inset 0 -2px 0 rgba(0,0,0,.72),0 3px 0 #06090a,0 5px 9px rgba(0,0,0,.40)!important;
+}
+
+/* Home settings lamps: unlit really looks unpowered. */
+.status-lamp.off{background:#141a1d;border-color:#30393e;box-shadow:inset 0 2px 3px rgba(0,0,0,.85)!important}
+
+/* Small phones: preserve context details by shrinking the calendar region, never the tray. */
+@media(max-height:760px){
+  .calendar-screen{grid-template-rows:minmax(150px,1fr) auto!important}
+  .calendar-context-tray:has(.context-panel:not([hidden])){min-height:130px!important}
+}
+
+/* ShiftMate 2.1.2 TEST */
+.leave-form-sheet-card label{display:grid;gap:6px;text-align:left;color:var(--muted);font-size:13px}
+.leave-form-sheet-card select,.leave-form-sheet-card textarea{width:100%;box-sizing:border-box;border:1px solid #435158;border-radius:10px;background:#12181b;color:var(--text);padding:10px;font:inherit}
+.leave-form-range-summary{display:grid;gap:3px;padding:10px 12px;border:1px solid #39464b;border-radius:10px;background:#0d1214}
+.leave-form-range-summary small{color:var(--muted)}
+.calendar-leave-form-button{margin-top:12px;width:100%}
+.personal-leave-reason-field[hidden]{display:none!important}
+@media print{}
+
+/* ShiftMate 2.1.2 TEST 3 — leave documentation + calendar tray fixes */
+.leave-form-edit-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.leave-form-edit-grid label:last-child{grid-column:1/-1}
+.leave-form-sheet-card input{width:100%;box-sizing:border-box;border:1px solid #435158;border-radius:10px;background:#12181b;color:var(--text);padding:10px;font:inherit}
+.calendar-context-tray{min-height:0!important;max-height:none!important;overflow:visible!important}
+.calendar-context-tray:has(.context-panel:not([hidden])){min-height:0!important}
+@media(max-height:760px){.calendar-context-tray:has(.context-panel:not([hidden])){min-height:0!important}}
+
+
+/* ShiftMate TEST v2.1.6 — iPhone bottom-safe-area + sheet gesture refinement */
+@media(max-width:919px){
+  .bottom-nav{
+    left:0!important;right:0!important;bottom:0!important;
+    gap:3px!important;
+    padding-top:4px!important;
+    padding-right:max(16px,env(safe-area-inset-right))!important;
+    padding-bottom:max(6px,calc(env(safe-area-inset-bottom) - 12px))!important;
+    padding-left:max(16px,env(safe-area-inset-left))!important;
+  }
+  .bottom-nav .nav-button{padding:6px 1px 7px!important}
+  .app-shell{padding-bottom:calc(62px + max(8px,env(safe-area-inset-bottom)))!important}
+}
+.leave-form-sheet-card{position:relative;touch-action:pan-y;will-change:transform}
+.leave-form-sheet-card::before{
+  content:"";display:block;width:42px;height:4px;border-radius:999px;margin:-4px auto 4px;
+  background:#69767c;box-shadow:inset 0 1px 1px rgba(255,255,255,.18),0 0 5px rgba(99,232,245,.12)
+}
+
+
+/* ShiftMate TEST v2.1.7 — leave sheet responsive layout */
+.leave-form-sheet{
+  align-items:flex-end!important;
+  padding:
+    10px
+    max(10px,env(safe-area-inset-right))
+    calc(72px + max(8px,env(safe-area-inset-bottom)))
+    max(10px,env(safe-area-inset-left))!important;
+}
+.leave-form-sheet-card{
+  width:min(100%,520px)!important;
+  max-height:calc(100dvh - 110px - max(8px,env(safe-area-inset-bottom)))!important;
+  overflow-y:auto!important;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+}
+.leave-form-edit-grid{
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+  gap:10px!important;
+}
+.leave-form-edit-grid label{min-width:0}
+.leave-form-edit-grid input{min-width:0!important}
+@media(max-width:430px){
+  .leave-form-edit-grid{grid-template-columns:1fr!important}
+  .leave-form-edit-grid label,
+  .leave-form-edit-grid label:last-child{grid-column:1!important}
+}
+
+
+/* ShiftMate TEST v2.1.8 */
+.home-leave-action{
+  width:100%;text-align:left;display:grid;gap:3px;margin-bottom:12px;
+  cursor:pointer;
+}
+.home-leave-action strong{font-size:16px}
+.home-leave-action small{opacity:.7}
+.book-off-sheet{
+  align-items:flex-end!important;
+  padding:10px max(10px,env(safe-area-inset-right))
+    calc(72px + max(8px,env(safe-area-inset-bottom)))
+    max(10px,env(safe-area-inset-left))!important;
+}
+.book-off-sheet-card{
+  width:min(100%,520px)!important;
+  max-height:calc(100dvh - 110px - max(8px,env(safe-area-inset-bottom)))!important;
+  overflow-y:auto!important;
+}
+.book-off-sheet-card button{width:100%;margin-top:8px}
+
+/* ShiftMate TEST v2.3.1 — control-console roster + calendar performance/UI */
+:root{--app-vh:100dvh}
+@media(max-width:919px){
+  .bottom-nav{bottom:0!important;transform:none!important}
+  .app-shell{min-height:var(--app-vh);padding-bottom:calc(68px + env(safe-area-inset-bottom))!important}
+}
+
+/* Home priority: roster -> pay -> leave -> full-size cycle control -> settings */
+#home .home-new-cycle{width:100%;min-height:64px;font-size:18px}
+
+/* Compact tactile roster console */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#roster .day-details{grid-column:1/-1;background:#0b1114;border:1px solid #344147;border-radius:8px;padding:8px!important}
+@media(max-width:350px){}
+
+/* Calendar lazy-load feedback + OT compare */
+.calendar-head-actions{display:flex;gap:6px;align-items:center}
+#calendarOtCompare.active{border-color:#62f2c2;box-shadow:0 0 9px rgba(98,242,194,.25);color:#dffff4}
+.calendar-loading{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);z-index:20;display:flex;align-items:center;gap:7px;padding:7px 11px;border:1px solid #3f5057;border-radius:999px;background:rgba(9,14,17,.92);color:#b8c5cb;font-size:11px;font-weight:800;box-shadow:0 5px 15px rgba(0,0,0,.35)}
+.calendar-loading[hidden]{display:none!important}
+.loading-lamp{width:8px;height:8px;border-radius:50%;background:#63e8f5;box-shadow:0 0 8px rgba(99,232,245,.9);animation:shiftmatePulse .9s ease-in-out infinite alternate}
+@keyframes shiftmatePulse{from{opacity:.35;transform:scale(.8)}to{opacity:1;transform:scale(1.12)}}
+.calendar-day.ot-multi-selected{outline:2px solid #63e8f5!important;outline-offset:-3px;box-shadow:0 0 12px rgba(99,232,245,.45)!important}
+.calendar-day.ot-multi-selected::after{content:"✓";position:absolute;right:4px;top:4px;z-index:8;width:16px;height:16px;border-radius:50%;display:grid;place-items:center;background:#63e8f5;color:#061012;font-size:10px;font-weight:1000;box-shadow:0 0 7px rgba(99,232,245,.6)}
+.ot-clear-selection{width:100%;margin-top:8px}
+
+.leave-type-field{display:grid;gap:6px;margin-bottom:10px;color:var(--muted);font-size:13px}
+.leave-type-field select{width:100%;box-sizing:border-box;border:1px solid #435158;border-radius:10px;background:#12181b;color:var(--text);padding:10px;font:inherit}
+
+
+/* ShiftMate TEST v2.3.2 — roster console refinement */
+.roster-period-control{
+  margin-top:10px;
+  display:flex;
+  align-items:flex-end;
+}
+.roster-period-control label{
+  width:auto!important;
+  max-width:200px;
+  font-size:12px;
+}
+#periodEndDate{
+  width:190px!important;
+  max-width:100%!important;
+  min-width:0!important;
+}
+
+/* Each day module is a physical console button:
+   raised = not entered, depressed = shift entered. */
+
+
+
+
+
+/* Code-only tactile face; invisible native select provides the platform picker.
+   Its option rows contain full shift names only. */
+
+
+
+
+
+/* Details appears as a global-feeling bottom sheet without expanding the grid. */
+#roster .roster-detail-backdrop{
+  display:none;
+}
+#roster .day-details{
+  display:none!important;
+}
+
+
+.roster-detail-sheet-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:12px;
+}
+.roster-detail-sheet-head strong{font-size:18px}
+.roster-detail-close{
+  width:42px;
+  height:42px;
+  flex:0 0 42px;
+  border:1px solid #596a70;
+  border-radius:10px;
+  background:linear-gradient(#313b40,#141b1f);
+  color:#eef5f6;
+  font-size:24px;
+  font-weight:800;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 3px 0 #070a0c;
+}
+
+
+/* ShiftMate TEST v2.3.3
+   Strong mechanical / Lightyear-inspired roster control states. */
+
+/* Centre Period End as a complete control group. */
+.roster-period-control{
+  width:100%;
+  justify-content:center!important;
+  text-align:center;
+}
+.roster-period-control label{
+  display:flex!important;
+  flex-direction:column;
+  align-items:center;
+  width:200px!important;
+  max-width:100%;
+  text-align:center!important;
+}
+#periodEndDate{
+  display:block;
+  width:190px!important;
+  max-width:100%!important;
+  margin:7px auto 0!important;
+  text-align:center!important;
+  text-align-last:center;
+}
+
+/* Make the whole shift card read as a chunky mechanical button. */
+
+
+/* UNPRESSED / no shift:
+   visibly standing proud of the console surface. */
+
+
+/* Give the raised card a visible lower mechanical skirt. */
+
+
+/* PRESSED / entered shift:
+   clearly sunk into the panel, not merely a different border. */
+
+
+/* Recessed perimeter / well around a latched card. */
+
+
+/* Press feedback for empty modules while the user touches them. */
+
+
+/* Keep the working controls crisp on top of the stronger module treatment. */
+
+
+
+/* ShiftMate TEST v2.3.4
+   Core tactile rule: ON = depressed + illuminated; OFF = raised + unlit. */
+
+/* Shift entered = ON */
+
+
+
+
+/* No shift / OFF = OFF */
+
+
+
+
+/* OT independently follows the same physical rule. */
+
+
+
+
+
+
+/* ShiftMate TEST v2.3.5 — inverse illuminated pressed bezel + global nav foundation */
+:root{--bottom-nav-h:72px}
+
+/* The nav is now a body-level viewport layer, independent of every page. */
+@media(max-width:919px){
+  html,body{min-height:100%;overflow-x:hidden}
+  .app-shell{
+    min-height:100dvh!important;
+    padding-bottom:calc(var(--bottom-nav-h) + 14px)!important;
+  }
+  .bottom-nav{
+    position:fixed!important;
+    inset:auto 0 0 0!important;
+    width:100%!important;
+    max-width:none!important;
+    margin:0!important;
+    transform:none!important;
+    translate:none!important;
+    z-index:2147483000!important;
+    isolation:isolate;
+    contain:layout paint;
+    background:#080b0d!important;
+    border-top:1px solid #293238!important;
+    padding-top:5px!important;
+    padding-right:max(16px,env(safe-area-inset-right))!important;
+    padding-bottom:max(7px,env(safe-area-inset-bottom))!important;
+    padding-left:max(16px,env(safe-area-inset-left))!important;
+    box-shadow:0 -10px 26px rgba(0,0,0,.72)!important;
+  }
+  main{padding-bottom:14px!important}
+}
+
+/* OFF stays as the strong raised silver/grey reference state. */
+
+
+/* ON: invert the physical lighting. The outside no longer carries the raised
+   silver highlight; cyan now lives INSIDE on the opposing (right/bottom) edges. */
+
+
+
+
+
+/* ShiftMate TEST v2.3.6 — recessed ON state + roster details sheet fix.
+   The working v2.3.5 bottom navigation implementation is unchanged. */
+
+
+
+
+
+/* iOS: transformed/filtered ancestors trap position:fixed descendants.
+   Remove those properties while details are open so the sheet becomes viewport-level. */
+
+
+
+
+
+
+/* ShiftMate TEST v2.3.7
+   Mechanical-state refinement:
+   OFF = raised hardware.
+   ON = face visibly sunk below a stationary outer housing.
+   Cyan only confirms the ON state from inside the recess. */
+
+/* ===== ENTERED SHIFT / ON =====
+   Build a thick stationary housing around a smaller sunken face. */
+
+
+/* Stationary outer socket/housing. This is deliberately thicker than before,
+   so the button face appears to have physically travelled down into it. */
+
+
+/* Cyan is only visible as light leaking from the lower/right INTERNAL gap.
+   No full perimeter trace. */
+
+
+/* Make the controls on a pressed module feel lower as well, rather than
+   floating above the recessed face. */
+
+
+/* ===== SHIFT DETAILS =====
+   Long forms (especially OFF days) must never push the header/X into
+   the iPhone status/safe-area region. Keep one bounded sheet and scroll
+   the form internally. */
+
+
+/* Header remains visible while long OFF/leave detail forms scroll. */
+#roster .roster-detail-sheet-head{
+  position:sticky!important;
+  top:0!important;
+  z-index:8!important;
+  margin:0 -14px 12px!important;
+  padding:14px 14px 12px!important;
+  background:linear-gradient(145deg,#1b2328,#11181c)!important;
+  border-bottom:1px solid #39464c!important;
+  box-shadow:0 8px 12px rgba(0,0,0,.24)!important;
+}
+
+/* Keep the close control obvious and reachable. */
+#roster .roster-detail-close{
+  position:relative!important;
+  z-index:9!important;
+  flex:0 0 44px!important;
+  width:44px!important;
+  height:44px!important;
+}
+
+/* Give the backdrop a guaranteed tappable area above the bounded sheet. */
+
+
+
+/* ShiftMate TEST v2.3.8
+   Approved Option 3:
+   - OFF remains convincingly raised.
+   - ENTERED is visibly sunken.
+   - Cyan illumination runs around ALL inner edges.
+   - Centre stays dark; glow does not flood the face.
+   - Existing fixed bottom navigation remains unchanged. */
+
+/* OFF / inactive: retain the raised hardware reference state. */
+
+
+/* ENTERED / active: deep recessed face inside a stationary housing. */
+
+
+/* Housing around the sunken face. */
+
+
+/* Approved Option 3 illumination:
+   all four INNER edges light, while the centre remains dark. */
+
+
+/* Controls on an entered card sit lower too, reinforcing the mechanical state. */
+
+
+/* Keep OT's own ON/OFF behaviour independent. */
+
+
+/* Unified dismissible-sheet affordance. */
+#roster .roster-detail-sheet-head,
+.leave-form-sheet-card,
+.book-off-sheet-card,
+#shareRosterSheet .share-sheet-card{
+  touch-action:pan-y;
+}
+
+/* Keep long shift-details content bounded and internally scrollable. */
+
+
+
+/* ShiftMate TEST v2.3.10
+   SAFE rebuild from v2.3.8.
+   No roster markup/data-binding changes.
+
+   Physical rule:
+   OFF = full-size raised silver/grey button.
+   ENTERED = visibly smaller face sunk inside a dark housing,
+             all four inner edges illuminated, dark centre. */
+
+/* OFF remains the strong raised reference state. */
+
+
+/* ENTERED: physically smaller face with a visible stationary dark socket.
+   The size difference creates the pressed state before colour/glow is considered. */
+
+
+/* Do not let historical pseudo-element experiments draw another neon outline. */
+
+
+/* Controls sit lower with the sunken face, but OT retains its independent active state. */
+
+
+/* ---------- Global Shift Details portal ----------
+   Existing .day-details DOM is MOVED here temporarily.
+   This preserves all existing field event handlers and calculations. */
+.shift-details-portal{
+  position:fixed!important;
+  inset:0!important;
+  z-index:2147483400!important;
+  display:flex!important;
+  align-items:flex-end!important;
+  justify-content:center!important;
+  padding:
+    max(12px,env(safe-area-inset-top))
+    max(12px,env(safe-area-inset-right))
+    calc(var(--bottom-nav-h) + 12px)
+    max(12px,env(safe-area-inset-left))!important;
+  background:rgba(3,7,9,.76)!important;
+  backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);
+}
+.shift-details-portal[hidden]{display:none!important}
+
+.shift-details-portal-stage{
+  width:min(100%,560px)!important;
+  max-height:min(72dvh,740px)!important;
+  display:block!important;
+}
+
+.shift-details-portal .day-details{
+  display:block!important;
+  position:relative!important;
+  inset:auto!important;
+  width:100%!important;
+  max-width:none!important;
+  max-height:min(72dvh,740px)!important;
+  margin:0!important;
+  padding:0 14px 16px!important;
+  overflow-y:auto!important;
+  box-sizing:border-box!important;
+  border:1px solid #53656c!important;
+  border-radius:18px!important;
+  background:linear-gradient(145deg,#1d272c,#0d1417)!important;
+  box-shadow:0 22px 60px rgba(0,0,0,.64)!important;
+  clip-path:none!important;
+  transform:none!important;
+  filter:none!important;
+  -webkit-overflow-scrolling:touch!important;
+  overscroll-behavior:contain!important;
+}
+
+.shift-details-portal .roster-detail-sheet-head{
+  position:sticky!important;
+  top:0!important;
+  z-index:20!important;
+  margin:0 -14px 12px!important;
+  padding:14px!important;
+  background:linear-gradient(145deg,#1d272c,#141c20)!important;
+  border-bottom:1px solid #435159!important;
+  box-shadow:0 8px 12px rgba(0,0,0,.24)!important;
+}
+
+.shift-details-portal .roster-detail-close{
+  position:relative!important;
+  z-index:21!important;
+  width:48px!important;
+  height:48px!important;
+  min-width:48px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+
+/* Old in-card backdrop is no longer used. */
+#roster .roster-detail-backdrop{display:none!important}
+
+/* Modal background locked while a sheet is open. */
+body.modal-open{overflow:hidden!important}
+
+
+/* ShiftMate TEST v2.3.11
+   Stable functional baseline retained.
+   Visual-only iPhone 15 roster refinement:
+   - slightly smaller two-column modules
+   - more breathing room so bevels/shadows don't clip
+   - pressed face colour separated from app background
+   - stronger recessed depth independent of cyan
+   - cyan only confirms active state */
+
+@media (max-width:430px){
+  #roster .roster-days{
+    gap:16px 18px!important;
+    padding-left:10px!important;
+    padding-right:10px!important;
+    align-items:start!important;
+  }
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+}
+
+/* OFF remains the raised reference state. */
+
+
+/* ENTERED: distinct charcoal/blue-grey face so it does not merge with the app background. */
+
+
+/* Prevent any historical pseudo-element glow from visually enlarging/clipping the pressed card. */
+
+
+/* Slightly compact modules on small iPhones while preserving touch targets. */
+@media (max-width:390px){
+  #roster .roster-days{
+    gap:15px 16px!important;
+    padding-left:9px!important;
+    padding-right:9px!important;
+  }
+
+  
+
+  
+
+  
+}
+
+
+/* ShiftMate TEST v2.3.12 — compact iPhone-first roster pass */
+@media (max-width:430px){
+  #roster .roster-days{
+    gap:13px 16px!important;
+    padding-left:9px!important;
+    padding-right:9px!important;
+  }
+  
+  
+  
+  
+
+  /* Main shift selector stays large; secondary controls shrink. */
+  
+  
+  
+
+  
+  
+
+  /* Dedicated OT status lamps are no longer required. */
+  
+
+  /* Supporting line is compact. */
+  
+  #roster .shift-name,
+  #roster .shift-location,
+  #roster .shift-summary-name,
+  #roster .shift-line-name{display:none!important}
+}
+
+/* OT state is communicated by the button and lettering itself. */
+
+
+
+@media (max-width:390px){
+  #roster .roster-days{
+    gap:11px 13px!important;
+    padding-left:7px!important;
+    padding-right:7px!important;
+  }
+  
+  
+  
+  
+}
+
+
+/* Individual shift pay remains calculated; it no longer occupies card-face space. */
+
+
+@media (max-width:430px){
+  /* Use recovered space as clearance around the physical button graphics. */
+  #roster .roster-days{
+    gap:14px 18px!important;
+    padding:4px 11px 8px!important;
+    overflow:visible!important;
+  }
+
+  
+
+  /* Compact date-only header. */
+  
+  
+  
+
+  /* Thin raised bevel: still tactile, much less wasted perimeter. */
+  
+
+  /* Thin recessed housing for entered shifts. */
+  
+
+  /* Main selector keeps its useful size. Space is reclaimed from secondary actions. */
+  
+  
+
+  /* OT and Details are now lightweight text actions, not separate boxed buttons. */
+  
+  
+  
+
+  /* OFF cards only need date + shift selector. */
+  
+  
+
+  /* Entered cards show time only; suppress repeated location/shift-name text. */
+  
+  
+
+  /* OT state is communicated by the lettering itself. */
+  
+}
+
+@media (max-width:390px){
+  #roster .roster-days{
+    gap:13px 16px!important;
+    padding-left:9px!important;
+    padding-right:9px!important;
+  }
+  
+  
+  
+}
+
+
+@media (max-width:430px){
+  /* Reduce date-to-selector spacing. */
+  
+
+  /* Shift selector no longer stretches unnecessarily on entered cards. */
+  
+
+  
+
+  /* OFF remains easy to tap and can use the available width. */
+  
+
+  /* OT and Details are plain actions only: no button graphics. */
+  
+
+  
+
+  
+
+  
+
+  
+}
+
+@media (max-width:390px){
+  
+
+  
+
+  
+}
+
+
+@media (max-width:430px){
+
+  /* Give each two-column card a little more breathing room.
+     This reduces the physical card width rather than merely shrinking its contents. */
+  #roster .roster-grid{
+    column-gap:12px!important;
+    padding-left:10px!important;
+    padding-right:10px!important;
+  }
+
+  
+
+  /* Small height reduction only. */
+  
+
+  
+
+  /* Remove ALL visible OT/details chrome. Keep the elements themselves for tapping. */
+  
+
+  /* Kill any decorative pseudo-elements that could still render a dark rectangle/line. */
+  
+
+  /* Preserve generous invisible hit areas while keeping only text/dots visible. */
+  
+
+  
+
+  /* ON state: illuminate the OT letters themselves, not a surrounding button. */
+  
+}
+
+/* Regular iPhone 15 / similarly narrow screens: only a tiny extra trim. */
+@media (max-width:393px){
+  #roster .roster-grid{
+    column-gap:13px!important;
+    padding-left:11px!important;
+    padding-right:11px!important;
+  }
+
+  
+}
+
+
+@media (max-width:430px){
+
+  /* ACTUAL two-column roster grid. Slightly narrow cards and add clearance. */
+  
+
+  
+
+  /* ACTUAL state selectors: classes live on the card itself. */
+  
+
+  
+
+  /* Strip every inherited button visual from these two secondary actions.
+     'all:unset' prevents old high-specificity button rules from leaving chrome. */
+  
+
+  
+
+  
+
+  /* No button pseudo chrome. */
+  
+
+  /* OT ON = letters only illuminate. */
+  
+
+  /* Compact entered cards without changing selector usability. */
+  
+
+  
+
+  /* OFF cards remain selector-only. */
+  
+
+  
+
+  
+}
+
+/* Regular iPhone 15 width: tiny further trim only. */
+@media (max-width:393px){
+  
+
+  
+}
+
+
+/* =========================================================
+   ShiftMate TEST v2.4.1 — CANONICAL ROSTER CARD SYSTEM
+   Historical roster-card CSS has been removed above.
+   This is now the only roster-card styling source.
+   ========================================================= */
+
+#roster .day-list{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  /* Cards keep their own natural height. The grid row still takes the taller
+     card's height, so the following row can never overlap it. */
+  align-items:start;
+  gap:14px 14px;
+  padding:4px 8px 10px;
+  overflow:visible;
+}
+
+#roster .roster-control-module{
+  position:relative;
+  align-self:start;
+  min-width:0;
+  width:100%;
+  box-sizing:border-box;
+  overflow:visible;
+  clip-path:none!important;
+  border-radius:8px!important;
+  padding:7px 8px 6px!important;
+  transition:transform .09s ease, box-shadow .09s ease, background .09s ease;
+}
+
+/* OFF / no shift = raised physical button. */
+#roster .roster-control-module[data-entered="false"]{
+  background:linear-gradient(150deg,#3b474c 0%,#2a3439 28%,#192226 76%,#12181b 100%)!important;
+  border:1px solid #6d7d83!important;
+  box-shadow:
+    inset 0 2px 0 rgba(226,239,242,.25),
+    inset 2px 0 0 rgba(205,220,224,.10),
+    inset -1px 0 0 rgba(0,0,0,.42),
+    inset 0 -2px 0 rgba(0,0,0,.62),
+    0 3px 0 #293438,
+    0 5px 0 #080b0d,
+    0 7px 9px rgba(0,0,0,.42)!important;
+}
+
+/* Entered = physically recessed first, illuminated second. */
+#roster .roster-control-module[data-entered="true"]{
+  margin:3px 3px 5px!important;
+  width:calc(100% - 6px)!important;
+  background:linear-gradient(145deg,#202b30 0%,#182328 52%,#121b1f 100%)!important;
+  border:1.5px solid rgba(94,224,234,.80)!important;
+  box-shadow:
+    0 0 0 3px #060a0c,
+    0 0 0 4px #202a2e,
+    inset 5px 6px 9px rgba(0,0,0,.82),
+    inset 2px 2px 0 rgba(0,0,0,.38),
+    inset -1px -1px 0 rgba(255,255,255,.035),
+    inset 0 0 3px rgba(105,235,244,.12),
+    0 0 3px rgba(78,218,229,.16)!important;
+}
+
+/* No historical pseudo graphics are allowed to redraw the corners. */
+#roster .roster-control-module::before,
+#roster .roster-control-module::after{
+  content:none!important;
+  display:none!important;
+}
+
+#roster .day-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  min-height:16px;
+  margin:0 0 3px!important;
+  padding:0!important;
+}
+#roster .day-head b{
+  display:block;
+  font-size:10.5px!important;
+  line-height:1!important;
+  letter-spacing:.01em!important;
+  text-transform:none!important;
+}
+#roster .day-head small,
+#roster .day-pay{
+  display:none!important;
+}
+
+/* Main entered-card layout: selector + small action rail. */
+#roster .day-main{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) 27px!important;
+  grid-template-rows:21px 21px!important;
+  column-gap:5px!important;
+  row-gap:0!important;
+  align-items:center!important;
+}
+#roster .day-main label{font-size:0!important}
+
+#roster .shift-picker{
+  position:relative;
+  display:block!important;
+  grid-column:1!important;
+  grid-row:1 / span 2!important;
+  width:min(100%,122px)!important;
+  min-width:86px!important;
+  height:40px!important;
+  min-height:40px!important;
+  margin:0!important;
+  border:1px solid #5d7077!important;
+  border-radius:7px!important;
+  background:linear-gradient(#172126,#0d1417)!important;
+  box-shadow:inset 0 2px 3px rgba(0,0,0,.5),0 1px 0 rgba(255,255,255,.055)!important;
+  overflow:hidden!important;
+}
+#roster .shift-face-code{
+  position:absolute;
+  inset:0 21px 0 0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#f1f5f6;
+  font-size:13px!important;
+  font-weight:850;
+  pointer-events:none;
+}
+#roster .shift-picker .shift-code{
+  position:absolute!important;
+  inset:0!important;
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  margin:0!important;
+  opacity:.001!important;
+  cursor:pointer;
+}
+
+/* Pure text/icon actions. Absolutely no visible button container. */
+#roster button.plain-roster-action{
+  all:unset!important;
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:27px!important;
+  min-width:27px!important;
+  height:21px!important;
+  min-height:21px!important;
+  margin:0!important;
+  padding:0!important;
+  color:#cbd3d6!important;
+  background:transparent!important;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  text-shadow:none!important;
+  border-radius:0!important;
+  -webkit-appearance:none!important;
+  appearance:none!important;
+  -webkit-tap-highlight-color:transparent!important;
+  cursor:pointer!important;
+}
+#roster button.plain-roster-action::before,
+#roster button.plain-roster-action::after{
+  content:none!important;
+  display:none!important;
+}
+#roster button.ot-toggle.plain-roster-action{
+  grid-column:2!important;
+  grid-row:1!important;
+  font-size:10px!important;
+  line-height:1!important;
+  font-weight:850!important;
+}
+#roster button.details-button.plain-roster-action{
+  grid-column:2!important;
+  grid-row:2!important;
+  font-size:14px!important;
+  line-height:1!important;
+  letter-spacing:1px!important;
+}
+#roster button.ot-toggle.plain-roster-action.active{
+  color:#70f3fb!important;
+  text-shadow:
+    0 0 3px rgba(112,243,251,.95),
+    0 0 7px rgba(83,225,236,.52)!important;
+}
+
+/* OFF cards are selector-only and therefore shorter. */
+#roster .roster-control-module.roster-unentered .day-main{
+  display:block!important;
+}
+#roster .roster-control-module.roster-unentered .shift-picker{
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+}
+#roster .roster-control-module.roster-unentered .ot-toggle,
+#roster .roster-control-module.roster-unentered .details-button,
+#roster .roster-control-module.roster-unentered .shift-time{
+  display:none!important;
+}
+
+/* Entered cards show time only; no repeated shift/location name. */
+#roster .shift-time{
+  display:block!important;
+  height:11px!important;
+  margin:2px 0 0!important;
+  font-size:0!important;
+  line-height:11px!important;
+  overflow:visible!important;
+  opacity:1!important;
+}
+#roster .roster-control-module[data-entered="true"] .shift-time::after{
+  content:attr(data-compact-time);
+  font-size:9.5px!important;
+  line-height:11px!important;
+  color:#aeb9bd!important;
+  white-space:nowrap!important;
+}
+
+/* Keep legacy in-card details hidden; the working global portal owns the editor. */
+#roster .roster-detail-backdrop,
+#roster .day-details{
+  display:none!important;
+}
+
+/* Regular iPhone 15 tuning — only a very small trim. */
+@media(max-width:393px){
+  #roster .day-list{
+    gap:13px 15px;
+    padding-left:9px;
+    padding-right:9px;
+  }
+  #roster .roster-control-module{
+    padding:6px 7px 5px!important;
+  }
+  #roster .shift-picker{
+    width:min(100%,118px)!important;
+    min-width:82px!important;
+    height:39px!important;
+    min-height:39px!important;
+  }
+}
+
+
+
+
+
+/* =========================================================
+   ShiftMate TEST v2.4.1 — POPUP OVERFLOW FIX
+   Audited against the actual popup DOM.
+   Goal: preserve each popup's existing layout and vertical scroll,
+   while preventing any horizontal scroll/overflow.
+   ========================================================= */
+
+/* -------- Shift Details portal -------- */
+.shift-details-portal{
+  overflow-x:hidden!important;
+  overscroll-behavior-x:none!important;
+}
+.shift-details-portal-stage{
+  box-sizing:border-box!important;
+  width:min(100%,560px)!important;
+  min-width:0!important;
+  max-width:100%!important;
+  overflow:visible!important;
+}
+.shift-details-portal .day-details{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  -webkit-overflow-scrolling:touch!important;
+  overscroll-behavior-x:none!important;
+  overscroll-behavior-y:contain!important;
+  touch-action:pan-y!important;
+}
+
+/* Keep Shift Details in its original one-column form layout.
+   Do NOT force any generic two-column grid here. */
+.shift-details-portal .day-details .form-grid,
+.shift-details-portal .day-details .field-grid,
+.shift-details-portal .day-details .two-col{
+  min-width:0!important;
+  max-width:100%!important;
+}
+.shift-details-portal .day-details input,
+.shift-details-portal .day-details select,
+.shift-details-portal .day-details textarea{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+}
+
+/* -------- Generate Leave Form --------
+   Actual app uses the leave-form sheet/card structure.
+   Constrain the OUTER sheet/card only; preserve its existing internal layout. */
+#leaveFormSheet,
+.leave-form-sheet,
+.leave-sheet,
+.leave-form-modal{
+  box-sizing:border-box!important;
+  max-width:100vw!important;
+  overflow-x:hidden!important;
+  overscroll-behavior-x:none!important;
+}
+#leaveFormSheet .share-sheet-card,
+#leaveFormSheet .sheet-card,
+#leaveFormSheet .leave-form-card,
+.leave-form-sheet .share-sheet-card,
+.leave-form-sheet .sheet-card,
+.leave-form-sheet .leave-form-card{
+  box-sizing:border-box!important;
+  width:min(100%,560px)!important;
+  min-width:0!important;
+  max-width:100%!important;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  -webkit-overflow-scrolling:touch!important;
+  overscroll-behavior-x:none!important;
+  overscroll-behavior-y:contain!important;
+  touch-action:pan-y!important;
+}
+#leaveFormSheet input,
+#leaveFormSheet select,
+#leaveFormSheet textarea,
+.leave-form-sheet input,
+.leave-form-sheet select,
+.leave-form-sheet textarea{
+  box-sizing:border-box!important;
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+}
+
+/* -------- Book-off / choice sheets -------- */
+#bookOffSheet,
+.book-off-sheet,
+.bookoff-sheet{
+  box-sizing:border-box!important;
+  max-width:100vw!important;
+  overflow-x:hidden!important;
+  overscroll-behavior-x:none!important;
+}
+#bookOffSheet .share-sheet-card,
+#bookOffSheet .sheet-card,
+.book-off-sheet .share-sheet-card,
+.book-off-sheet .sheet-card,
+.bookoff-sheet .share-sheet-card,
+.bookoff-sheet .sheet-card{
+  box-sizing:border-box!important;
+  width:min(100%,560px)!important;
+  min-width:0!important;
+  max-width:100%!important;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  -webkit-overflow-scrolling:touch!important;
+  overscroll-behavior-x:none!important;
+  overscroll-behavior-y:contain!important;
+  touch-action:pan-y!important;
+}
+
+/* -------- Share Roster -------- */
+#shareRosterSheet,
+.share-roster-sheet{
+  box-sizing:border-box!important;
+  max-width:100vw!important;
+  overflow-x:hidden!important;
+  overscroll-behavior-x:none!important;
+}
+#shareRosterSheet .share-sheet-card,
+.share-roster-sheet .share-sheet-card{
+  box-sizing:border-box!important;
+  width:min(100%,560px)!important;
+  min-width:0!important;
+  max-width:100%!important;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  -webkit-overflow-scrolling:touch!important;
+  overscroll-behavior-x:none!important;
+  overscroll-behavior-y:contain!important;
+  touch-action:pan-y!important;
+}
+
+/* -------- Generic share-sheet safety net --------
+   This only constrains the shell; it does NOT rewrite grids or field placement. */
+.share-sheet{
+  box-sizing:border-box!important;
+  max-width:100vw!important;
+  overflow-x:hidden!important;
+  overscroll-behavior-x:none!important;
+}
+.share-sheet .share-sheet-card{
+  box-sizing:border-box!important;
+  min-width:0!important;
+  max-width:100%!important;
+  overflow-x:hidden!important;
+}
+
+/* Prevent individual form controls from forcing any popup wider.
+   This changes width constraints only, not layout mode or field order. */
+.shift-details-portal .day-details *,
+#leaveFormSheet *,
+#bookOffSheet *,
+#shareRosterSheet *,
+.share-sheet .share-sheet-card *{
+  box-sizing:border-box!important;
+  min-width:0!important;
+}
+
+
+/* ShiftMate v2.4.0 — native iOS date/time width fix.
+   Keeps native pickers while preventing intrinsic Safari sizing from
+   extending past the width of other form controls. */
+input[type="date"],
+input[type="time"]{
+  box-sizing:border-box!important;
+  display:block;
+  width:100%!important;
+  min-width:0!important;
+  max-width:100%!important;
+}
+
+/* iOS native date/time controls can retain an intrinsic min-content width.
+   Constrain both the input and the field/container that owns it. */
+label:has(> input[type="date"]),
+label:has(> input[type="time"]),
+.field:has(> input[type="date"]),
+.field:has(> input[type="time"]),
+.form-field:has(> input[type="date"]),
+.form-field:has(> input[type="time"]){
+  box-sizing:border-box!important;
+  min-width:0!important;
+  max-width:100%!important;
+}
+
+/* WebKit internals must remain shrinkable inside the app field width. */
+input[type="date"]::-webkit-date-and-time-value,
+input[type="time"]::-webkit-date-and-time-value{
+  min-width:0!important;
+  max-width:100%!important;
+}
+
+/* TEST environment marker only */
+.test-build-badge{
+  position:fixed;top:max(5px,env(safe-area-inset-top));right:7px;z-index:99999;
+  padding:3px 6px;border-radius:5px;font:800 9px/1 system-ui,sans-serif;
+  letter-spacing:.08em;background:#6d1721;color:#fff;pointer-events:none;
+}
+
+/* ShiftMate TEST v2.5.3 — authoritative scanner/button layout */
+.home-cycle-actions{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:10px!important;
+  margin-bottom:12px!important;
+}
+#homeNewCycle,#homeScanRoster{width:100%!important;min-width:0!important}
+
+.roster-actions{
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important;
+  gap:10px!important;
+}
+#rosterSaveCycle{grid-column:1/-1!important;width:100%!important}
+#rosterNewCycle{grid-column:1!important;width:100%!important}
+#rosterScanNextCycle{
+  grid-column:2!important;width:100%!important;min-width:0!important;white-space:normal!important
+}
+
+/* Scanner only: no scrolling. Phone remains portrait; scan area is landscape. */
+#rosterScanSheet{
+  overflow:hidden!important;
+  overscroll-behavior:none!important;
+  padding:max(8px,env(safe-area-inset-top)) 8px max(8px,env(safe-area-inset-bottom))!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+#rosterScanSheet .roster-scan-card{
+  box-sizing:border-box!important;
+  width:min(calc(100vw - 16px),560px)!important;
+  max-width:min(calc(100vw - 16px),560px)!important;
+  height:auto!important;
+  max-height:calc(100dvh - max(16px,env(safe-area-inset-top)) - max(16px,env(safe-area-inset-bottom)))!important;
+  overflow:hidden!important;
+  overscroll-behavior:none!important;
+  display:grid!important;
+  grid-template-rows:auto auto auto auto auto!important;
+  gap:7px!important;
+  padding:10px!important;
+}
+#rosterScanSheet .roster-scan-head{
+  display:flex!important;align-items:center!important;justify-content:space-between!important;
+  gap:10px!important;min-width:0!important
+}
+#rosterScanSheet .roster-scan-head h3{margin:2px 0 0!important}
+#rosterScanSheet .roster-scan-cancel{
+  flex:0 0 auto!important;min-height:38px!important;padding:7px 11px!important
+}
+#rosterScanSheet .roster-scan-help{
+  margin:0!important;font-size:.78rem!important;line-height:1.25!important
+}
+#rosterScanSheet .roster-camera-wrap{
+  position:relative!important;
+  width:100%!important;
+  aspect-ratio:4/3!important;
+  min-height:0!important;
+  max-height:min(39dvh,300px)!important;
+  background:#030607!important;
+  border:1px solid var(--line,#52616a)!important;
+  border-radius:12px!important;
+  overflow:hidden!important;
+  margin:1px 0!important
+}
+#rosterScanSheet .roster-camera-wrap video{
+  width:100%!important;height:100%!important;display:block!important;object-fit:cover!important
+}
+#rosterScanSheet .roster-camera-guide{
+  position:absolute!important;inset:4%!important;border:2px solid #5de8ee!important;
+  border-radius:8px!important;box-shadow:0 0 0 999px rgba(0,0,0,.20)!important;pointer-events:none!important
+}
+#rosterScanSheet .roster-camera-guide span{
+  position:absolute!important;left:6px!important;right:6px!important;bottom:6px!important;
+  text-align:center!important;font-size:.70rem!important;line-height:1.15!important;
+  background:rgba(0,0,0,.70)!important;padding:4px!important;border-radius:6px!important
+}
+#rosterScanSheet .scan-status{
+  min-height:18px!important;max-height:36px!important;overflow:hidden!important;
+  margin:0!important;color:#aebbc4!important;font-size:.76rem!important;line-height:1.2!important
+}
+#rosterScanSheet .roster-scan-capture{
+  width:100%!important;min-height:42px!important;margin:0!important
+}
+
+#rosterScanSheet .scan-debug{
+  margin:0!important;font-size:.68rem!important;line-height:1.15!important;
+  color:#83929b!important;max-height:28px!important;overflow:hidden!important
+}
+
+/* Scanner capture feedback + review sheet */
+#rosterScanSheet .roster-camera-wrap canvas{
+  width:100%!important;height:100%!important;display:block!important;object-fit:cover!important
+}
+#rosterScanSheet .roster-camera-wrap video[hidden],
+#rosterScanSheet .roster-camera-wrap canvas[hidden]{display:none!important}
+#rosterPeSheet{
+  box-sizing:border-box!important;
+  padding:max(10px,env(safe-area-inset-top)) 10px calc(82px + env(safe-area-inset-bottom))!important;
+  align-items:center!important;
+  justify-content:center!important;
+  overflow:hidden!important
+}
+#rosterPeSheet .roster-pe-card{
+  box-sizing:border-box!important;
+  width:min(calc(100vw - 20px),560px)!important;
+  max-height:calc(100dvh - 110px - env(safe-area-inset-top) - env(safe-area-inset-bottom))!important;
+  display:grid!important;
+  grid-template-rows:auto auto minmax(0,1fr) auto!important;
+  gap:9px!important;
+  overflow:hidden!important
+}
+#rosterPeSheet .roster-review-head h3{margin:2px 0 0!important}
+#rosterPeSheet .roster-review-note{color:#aebbc4!important;line-height:1.3!important}
+#rosterPeSheet .roster-scan-review{
+  overflow:auto!important;
+  overscroll-behavior:contain!important;
+  border:1px solid var(--line,#52616a)!important;
+  border-radius:10px!important;
+  min-height:0!important
+}
+#rosterPeSheet .roster-review-row{
+  display:grid!important;grid-template-columns:1fr auto!important;gap:12px!important;
+  align-items:center!important;padding:8px 10px!important;border-top:1px solid var(--line,#52616a)!important
+}
+#rosterPeSheet .roster-review-row:first-child{border-top:0!important}
+#rosterPeSheet .roster-review-row strong{font-size:.88rem!important}
+#rosterPeSheet .roster-review-row span{font-weight:800!important}
+#rosterPeSheet .roster-review-row .unresolved{font-weight:600!important;color:#d5a557!important}
+#rosterPeSheet .roster-review-actions{display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px!important}
+#rosterPeSheet .roster-review-actions button{width:100%!important;min-height:44px!important;margin:0!important}
+
+/* ShiftMate TEST 2.5.x — Shift Swap documentation */
+.home-doc-actions{display:grid;gap:8px;margin-bottom:12px;padding:16px 20px}.home-doc-actions .eyebrow{display:block}.home-doc-link{display:block;border:0;background:none;color:var(--accent);font:inherit;font-size:1.15rem;font-weight:800;text-align:left;padding:3px 0;cursor:pointer}
+.swap-mode-grid{display:grid;grid-template-columns:1fr;gap:8px;margin:12px 0}
+.swap-mode{width:100%;padding:11px 12px;border:1px solid #435158;border-radius:10px;background:#12181b;color:var(--text);font:inherit;font-weight:700}
+.swap-mode.active{box-shadow:inset 0 0 0 1px var(--accent),inset 0 2px 8px rgba(0,0,0,.45);color:var(--text)}
+.swap-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.swap-person-panel{display:grid;gap:8px;padding:12px;border:1px solid #39464b;border-radius:12px;background:#0d1214}
+.swap-person-panel>strong{font-size:16px}
+.swap-person-panel>small{color:var(--muted)}
+.swap-person-panel label,.swap-options label{display:grid;gap:5px;text-align:left;color:var(--muted);font-size:13px}
+.swap-person-panel input,.swap-person-panel select,.swap-options input[type=text]{width:100%;box-sizing:border-box;border:1px solid #435158;border-radius:10px;background:#12181b;color:var(--text);padding:10px;font:inherit}
+.swap-time-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.swap-options{display:grid;gap:9px;margin:12px 0;padding:12px;border:1px solid #39464b;border-radius:12px;background:#0d1214}
+.swap-options label:not(#swapOthersWrap){display:flex;align-items:center;gap:8px}
+.swap-options input[type=checkbox]{width:18px;height:18px;margin:0}
+#swapOthersWrap[hidden]{display:none!important}
+.swap-multi-note{padding:9px 11px;margin:8px 0 12px;border-radius:10px;background:#0d1214;color:var(--muted);font-size:13px}
+@media(max-width:620px){.swap-form-grid{grid-template-columns:1fr}.shift-swap-card{max-height:92dvh;overflow:auto}}
+
+/* Shift Swap calendar and multi-date controls */
+.swap-calendar-wrap{margin:12px 0}.swap-calendar{max-height:310px;overflow:auto;border:1px solid var(--border,#ddd);border-radius:14px;padding:8px}.swap-calendar .calendar-month-block{margin-bottom:10px}.swap-calendar .calendar-day{min-height:48px}.swap-calendar .calendar-day strong{font-size:.72rem}.swap-multi-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:12px 0}.swap-entry-card{border:1px solid var(--border,#ddd);border-radius:14px;padding:12px;margin:10px 0}.swap-entry-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.swap-entry-columns{display:grid;grid-template-columns:1fr 1fr;gap:12px}.swap-roster-note{padding:10px 12px;border-radius:12px;background:var(--surface-2,#f5f5f5);margin:10px 0}.swap-entry-card input,.swap-entry-card select{width:100%}@media(max-width:650px){.swap-entry-columns{grid-template-columns:1fr}.swap-multi-head{align-items:flex-start;flex-direction:column}}
+
+.swap-warning{display:block;color:#e4bd55;font-weight:800;font-size:13px;margin-top:-3px}.swap-entry-warning{display:block;color:#e4bd55;font-weight:800;font-size:13px;margin-top:8px}.swap-entry-date{margin-bottom:2px}
+
+.swap-entry-date-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}.swap-pe-warning{color:#e4bd55!important}@media(max-width:650px){.swap-entry-date-grid{grid-template-columns:1fr}}
+
+/* Shift Swap 9 — compact dashboard only; preserves original app controls/event architecture. */
+@media(max-width:430px){
+  #home{padding-top:6px!important;gap:7px!important;padding-bottom:calc(var(--bottom-nav-h,88px) + 6px)!important}
+  #home .fortnight-card{padding:9px 10px!important}
+  #home .fortnight-head h2{font-size:20px!important;line-height:1.05!important;margin:2px 0 3px!important}
+  #home .fortnight-head .field-note{font-size:9px!important}
+  #home .fortnight-strip{gap:3px!important}
+  #home .fortnight-strip>.week-day,#home .fortnight-week>.week-day{aspect-ratio:auto!important;height:54px!important;min-height:0!important;padding:5px 1px 2px!important;border-radius:7px!important}
+  #home .week-day .week-dow{font-size:7px!important}
+  #home .week-day .week-date{font-size:9px!important;margin-top:1px!important}
+  #home .week-day strong{font-size:12px!important;margin-top:3px!important}
+  #home .week-day small{font-size:6px!important;margin-top:2px!important}
+  #home .week-day.off strong{font-size:9px!important}
+  #home .week-day.today{padding:4px 0 1px!important}
+  #home .current-card{padding:9px 11px!important;gap:5px 10px!important;min-height:104px!important}
+  #home .current-card .home-net strong{font-size:28px!important}
+  #home .current-card .home-net small{font-size:9px!important;margin-top:3px!important}
+  #home .home-roster-status{font-size:9px!important}
+  #home .home-doc-actions{padding:9px 12px!important;gap:1px!important;margin-bottom:0!important}
+  #home .home-doc-actions .eyebrow{font-size:8px!important}
+  #home .home-doc-link{font-size:16px!important;line-height:1.1!important;padding:2px 0!important}
+  #home .home-cycle-actions{gap:6px!important;margin-bottom:0!important}
+  #home #homeNewCycle,#home #homeScanRoster{min-height:48px!important;height:48px!important;padding:7px 10px!important;font-size:16px!important}
+  #home .home-settings-summary{padding:7px 11px!important;min-height:42px!important}
+  #home .home-settings-chips{gap:4px!important;margin-top:4px!important}
+  #home .setting-chip{min-height:20px!important;padding:3px 5px!important}
+  #home .setting-chip small{font-size:7px!important}.setting-chip b{font-size:8px!important}
+}
