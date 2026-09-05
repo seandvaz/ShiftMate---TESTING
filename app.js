@@ -168,7 +168,6 @@
     $$('.calendar-day').forEach(el=>el.classList.remove('selected'));
     hideCalendarPaySummary();
     const detail=$('#calendarDetail');if(detail)detail.hidden=true;
-    const what=$('#whatIfPanel');if(what)what.hidden=true;whatIfState={key:'',action:'',swapFrom:''};
   }
   function renderProjectedPaySummary(date){
     const detail=$('#calendarProjectionPay');if(!detail)return;
@@ -366,29 +365,6 @@
     const available=Math.floor(navTop-top-6);
     screen.style.height=`${Math.max(360,available)}px`;
   }
-  let whatIfState={key:'',action:'',swapFrom:''};
-  function calendarCycleForDate(date,entries=rosterTimeline()){
-    const state=visualDayState(date,entries),actual=state.entry?.cycle||null;
-    const start=actual?.startDate?parseDate(actual.startDate):(state.projection?.fortnightStart||projectionFortnightStartForProfile(date));
-    if(!start)return null;
-    const baseline=actual?JSON.parse(JSON.stringify(actual)):projectedBaselineCycle(start);
-    return {baseline,start,state,dayIndex:Math.round((startOfRosterDay(date)-startOfRosterDay(start))/86400000)};
-  }
-  function simulateWhatIf(date,action,code='',swapDate=null){
-    const info=calendarCycleForDate(date);if(!info||info.dayIndex<0||info.dayIndex>13)return null;
-    const baseline=info.baseline,baseResult=PayCalc.calculate(baseline),trial=JSON.parse(JSON.stringify(baseline));
-    trial.days=Array.from({length:14},(_,i)=>({...emptyDay(),...(trial.days?.[i]||{})}));
-    if(action==='ot'){
-      const codes=overtimeCandidateCodes(date);let best=null;
-      for(const c of codes){const t=JSON.parse(JSON.stringify(trial));t.days[info.dayIndex]={...emptyDay(),code:c,type:'Picked-up OT',entered:true,phBenefit:'lieu'};const r=PayCalc.calculate(t);if(!best||r.net>best.result.net)best={trial:t,result:r,code:c}}
-      if(!best)return null;return {...best,baseResult};
-    }
-    if(action==='off')trial.days[info.dayIndex]={...emptyDay(),type:'Off',entered:true};
-    if(action==='change'&&code)trial.days[info.dayIndex]={...trial.days[info.dayIndex],code,type:'Rostered',entered:true};
-    if(action==='swap'&&swapDate){const j=Math.round((startOfRosterDay(swapDate)-startOfRosterDay(info.start))/86400000);if(j<0||j>13)return null;[trial.days[info.dayIndex],trial.days[j]]=[trial.days[j],trial.days[info.dayIndex]]}
-    const result=PayCalc.calculate(trial);return {trial,result,baseResult,code};
-  }
-  function whatIfResultMarkup(sim){const delta=sim.result.net-sim.baseResult.net,sign=delta>=0?'+':'−';return `<div class="what-if-money"><span>Estimated net change</span><strong class="${delta>=0?'positive':'negative'}">${sign}${money(Math.abs(delta))}</strong></div><div class="what-if-new-net"><span>Fortnight net</span><b>${money(sim.result.net)}</b></div><small>Hypothetical only — your roster will not be changed.</small>`}
   function earliestSavedActualDate(){
     let earliest=null;
     const scan=cycle=>{

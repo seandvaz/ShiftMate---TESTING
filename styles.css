@@ -1395,8 +1395,8 @@ nn/* ShiftMate 1.0.13 calendar readability + certainty hierarchy */n.calendar-we
 body{background:radial-gradient(circle at 50% -20%,#171c20 0,#090b0d 48%);color:var(--ink)}
 
 .card{background:linear-gradient(145deg,#181d21,#111518);border-color:#30383e;box-shadow:inset 0 1px 0 rgba(255,255,255,.045),inset 0 -1px 0 rgba(0,0,0,.8),0 7px 18px rgba(0,0,0,.24)}
-.secondary,.compact-button,.what-if-actions button{background:linear-gradient(180deg,#232a2f,#171c20);border:1px solid #38434a;color:#e8edef;box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 2px 5px rgba(0,0,0,.45)}
-.secondary:active,.compact-button:active,.what-if-actions button:active{transform:translateY(1px);box-shadow:inset 0 2px 5px rgba(0,0,0,.65)}
+.secondary,.compact-button{background:linear-gradient(180deg,#232a2f,#171c20);border:1px solid #38434a;color:#e8edef;box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 2px 5px rgba(0,0,0,.45)}
+.secondary:active,.compact-button:active{transform:translateY(1px);box-shadow:inset 0 2px 5px rgba(0,0,0,.65)}
 .bottom-nav{background:rgba(8,11,13,.97);border-top-color:#293238;box-shadow:0 -8px 24px rgba(0,0,0,.35)}
 .nav-button{display:flex;flex-direction:column;align-items:center;gap:2px;color:#7f898f;background:transparent!important;box-shadow:none!important}
 .nav-icon{font-size:18px;line-height:1;color:#737e84;text-shadow:none}
@@ -1422,7 +1422,6 @@ body{background:radial-gradient(circle at 50% -20%,#171c20 0,#090b0d 48%);color:
 .calendar-day .ot-stars,.legend-stars,.ot-flip-stars{color:var(--money)!important;text-shadow:0 0 7px rgba(240,191,88,.45)!important}.calendar-day-back{background:linear-gradient(145deg,#211d14,#111416);border-color:#6d5930!important;box-shadow:inset 0 0 10px rgba(240,191,88,.08)}.calendar-day-back b{color:#ffd77e!important;text-shadow:0 0 7px rgba(240,191,88,.35)}
 .legend-swatch.solid{background:#444c51;border-color:#5b656a}.legend-swatch.outline{background:#0e1214;border-color:#59646a}.calendar-legend{flex-wrap:nowrap!important;white-space:nowrap;overflow:hidden;font-size:8px;gap:3px 4px!important}.ot-target-note{font-size:7px}
 .calendar-day.fortnight-start::before{content:"";position:absolute;left:-2px;right:-2px;top:-5px;height:1px;background:#59646a;box-shadow:0 0 4px rgba(89,215,232,.18);z-index:4}
-.context-head{display:flex;justify-content:space-between;align-items:center}.context-close{border:0;background:transparent;color:#9aa4a9;font-size:20px;padding:0 4px}.what-if-actions{display:flex;gap:6px;flex-wrap:wrap;margin:7px 0}.what-if-actions button{padding:7px 9px;border-radius:8px;font-size:10px;font-weight:800}.what-if-result{display:grid;gap:5px}.what-if-result small{color:var(--muted);font-size:8px}.what-if-money,.what-if-new-net{display:flex;justify-content:space-between;align-items:end;gap:10px}.what-if-money span,.what-if-new-net span{color:var(--muted);font-size:10px}.what-if-money strong{font-size:24px}.what-if-money .positive{color:#ffd77e;text-shadow:0 0 8px rgba(240,191,88,.28)}.what-if-money .negative{color:#e9898b}.what-if-new-net b{font-size:14px}.what-if-result select{margin-top:4px}
 @media(max-width:380px){.calendar-legend{font-size:7px}.calendar-context-tray{min-height:90px}}
 
 
@@ -1533,7 +1532,6 @@ body{background:radial-gradient(circle at 50% -20%,#171c20 0,#090b0d 48%);color:
 .calendar-day .ot-stars,.legend-stars,.ot-flip-stars{
   color:#ffd46d!important;text-shadow:0 0 3px #f0bf58,0 0 9px rgba(240,191,88,.58)!important;
 }
-.what-if-panel,.what-if-actions,.what-if-result{display:none!important}
 @media (prefers-reduced-motion:reduce){
   .primary,.secondary,.compact-button,.calendar-day,.week-day{transition:none!important}
 }
@@ -3032,9 +3030,6 @@ input[type="time"]::-webkit-date-and-time-value{
 #rosterScanSheet .roster-scan-cancel{
   flex:0 0 auto!important;min-height:38px!important;padding:7px 11px!important
 }
-#rosterScanSheet .roster-scan-help{
-  margin:0!important;font-size:.78rem!important;line-height:1.25!important
-}
 #rosterScanSheet .roster-camera-wrap{
   position:relative!important;
   width:100%!important;
@@ -3049,15 +3044,6 @@ input[type="time"]::-webkit-date-and-time-value{
 }
 #rosterScanSheet .roster-camera-wrap video{
   width:100%!important;height:100%!important;display:block!important;object-fit:cover!important
-}
-#rosterScanSheet .roster-camera-guide{
-  position:absolute!important;inset:4%!important;border:2px solid #5de8ee!important;
-  border-radius:8px!important;box-shadow:0 0 0 999px rgba(0,0,0,.20)!important;pointer-events:none!important
-}
-#rosterScanSheet .roster-camera-guide span{
-  position:absolute!important;left:6px!important;right:6px!important;bottom:6px!important;
-  text-align:center!important;font-size:.70rem!important;line-height:1.15!important;
-  background:rgba(0,0,0,.70)!important;padding:4px!important;border-radius:6px!important
 }
 #rosterScanSheet .scan-status{
   min-height:18px!important;max-height:36px!important;overflow:hidden!important;
