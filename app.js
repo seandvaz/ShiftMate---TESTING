@@ -1617,11 +1617,18 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
         const line=card.querySelector('.worked-line');
         if(line){line.value=current.settings.homeLine;card.dataset.workedRosterLine=line.value}
         refreshShiftOptions(card,date,main);
+        // Rebuilding the options is needed for off-line shifts, but mobile browsers
+        // can otherwise leave the selected value and card styling out of sync until
+        // the roster is rebuilt. Restore the selected normal shift before deriving
+        // the card's entered state.
+        const refreshedSelect=card.querySelector('.shift-code');
+        if(refreshedSelect&&[...refreshedSelect.options].some(option=>option.value===main))refreshedSelect.value=main;
         applyShiftDefaults(card,date,true);
         syncCardShiftDisplay(card);
         updateRosterCardState(card);
         syncCurrentFromUI();
         recalculate();
+        requestAnimationFrame(()=>{if(card.isConnected)updateRosterCardState(card)});
       };
       card.querySelector('.offline-shift-code').onchange=e=>{
         const code=e.target.value;
