@@ -1636,7 +1636,8 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
       // calculation stay in sync without requiring a second tap.
       shiftCodeSelect.oninput=handleShiftCodeChange;
       shiftCodeSelect.onchange=handleShiftCodeChange;
-      card.querySelector('.offline-shift-code').onchange=e=>{
+      const offlineShiftSelect=card.querySelector('.offline-shift-code');
+      const handleOfflineShiftChange=e=>{
         const code=e.target.value;
         const data=SHIFT_DATA[code];
         if(!data)return;
@@ -1668,6 +1669,10 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
         recalculate();
         syncCardShiftDisplay(card);
       };
+      // Use the same full update for the mobile input event and the usual
+      // change event, so off-line shifts calculate immediately as well.
+      offlineShiftSelect.oninput=handleOfflineShiftChange;
+      offlineShiftSelect.onchange=handleOfflineShiftChange;
       card.querySelector('.worked-line').onchange=e=>{
         card.dataset.entered='true';
         card.dataset.workedRosterLine=e.target.value;
@@ -2519,7 +2524,7 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
     saveCurrent();
     const payload={
       app:'PTA ShiftMate',
-      version:'2.5.8-roster-pay-sync-test',
+      version:'2.5.9-offline-pay-sync-test',
       exportedAt:new Date().toISOString(),
       current:AppStorage.loadCurrent(),
       cycles:AppStorage.loadCycles()
