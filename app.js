@@ -1584,7 +1584,11 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
         }
       }
 
-      const closeRosterDetails=()=>card.classList.remove('open');
+      let settleOfflineShiftSelection=()=>{};
+      const closeRosterDetails=()=>{
+        card.classList.remove('open');
+        settleOfflineShiftSelection();
+      };
       card.querySelector('.details-button').onclick=()=>openShiftDetailsPortal(card);
       card.querySelector('.roster-detail-close').onclick=closeRosterDetails;
       card.querySelector('.roster-detail-backdrop').onclick=closeRosterDetails;
@@ -1669,13 +1673,31 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
         recalculate();
         syncCardShiftDisplay(card);
       };
-      // iOS can report input before this nested selector has committed its new
-      // value. Read it on the next frame, then run the same full update used by
-      // change; this is independent of whether the shift is rostered or OT.
-      offlineShiftSelect.oninput=()=>requestAnimationFrame(()=>{
-        if(card.isConnected)handleOfflineShiftChange({target:offlineShiftSelect});
-      });
-      offlineShiftSelect.onchange=handleOfflineShiftChange;
+      settleOfflineShiftSelection=()=>{
+        const code=offlineShiftSelect.value;
+        if(!SHIFT_DATA[code])return;
+        handleOfflineShiftChange({target:offlineShiftSelect});
+        requestAnimationFrame(()=>{
+          if(!card.isConnected||!SHIFT_DATA[offlineShiftSelect.value])return;
+          // Explicitly reconcile the visual state after the details sheet has
+          // settled. This prevents a valid off-line code being left in the
+          // blank-card layout on mobile.
+          card.dataset.effectiveShiftCode=offlineShiftSelect.value;
+          card.dataset.entered='true';
+          const type=card.querySelector('.shift-type')?.value||'';
+          const isOvertime=type==='Picked-up OT'||type==='Overtime';
+          card.classList.remove('roster-unentered');
+          card.classList.toggle('roster-entered',!isOvertime);
+          card.classList.toggle('roster-overtime',isOvertime);
+          updateRosterCardState(card);
+          syncCardShiftDisplay(card);
+          syncCurrentFromUI();
+          recalculate();
+        });
+      };
+      offlineShiftSelect.oninput=settleOfflineShiftSelection;
+      offlineShiftSelect.onchange=settleOfflineShiftSelection;
+      offlineShiftSelect.onblur=settleOfflineShiftSelection;
       card.querySelector('.worked-line').onchange=e=>{
         card.dataset.entered='true';
         card.dataset.workedRosterLine=e.target.value;
@@ -2527,7 +2549,7 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
     saveCurrent();
     const payload={
       app:'PTA ShiftMate',
-      version:'2.5.10-offline-input-test',
+      version:'2.5.11-offline-card-state-test',
       exportedAt:new Date().toISOString(),
       current:AppStorage.loadCurrent(),
       cycles:AppStorage.loadCycles()
