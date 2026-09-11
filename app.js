@@ -1677,27 +1677,31 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
         recalculate();
         syncCardShiftDisplay(card);
       };
+      const reconcileOfflineCard=()=>{
+        if(!card.isConnected||!SHIFT_DATA[offlineShiftSelect.value])return;
+        // Explicitly reconcile the visual state after the details sheet has
+        // settled. This prevents a valid off-line code being left in the
+        // blank-card layout on mobile.
+        card.dataset.effectiveShiftCode=offlineShiftSelect.value;
+        card.dataset.entered='true';
+        const type=card.querySelector('.shift-type')?.value||'';
+        const isOvertime=type==='Picked-up OT'||type==='Overtime';
+        card.classList.remove('roster-unentered');
+        card.classList.toggle('roster-entered',!isOvertime);
+        card.classList.toggle('roster-overtime',isOvertime);
+        updateRosterCardState(card);
+        syncCardShiftDisplay(card);
+        syncCurrentFromUI();
+        recalculate();
+      };
       settleOfflineShiftSelection=()=>{
         const code=offlineShiftSelect.value;
         if(!SHIFT_DATA[code])return;
         handleOfflineShiftChange({target:offlineShiftSelect});
-        requestAnimationFrame(()=>{
-          if(!card.isConnected||!SHIFT_DATA[offlineShiftSelect.value])return;
-          // Explicitly reconcile the visual state after the details sheet has
-          // settled. This prevents a valid off-line code being left in the
-          // blank-card layout on mobile.
-          card.dataset.effectiveShiftCode=offlineShiftSelect.value;
-          card.dataset.entered='true';
-          const type=card.querySelector('.shift-type')?.value||'';
-          const isOvertime=type==='Picked-up OT'||type==='Overtime';
-          card.classList.remove('roster-unentered');
-          card.classList.toggle('roster-entered',!isOvertime);
-          card.classList.toggle('roster-overtime',isOvertime);
-          updateRosterCardState(card);
-          syncCardShiftDisplay(card);
-          syncCurrentFromUI();
-          recalculate();
-        });
+        requestAnimationFrame(reconcileOfflineCard);
+        // On iOS a select can emit its final event after the next frame.
+        // Reconcile once more after the native picker is fully dismissed.
+        setTimeout(reconcileOfflineCard,120);
       };
       offlineShiftSelect.oninput=settleOfflineShiftSelection;
       offlineShiftSelect.onchange=settleOfflineShiftSelection;
@@ -2553,7 +2557,7 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
     saveCurrent();
     const payload={
       app:'PTA ShiftMate',
-      version:'2.5.12-offline-default-test',
+      version:'2.5.13-offline-settle-test',
       exportedAt:new Date().toISOString(),
       current:AppStorage.loadCurrent(),
       cycles:AppStorage.loadCycles()
