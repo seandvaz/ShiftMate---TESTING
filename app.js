@@ -1669,9 +1669,12 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
         recalculate();
         syncCardShiftDisplay(card);
       };
-      // Use the same full update for the mobile input event and the usual
-      // change event, so off-line shifts calculate immediately as well.
-      offlineShiftSelect.oninput=handleOfflineShiftChange;
+      // iOS can report input before this nested selector has committed its new
+      // value. Read it on the next frame, then run the same full update used by
+      // change; this is independent of whether the shift is rostered or OT.
+      offlineShiftSelect.oninput=()=>requestAnimationFrame(()=>{
+        if(card.isConnected)handleOfflineShiftChange({target:offlineShiftSelect});
+      });
       offlineShiftSelect.onchange=handleOfflineShiftChange;
       card.querySelector('.worked-line').onchange=e=>{
         card.dataset.entered='true';
@@ -2524,7 +2527,7 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
     saveCurrent();
     const payload={
       app:'PTA ShiftMate',
-      version:'2.5.9-offline-pay-sync-test',
+      version:'2.5.10-offline-input-test',
       exportedAt:new Date().toISOString(),
       current:AppStorage.loadCurrent(),
       cycles:AppStorage.loadCycles()
