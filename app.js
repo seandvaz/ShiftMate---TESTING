@@ -1599,6 +1599,10 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
         const offlineWrap=card.querySelector('.offline-shift-wrap');
         const offlineSelect=card.querySelector('.offline-shift-code');
         if(main===OFFLINE_CODE){
+          const type=card.querySelector('.shift-type');
+          // Selecting an actual off-line shift is work, not an off day. Start
+          // it as rostered; users can still change it to Picked-up OT if needed.
+          if(type&&type.value==='Off')type.value='Rostered';
           card.dataset.offline='true';
           card.dataset.entered='false'; // no effective shift until a real code is chosen
           if(offlineWrap){
@@ -2549,7 +2553,7 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
     saveCurrent();
     const payload={
       app:'PTA ShiftMate',
-      version:'2.5.11-offline-card-state-test',
+      version:'2.5.12-offline-default-test',
       exportedAt:new Date().toISOString(),
       current:AppStorage.loadCurrent(),
       cycles:AppStorage.loadCycles()
