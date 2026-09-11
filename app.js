@@ -1590,17 +1590,7 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
       card.querySelector('.roster-detail-backdrop').onclick=closeRosterDetails;
       card.querySelector('.ot-toggle').onclick=()=>{const type=card.querySelector('.shift-type'),btn=card.querySelector('.ot-toggle');if(!effectiveShiftCode(card)){toast('Select a shift first');return}const on=type.value==='Picked-up OT';type.value=on?'Rostered':'Picked-up OT';btn.classList.toggle('active',!on);card.dataset.entered='true';updateRosterCardState(card);syncCurrentFromUI();recalculate()};
       const shiftCodeSelect=card.querySelector('.shift-code');
-      const syncSelectedShiftVisual=()=>{
-        // Some installed mobile browsers report a select value before they emit
-        // its change event. Keep the roster controls in step with that value;
-        // the change handler below remains responsible for saving and calculating.
-        if(shiftCodeSelect.value===OFFLINE_CODE)return;
-        delete card.dataset.effectiveShiftCode;
-        updateRosterCardState(card);
-        requestAnimationFrame(()=>{if(card.isConnected)updateRosterCardState(card)});
-      };
-      shiftCodeSelect.oninput=syncSelectedShiftVisual;
-      shiftCodeSelect.onchange=()=>{
+      const handleShiftCodeChange=()=>{
         const main=card.querySelector('.shift-code').value;
         const offlineWrap=card.querySelector('.offline-shift-wrap');
         const offlineSelect=card.querySelector('.offline-shift-code');
@@ -1641,6 +1631,11 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
         recalculate();
         requestAnimationFrame(()=>{if(card.isConnected)updateRosterCardState(card)});
       };
+      // Installed mobile browsers can raise input before change for a select.
+      // Both events must run the full update so the roster controls and pay
+      // calculation stay in sync without requiring a second tap.
+      shiftCodeSelect.oninput=handleShiftCodeChange;
+      shiftCodeSelect.onchange=handleShiftCodeChange;
       card.querySelector('.offline-shift-code').onchange=e=>{
         const code=e.target.value;
         const data=SHIFT_DATA[code];
@@ -2524,7 +2519,7 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
     saveCurrent();
     const payload={
       app:'PTA ShiftMate',
-      version:'2.5.7-roster-input-test',
+      version:'2.5.8-roster-pay-sync-test',
       exportedAt:new Date().toISOString(),
       current:AppStorage.loadCurrent(),
       cycles:AppStorage.loadCycles()
