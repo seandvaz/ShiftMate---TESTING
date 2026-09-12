@@ -1640,11 +1640,20 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
         recalculate();
         requestAnimationFrame(()=>{if(card.isConnected)updateRosterCardState(card)});
       };
-      // Installed mobile browsers can raise input before change for a select.
-      // Both events must run the full update so the roster controls and pay
-      // calculation stay in sync without requiring a second tap.
-      shiftCodeSelect.oninput=handleShiftCodeChange;
-      shiftCodeSelect.onchange=handleShiftCodeChange;
+      // Browsers can fire both input and change for one selection. Defer the
+      // full update until the picker has settled, so rebuilding its options
+      // cannot cause a second handler to read an empty value.
+      let normalShiftUpdatePending=false;
+      const scheduleNormalShiftUpdate=()=>{
+        if(normalShiftUpdatePending)return;
+        normalShiftUpdatePending=true;
+        requestAnimationFrame(()=>{
+          normalShiftUpdatePending=false;
+          if(card.isConnected)handleShiftCodeChange();
+        });
+      };
+      shiftCodeSelect.oninput=scheduleNormalShiftUpdate;
+      shiftCodeSelect.onchange=scheduleNormalShiftUpdate;
       const offlineShiftSelect=card.querySelector('.offline-shift-code');
       const handleOfflineShiftChange=e=>{
         const code=e.target.value;
@@ -2559,7 +2568,7 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
     saveCurrent();
     const payload={
       app:'PTA ShiftMate',
-      version:'2.5.14-offline-close-test',
+      version:'2.5.15-selection-events-test',
       exportedAt:new Date().toISOString(),
       current:AppStorage.loadCurrent(),
       cycles:AppStorage.loadCycles()
