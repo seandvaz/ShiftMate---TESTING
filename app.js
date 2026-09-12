@@ -1411,7 +1411,9 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
     const code=effectiveShiftCode(card);
     const rowType=card.querySelector('.shift-type')?.value||'';
     const isOvertime=rowType==='Picked-up OT'||rowType==='Overtime';
-    const hasRosterEntry=Boolean(code);
+    // An Off day can retain its previous code for reference, but it must still
+    // look and behave as off rather than as an active rostered shift.
+    const hasRosterEntry=Boolean(code)&&rowType!=='Off';
     card.dataset.entered=String(hasRosterEntry);
     card.classList.toggle('roster-unentered',!hasRosterEntry);
     card.classList.toggle('roster-entered',hasRosterEntry&&!isOvertime);
@@ -1647,7 +1649,10 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
       const reconcileNormalCard=()=>{
         if(!card.isConnected)return;
         const code=card.querySelector('.shift-code')?.value||'';
-        if(!code||code===OFFLINE_CODE)return;
+        if(!code||code===OFFLINE_CODE||card.querySelector('.shift-type')?.value==='Off'){
+          updateRosterCardState(card);
+          return;
+        }
         // iOS can apply the select's final value after its change event has
         // finished. At that point the shift is valid, so make the compact card
         // agree with the picker instead of leaving its controls hidden.
@@ -2591,7 +2596,7 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
     saveCurrent();
     const payload={
       app:'PTA ShiftMate',
-      version:'2.5.16-card-reconciliation-test',
+      version:'2.5.17-off-card-state-test',
       exportedAt:new Date().toISOString(),
       current:AppStorage.loadCurrent(),
       cycles:AppStorage.loadCycles()
