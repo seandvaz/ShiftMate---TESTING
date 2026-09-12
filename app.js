@@ -1644,12 +1644,35 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
       // full update until the picker has settled, so rebuilding its options
       // cannot cause a second handler to read an empty value.
       let normalShiftUpdatePending=false;
+      const reconcileNormalCard=()=>{
+        if(!card.isConnected)return;
+        const code=card.querySelector('.shift-code')?.value||'';
+        if(!code||code===OFFLINE_CODE)return;
+        // iOS can apply the select's final value after its change event has
+        // finished. At that point the shift is valid, so make the compact card
+        // agree with the picker instead of leaving its controls hidden.
+        const isOvertime=card.querySelector('.shift-type')?.value==='Picked-up OT';
+        card.dataset.entered='true';
+        card.classList.remove('roster-unentered','shift-off');
+        card.classList.toggle('roster-entered',!isOvertime);
+        card.classList.toggle('roster-overtime',isOvertime);
+        const start=card.querySelector('.start-time')?.value||'';
+        const finish=card.querySelector('.finish-time')?.value||'';
+        const time=card.querySelector('.shift-time');
+        if(time)time.dataset.compactTime=start&&finish?`${start}–${finish}`:'';
+        const hour=Number(start.split(':')[0]);
+        card.classList.toggle('shift-morn',Number.isFinite(hour)&&hour<12);
+        card.classList.toggle('shift-arvo',Number.isFinite(hour)&&hour>=12);
+      };
       const scheduleNormalShiftUpdate=()=>{
         if(normalShiftUpdatePending)return;
         normalShiftUpdatePending=true;
         requestAnimationFrame(()=>{
           normalShiftUpdatePending=false;
-          if(card.isConnected)handleShiftCodeChange();
+          if(!card.isConnected)return;
+          handleShiftCodeChange();
+          requestAnimationFrame(reconcileNormalCard);
+          setTimeout(reconcileNormalCard,120);
         });
       };
       shiftCodeSelect.oninput=scheduleNormalShiftUpdate;
@@ -2568,7 +2591,7 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
     saveCurrent();
     const payload={
       app:'PTA ShiftMate',
-      version:'2.5.15-selection-events-test',
+      version:'2.5.16-card-reconciliation-test',
       exportedAt:new Date().toISOString(),
       current:AppStorage.loadCurrent(),
       cycles:AppStorage.loadCycles()
