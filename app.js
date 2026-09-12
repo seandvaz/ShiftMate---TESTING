@@ -1452,6 +1452,7 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
       else parent.appendChild(details);
     }
     card?.classList.remove('details-portal-open');
+    card?.dispatchEvent(new Event('shift-details-closed'));
     if(portal)portal.hidden=true;
     document.body.classList.remove('modal-open');
     activeShiftDetailsPortal=null;
@@ -1706,6 +1707,7 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
       offlineShiftSelect.oninput=settleOfflineShiftSelection;
       offlineShiftSelect.onchange=settleOfflineShiftSelection;
       offlineShiftSelect.onblur=settleOfflineShiftSelection;
+      card.addEventListener('shift-details-closed',settleOfflineShiftSelection);
       card.querySelector('.worked-line').onchange=e=>{
         card.dataset.entered='true';
         card.dataset.workedRosterLine=e.target.value;
@@ -2557,7 +2559,7 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
     saveCurrent();
     const payload={
       app:'PTA ShiftMate',
-      version:'2.5.13-offline-settle-test',
+      version:'2.5.14-offline-close-test',
       exportedAt:new Date().toISOString(),
       current:AppStorage.loadCurrent(),
       cycles:AppStorage.loadCycles()
