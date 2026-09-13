@@ -1327,7 +1327,9 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
     return missing>0?{scheduledStart:nominal[0],scheduledFinish:nominal[1],scheduledMinutes:scheduled,workedMinutes:worked,missingHours:missing/60}:null;
   }
   function openBookOffChoice(card,date){
-    const code=card.querySelector('.shift-code').value;
+    // Off-line cards retain OFFLINE in the visible picker, so compare their
+    // entered times against the actual selected operational shift instead.
+    const code=effectiveShiftCode(card);
     const actualStart=rosterControl(card,'.start-time')?.value||'';
     const actualFinish=rosterControl(card,'.finish-time')?.value||'';
     const diff=bookOffDifference(code,date,actualStart,actualFinish);
@@ -2612,7 +2614,7 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
     saveCurrent();
     const payload={
       app:'PTA ShiftMate',
-      version:'2.5.19-offline-time-preserve',
+      version:'2.5.20-offline-bookoff',
       exportedAt:new Date().toISOString(),
       current:AppStorage.loadCurrent(),
       cycles:AppStorage.loadCycles()
