@@ -2328,6 +2328,10 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
       const overview=makeScanVariant(canvas,0,0,W,H,2400,1.28);
       const header=makeScanVariant(canvas,0,0,W,Math.round(H*.34),2600,1.42);
       const leftDates=makeScanVariant(canvas,0,0,Math.round(W*.48),H,2400,1.42);
+      // The visible roster header is usually in the centre-right of a portrait
+      // phone photo of a laptop screen. Crop it tightly so its small PE text is
+      // enlarged before OCR, instead of being diluted by the surrounding room.
+      const periodHeader=makeScanVariant(canvas,Math.round(W*.42),Math.round(H*.30),Math.round(W*.58),Math.round(H*.32),3200,1.18);
       // A roster photographed on a laptop screen often sits in the middle of a
       // portrait camera frame, not at the top. This high-detail pass finds its
       // pay-period header before the scanner gives up.
@@ -2341,6 +2345,11 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
       // If header did not establish the cycle, use the Actuals/date-column pass.
       if(!pe){
         results.push(await ocrRosterRegion(T,leftDates,'Reading roster dates',status));
+        pe=chooseScanPeriodEnd(results);
+      }
+
+      if(!pe){
+        results.push(await ocrRosterRegion(T,periodHeader,'Reading pay period',status));
         pe=chooseScanPeriodEnd(results);
       }
 
@@ -2642,7 +2651,7 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
     saveCurrent();
     const payload={
       app:'PTA ShiftMate',
-      version:'2.5.22-scanner-period',
+      version:'2.5.23-scanner-header',
       exportedAt:new Date().toISOString(),
       current:AppStorage.loadCurrent(),
       cycles:AppStorage.loadCycles()
