@@ -2183,15 +2183,31 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
       const xSpan=Math.max(...xs)-Math.min(...xs),ySpan=Math.max(...ys)-Math.min(...ys);
       const gridLike=xSpan>Math.max(180,ySpan*2.2);
       if(gridLike){
-        const byIndex=new Map();
-        dateWords.forEach(a=>{
-          const idx=Math.round((new Date(a.d.getFullYear(),a.d.getMonth(),a.d.getDate())-new Date(start.getFullYear(),start.getMonth(),start.getDate()))/86400000);
-          if(idx<0||idx>13)return;
-          const old=byIndex.get(idx);
-          // Prefer the date observation in the densest horizontal header band.
-          if(!old||Number(a.w.confidence??a.w.conf??0)>Number(old.w.confidence??old.w.conf??0))byIndex.set(idx,a);
+        const dateIndex=d=>Math.round((new Date(d.getFullYear(),d.getMonth(),d.getDate())-new Date(start.getFullYear(),start.getMonth(),start.getDate()))/86400000);
+        // A master roster repeats its 14 date columns for each team section.
+        // On a photographed monitor their x positions can drift slightly from one
+        // section to another, so use the complete header closest above the user's
+        // row instead of mixing the strongest labels from the entire page.
+        const headerBands=[];
+        [...dateWords].sort((a,b)=>cy(a.w)-cy(b.w)).forEach(a=>{
+          const y=cy(a.w),band=headerBands.find(b=>Math.abs(b.y-y)<Math.max(16,medianH*1.25));
+          if(band){band.items.push(a);band.y=band.items.reduce((sum,item)=>sum+cy(item.w),0)/band.items.length}
+          else headerBands.push({y,items:[a]});
         });
-        const anchors=[...byIndex.entries()].sort((a,b)=>a[0]-b[0]).map(([idx,a])=>({idx,x:cx(a.w),w:a.w}));
+        const candidates=headerBands.map(b=>{
+          const byIndex=new Map();
+          b.items.forEach(a=>{
+            const idx=dateIndex(a.d);if(idx<0||idx>13)return;
+            const old=byIndex.get(idx);
+            if(!old||Number(a.w.confidence??a.w.conf??0)>Number(old.w.confidence??old.w.conf??0))byIndex.set(idx,a);
+          });
+          return {...b,byIndex};
+        }).filter(b=>b.byIndex.size>=5);
+        const nearest=candidates.sort((a,b)=>{
+          const distance=x=>x.y<=targetY?targetY-x.y:100000+Math.abs(targetY-x.y);
+          return distance(a)-distance(b)||b.byIndex.size-a.byIndex.size;
+        })[0];
+        const anchors=nearest?[...nearest.byIndex.entries()].sort((a,b)=>a[0]-b[0]).map(([idx,a])=>({idx,x:cx(a.w),w:a.w})):[];
         if(anchors.length>=5){
           // Estimate missing date-column centres from a robust linear fit across known anchors.
           const n=anchors.length,sumI=anchors.reduce((s,a)=>s+a.idx,0),sumX=anchors.reduce((s,a)=>s+a.x,0);
@@ -2200,7 +2216,7 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
           const step=anchors.reduce((s,a)=>s+(a.idx-meanI)*(a.x-meanX),0)/denom;
           const base=meanX-step*meanI;
           const colHalf=Math.max(18,Math.abs(step)*0.46);
-          const yTol=Math.max(24,medianH*2.2);
+          const yTol=Math.max(18,Math.min(32,medianH*1.6));
           for(let i=0;i<14;i++){
             const x0=base+step*i;
             // Only known shift codes are eligible. Time values are intentionally
@@ -2651,7 +2667,7 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
     saveCurrent();
     const payload={
       app:'PTA ShiftMate',
-      version:'2.5.23-scanner-header',
+      version:'2.5.24-scanner-grid-align',
       exportedAt:new Date().toISOString(),
       current:AppStorage.loadCurrent(),
       cycles:AppStorage.loadCycles()
