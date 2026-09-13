@@ -1999,6 +1999,23 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
   }
   function normaliseOcrToken(value){return String(value||'').toUpperCase().replace(/[–—]/g,'-').replace(/[^A-Z0-9/-]/g,'').trim()}
   function validScanCodes(){return new Set(Object.keys(SHIFT_DATA||{}).map(k=>String(k).toUpperCase()))}
+  function scanCodeForToken(value,valid=validScanCodes()){
+    // Roster print-outs sometimes add a label such as "-ACT" to the actual
+    // ShiftMate code. The scanner imports only the known ShiftMate code; it
+    // deliberately does not read or use the printed start and finish times.
+    const raw=normaliseOcrToken(value);
+    if(!raw)return'';
+    const bases=[raw,raw.replace(/-?ACT(?:UALS?)?$/,''),raw.replace(/-?ROSTER(?:ED)?$/,'')]
+      .filter(Boolean);
+    for(const base of bases){
+      if(valid.has(base))return base;
+      // These are the limited, common OCR look-alikes seen in roster codes.
+      // A correction is accepted only when it resolves to an actual app code.
+      const corrected=base.replace(/[IL]/g,'1').replace(/O/g,'0').replace(/S/g,'5').replace(/Z/g,'2').replace(/B/g,'8');
+      if(valid.has(corrected))return corrected;
+    }
+    return'';
+  }
   const OCR_MONTHS={JANUARY:0,FEBRUARY:1,MARCH:2,APRIL:3,MAY:4,JUNE:5,JULY:6,AUGUST:7,SEPTEMBER:8,OCTOBER:9,NOVEMBER:10,DECEMBER:11,
                     JAN:0,FEB:1,MAR:2,APR:3,JUN:5,JUL:6,AUG:7,SEP:8,SEPT:8,OCT:9,NOV:10,DEC:11};
   const OCR_WEEKDAYS={SUN:0,SUNDAY:0,MON:1,MONDAY:1,TUE:2,TUES:2,TUESDAY:2,WED:3,WEDNESDAY:3,THU:4,THUR:4,THURS:4,THURSDAY:4,FRI:5,FRIDAY:5,SAT:6,SATURDAY:6};
@@ -2102,7 +2119,7 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
     const service=String(current.settings.serviceNumber||'').trim();
     const cleanWords=(words||[])
       .filter(w=>Number(w.confidence??w.conf??0)>25)
-      .map(w=>({...w,token:normaliseOcrToken(w.text),box:w.bbox||{x0:0,y0:0,x1:0,y1:0}}));
+      .map(w=>({...w,rawToken:normaliseOcrToken(w.text),token:scanCodeForToken(w.text,valid)||normaliseOcrToken(w.text),box:w.bbox||{x0:0,y0:0,x1:0,y1:0}}));
     if(!cleanWords.length)return assign;
 
     const cx=w=>(w.box.x0+w.box.x1)/2,cy=w=>(w.box.y0+w.box.y1)/2;
@@ -2186,6 +2203,8 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
           const yTol=Math.max(24,medianH*2.2);
           for(let i=0;i<14;i++){
             const x0=base+step*i;
+            // Only known shift codes are eligible. Time values are intentionally
+            // ignored: ShiftMate supplies the correct times after the code is loaded.
             const candidates=cleanWords.filter(w=>valid.has(w.token)&&Math.abs(cx(w)-x0)<=colHalf&&Math.abs(cy(w)-targetY)<=yTol)
               .sort((a,b)=>Math.abs(cy(a)-targetY)-Math.abs(cy(b)-targetY)||Number(b.confidence??b.conf??0)-Number(a.confidence??a.conf??0));
             if(candidates[0])assign[i]=candidates[0].token;
@@ -2614,7 +2633,7 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
     saveCurrent();
     const payload={
       app:'PTA ShiftMate',
-      version:'2.5.20-offline-bookoff',
+      version:'2.5.21-scanner-codes',
       exportedAt:new Date().toISOString(),
       current:AppStorage.loadCurrent(),
       cycles:AppStorage.loadCycles()
