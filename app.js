@@ -1692,6 +1692,7 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
       shiftCodeSelect.oninput=scheduleNormalShiftUpdate;
       shiftCodeSelect.onchange=scheduleNormalShiftUpdate;
       const offlineShiftSelect=card.querySelector('.offline-shift-code');
+      let lastSettledOfflineCode=offlineShiftSelect.value||'';
       const handleOfflineShiftChange=e=>{
         const code=e.target.value;
         const data=SHIFT_DATA[code];
@@ -1744,7 +1745,12 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
       settleOfflineShiftSelection=()=>{
         const code=offlineShiftSelect.value;
         if(!SHIFT_DATA[code])return;
-        handleOfflineShiftChange({target:offlineShiftSelect});
+        // A real selection applies that shift's rostered defaults. Closing the
+        // details modal is not a new selection and must preserve edited times.
+        if(code!==lastSettledOfflineCode){
+          handleOfflineShiftChange({target:offlineShiftSelect});
+          lastSettledOfflineCode=code;
+        }
         requestAnimationFrame(reconcileOfflineCard);
         // On iOS a select can emit its final event after the next frame.
         // Reconcile once more after the native picker is fully dismissed.
@@ -2606,7 +2612,7 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
     saveCurrent();
     const payload={
       app:'PTA ShiftMate',
-      version:'2.5.18-manual-time-fix',
+      version:'2.5.19-offline-time-preserve',
       exportedAt:new Date().toISOString(),
       current:AppStorage.loadCurrent(),
       cycles:AppStorage.loadCycles()
