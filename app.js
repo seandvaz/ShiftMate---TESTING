@@ -1273,7 +1273,7 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
   }
 
   function refreshShiftOptions(card,date,selected=''){
-    const line=card.querySelector('.worked-line').value||current.settings.homeLine;
+    const line=rosterControl(card,'.worked-line')?.value||current.settings.homeLine;
     const select=card.querySelector('.shift-code');
 
     const isSavedOffline=selected===OFFLINE_CODE;
@@ -1328,8 +1328,8 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
   }
   function openBookOffChoice(card,date){
     const code=card.querySelector('.shift-code').value;
-    const actualStart=card.querySelector('.start-time').value;
-    const actualFinish=card.querySelector('.finish-time').value;
+    const actualStart=rosterControl(card,'.start-time')?.value||'';
+    const actualFinish=rosterControl(card,'.finish-time')?.value||'';
     const diff=bookOffDifference(code,date,actualStart,actualFinish);
     if(!diff)return;
     pendingBookOff={card,date,code,actualStart,actualFinish,...diff};
@@ -1384,10 +1384,10 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
     const face=card.querySelector('.shift-face-code');
     if(face)face.textContent=code?(/^\d+$/.test(code)?`T${code}`:code):'OFF';
     const data=SHIFT_DATA[code];
-    const start=card.querySelector('.start-time');
-    const finish=card.querySelector('.finish-time');
-    const type=card.querySelector('.shift-type');
-    const hd=card.querySelector('.higher-duties');
+    const start=rosterControl(card,'.start-time');
+    const finish=rosterControl(card,'.finish-time');
+    const type=rosterControl(card,'.shift-type');
+    const hd=rosterControl(card,'.higher-duties');
     const label=card.querySelector('.shift-time');
     if(!data){
       start.value='';finish.value='';type.value='Off';hd.value='no';label.textContent='Off / no shift';return;
@@ -1398,9 +1398,9 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
     if(data.autoHigherDuties) hd.value='yes';
     label.textContent=data.leaveType?`${data.name} • ${data.defaultHours||10} paid hours`:`${data.name} • ${start.value}–${finish.value}`;
     const selectedData=SHIFT_DATA[card.querySelector('.shift-code')?.value];
-    const leaveField=card.querySelector('.leave-hours-field');
-    const annualPartField=card.querySelector('.annual-leave-portion-field');
-    const personalReasonField=card.querySelector('.personal-leave-reason-field');
+    const leaveField=rosterControl(card,'.leave-hours-field');
+    const annualPartField=rosterControl(card,'.annual-leave-portion-field');
+    const personalReasonField=rosterControl(card,'.personal-leave-reason-field');
     if(leaveField)leaveField.hidden=!selectedData?.leaveType;
     if(personalReasonField)personalReasonField.hidden=selectedData?.leaveType!=='sick';
     if(annualPartField)annualPartField.hidden=selectedData?.leaveType!=='sick';
@@ -1409,7 +1409,7 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
 
   function updateRosterCardState(card){
     const code=effectiveShiftCode(card);
-    const rowType=card.querySelector('.shift-type')?.value||'';
+    const rowType=rosterControl(card,'.shift-type')?.value||'';
     const isOvertime=rowType==='Picked-up OT'||rowType==='Overtime';
     // An Off day can retain its previous code for reference, but it must still
     // look and behave as off rather than as an active rostered shift.
@@ -1418,8 +1418,8 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
     card.classList.toggle('roster-unentered',!hasRosterEntry);
     card.classList.toggle('roster-entered',hasRosterEntry&&!isOvertime);
     card.classList.toggle('roster-overtime',hasRosterEntry&&isOvertime);
-    const start=card.querySelector('.start-time')?.value||'';
-    const finish=card.querySelector('.finish-time')?.value||'';
+    const start=rosterControl(card,'.start-time')?.value||'';
+    const finish=rosterControl(card,'.finish-time')?.value||'';
     const timeEl=card.querySelector('.shift-time');
     if(timeEl)timeEl.dataset.compactTime=(hasRosterEntry&&start&&finish)?`${start}–${finish}`:'';
     const hour=Number(start.split(':')[0]);
@@ -1438,6 +1438,15 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
 
 
   let activeShiftDetailsPortal=null;
+
+  // Shift details are temporarily moved into the modal on small screens. Use
+  // this accessor whenever a roster control may currently live in that modal.
+  function rosterControl(card,selector){
+    return card?.querySelector(selector)||
+      (activeShiftDetailsPortal?.card===card
+        ? activeShiftDetailsPortal.details.querySelector(selector)
+        : null);
+  }
 
   function closeShiftDetailsPortal(){
     const active=activeShiftDetailsPortal;
@@ -1595,14 +1604,14 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
       card.querySelector('.details-button').onclick=()=>openShiftDetailsPortal(card);
       card.querySelector('.roster-detail-close').onclick=closeRosterDetails;
       card.querySelector('.roster-detail-backdrop').onclick=closeRosterDetails;
-      card.querySelector('.ot-toggle').onclick=()=>{const type=card.querySelector('.shift-type'),btn=card.querySelector('.ot-toggle');if(!effectiveShiftCode(card)){toast('Select a shift first');return}const on=type.value==='Picked-up OT';type.value=on?'Rostered':'Picked-up OT';btn.classList.toggle('active',!on);card.dataset.entered='true';updateRosterCardState(card);syncCurrentFromUI();recalculate()};
+      card.querySelector('.ot-toggle').onclick=()=>{const type=rosterControl(card,'.shift-type'),btn=card.querySelector('.ot-toggle');if(!effectiveShiftCode(card)){toast('Select a shift first');return}const on=type.value==='Picked-up OT';type.value=on?'Rostered':'Picked-up OT';btn.classList.toggle('active',!on);card.dataset.entered='true';updateRosterCardState(card);syncCurrentFromUI();recalculate()};
       const shiftCodeSelect=card.querySelector('.shift-code');
       const handleShiftCodeChange=()=>{
         const main=card.querySelector('.shift-code').value;
         const offlineWrap=card.querySelector('.offline-shift-wrap');
         const offlineSelect=card.querySelector('.offline-shift-code');
         if(main===OFFLINE_CODE){
-          const type=card.querySelector('.shift-type');
+          const type=rosterControl(card,'.shift-type');
           // Selecting an actual off-line shift is work, not an off day. Start
           // it as rostered; users can still change it to Picked-up OT if needed.
           if(type&&type.value==='Off')type.value='Rostered';
@@ -1626,7 +1635,7 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
         delete card.dataset.effectiveShiftCode;
         card.dataset.offline='false';
         card.dataset.entered='true';
-        const line=card.querySelector('.worked-line');
+        const line=rosterControl(card,'.worked-line');
         if(line){line.value=current.settings.homeLine;card.dataset.workedRosterLine=line.value}
         refreshShiftOptions(card,date,main);
         // Rebuilding the options is needed for off-line shifts, but mobile browsers
@@ -1649,20 +1658,20 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
       const reconcileNormalCard=()=>{
         if(!card.isConnected)return;
         const code=card.querySelector('.shift-code')?.value||'';
-        if(!code||code===OFFLINE_CODE||card.querySelector('.shift-type')?.value==='Off'){
+        if(!code||code===OFFLINE_CODE||rosterControl(card,'.shift-type')?.value==='Off'){
           updateRosterCardState(card);
           return;
         }
         // iOS can apply the select's final value after its change event has
         // finished. At that point the shift is valid, so make the compact card
         // agree with the picker instead of leaving its controls hidden.
-        const isOvertime=card.querySelector('.shift-type')?.value==='Picked-up OT';
+        const isOvertime=rosterControl(card,'.shift-type')?.value==='Picked-up OT';
         card.dataset.entered='true';
         card.classList.remove('roster-unentered','shift-off');
         card.classList.toggle('roster-entered',!isOvertime);
         card.classList.toggle('roster-overtime',isOvertime);
-        const start=card.querySelector('.start-time')?.value||'';
-        const finish=card.querySelector('.finish-time')?.value||'';
+        const start=rosterControl(card,'.start-time')?.value||'';
+        const finish=rosterControl(card,'.finish-time')?.value||'';
         const time=card.querySelector('.shift-time');
         if(time)time.dataset.compactTime=start&&finish?`${start}–${finish}`:'';
         const hour=Number(start.split(':')[0]);
@@ -1693,7 +1702,7 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
         // The home line remains the user's home line; workedRosterLine becomes
         // the selected shift's operational line so the existing allowance engine
         // can calculate the home-vs-worked-line allowance.
-        const line=card.querySelector('.worked-line');
+        const line=rosterControl(card,'.worked-line');
         if(line && data.line && data.line!=='LEAVE'){
           line.value=data.line;
           card.dataset.workedRosterLine=data.line;
@@ -1702,8 +1711,8 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
         // Populate the actual rostered times explicitly before syncing/recalculating;
         // this avoids the offline selector path ever leaving Start/Finish blank.
         const offlineTimes=data.times?.[PayCalc.dayGroup(date.getDay())]||['',''];
-        const start=card.querySelector('.start-time');
-        const finish=card.querySelector('.finish-time');
+        const start=rosterControl(card,'.start-time');
+        const finish=rosterControl(card,'.finish-time');
         if(start)start.value=offlineTimes[0]||'';
         if(finish)finish.value=offlineTimes[1]||'';
         card.dataset.scheduledStart=offlineTimes[0]||'';
@@ -1722,7 +1731,7 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
         // blank-card layout on mobile.
         card.dataset.effectiveShiftCode=offlineShiftSelect.value;
         card.dataset.entered='true';
-        const type=card.querySelector('.shift-type')?.value||'';
+        const type=rosterControl(card,'.shift-type')?.value||'';
         const isOvertime=type==='Picked-up OT'||type==='Overtime';
         card.classList.remove('roster-unentered');
         card.classList.toggle('roster-entered',!isOvertime);
@@ -1758,9 +1767,10 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
       card.querySelectorAll('.shift-type,.higher-duties,.ph-benefit,.offline-reason,.personal-leave-reason').forEach(el=>el.onchange=()=>{card.dataset.entered='true';updateRosterCardState(card);syncCurrentFromUI();recalculate()});
       card.querySelectorAll('.leave-hours,.annual-leave-hours,.shift-partner').forEach(el=>el.oninput=()=>{card.dataset.entered='true';updateRosterCardState(card);syncCurrentFromUI();recalculate()});
       const manualTime=()=>{
-        const data=SHIFT_DATA[card.querySelector('.shift-code').value];
-        const st=card.querySelector('.start-time').value||'--:--',fn=card.querySelector('.finish-time').value||'--:--';
-        const tempRow={code:card.querySelector('.shift-code').value,type:card.querySelector('.shift-type').value,start:st,finish:fn};
+        const code=effectiveShiftCode(card);
+        const data=SHIFT_DATA[code];
+        const st=rosterControl(card,'.start-time')?.value||'--:--',fn=rosterControl(card,'.finish-time')?.value||'--:--';
+        const tempRow={code,type:rosterControl(card,'.shift-type')?.value||'Rostered',start:st,finish:fn};
         const variation=rosterVariation(tempRow,date);
         const bits=[];
         if(variation.early>0)bits.push(`${variation.early.toFixed(2)}h early OT`);
@@ -1772,7 +1782,7 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
       };
       card.querySelector('.start-time').oninput=manualTime;
       card.querySelector('.finish-time').oninput=manualTime;
-      const considerBookOff=()=>{const diff=bookOffDifference(card.querySelector('.shift-code').value,date,card.querySelector('.start-time').value,card.querySelector('.finish-time').value);if(diff)openBookOffChoice(card,date)};
+      const considerBookOff=()=>{const diff=bookOffDifference(effectiveShiftCode(card),date,rosterControl(card,'.start-time')?.value||'',rosterControl(card,'.finish-time')?.value||'');if(diff)openBookOffChoice(card,date)};
       card.querySelector('.start-time').onchange=considerBookOff;
       card.querySelector('.finish-time').onchange=considerBookOff;
       refreshShiftOptions(card,date,row.offlineShiftCode?OFFLINE_CODE:(row.code||''));
@@ -1797,21 +1807,21 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
     resolveAgreementSettings();
     current.days=$$('.day-card').map(card=>({
       code:effectiveShiftCode(card),
-      type:card.querySelector('.shift-type').value,
-      hd:card.querySelector('.higher-duties').value==='yes',
-      start:card.querySelector('.start-time').value,
-      finish:card.querySelector('.finish-time').value,
+      type:rosterControl(card,'.shift-type')?.value||'Off',
+      hd:rosterControl(card,'.higher-duties')?.value==='yes',
+      start:rosterControl(card,'.start-time')?.value||'',
+      finish:rosterControl(card,'.finish-time')?.value||'',
       earlyStartHours:0,
       additionalHours:0,
-      leaveHours:card.querySelector('.leave-hours')?.value===''?'':Number(card.querySelector('.leave-hours')?.value),
-      annualLeaveHours:Number(card.querySelector('.annual-leave-hours')?.value)||0,
-      phBenefit:card.querySelector('.ph-benefit')?.value||'lieu',
-      workedRosterLine:card.querySelector('.worked-line').value||current.settings.homeLine,
-      offline:(card.querySelector('.worked-line').value||current.settings.homeLine)!==current.settings.homeLine,
+      leaveHours:rosterControl(card,'.leave-hours')?.value===''?'':Number(rosterControl(card,'.leave-hours')?.value),
+      annualLeaveHours:Number(rosterControl(card,'.annual-leave-hours')?.value)||0,
+      phBenefit:rosterControl(card,'.ph-benefit')?.value||'lieu',
+      workedRosterLine:rosterControl(card,'.worked-line')?.value||current.settings.homeLine,
+      offline:(rosterControl(card,'.worked-line')?.value||current.settings.homeLine)!==current.settings.homeLine,
       offlineShiftCode:card.querySelector('.shift-code').value===OFFLINE_CODE?effectiveShiftCode(card):'',
-      offlineReason:card.querySelector('.offline-reason').value||'directed',
-      partner:card.querySelector('.shift-partner')?.value.trim()||'',
-      personalLeaveReason:card.querySelector('.personal-leave-reason')?.value||'illness',
+      offlineReason:rosterControl(card,'.offline-reason')?.value||'directed',
+      partner:rosterControl(card,'.shift-partner')?.value.trim()||'',
+      personalLeaveReason:rosterControl(card,'.personal-leave-reason')?.value||'illness',
       bookOffHours:Number(card.dataset.bookOffHours)||0,
       bookOffLeaveType:card.dataset.bookOffLeaveType||'',
       bookOffLeaveReason:card.dataset.bookOffLeaveReason||'illness',
@@ -2596,7 +2606,7 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
     saveCurrent();
     const payload={
       app:'PTA ShiftMate',
-      version:'2.5.17-off-card-state-test',
+      version:'2.5.18-manual-time-fix',
       exportedAt:new Date().toISOString(),
       current:AppStorage.loadCurrent(),
       cycles:AppStorage.loadCycles()
