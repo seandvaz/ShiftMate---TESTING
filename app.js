@@ -2016,6 +2016,20 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
     }
     return'';
   }
+  function scanTargetRowY(words){
+    const employee=String(current.settings.employeeName||'').trim().toUpperCase();
+    const service=String(current.settings.serviceNumber||'').trim();
+    const clean=(words||[]).filter(w=>Number(w.confidence??w.conf??0)>25).map(w=>({
+      token:normaliseOcrToken(w.text),box:w.bbox||w.box||{x0:0,y0:0,x1:0,y1:0}
+    }));
+    const cy=w=>(w.box.y0+w.box.y1)/2;
+    let matches=service?clean.filter(w=>w.token===normaliseOcrToken(service)):[];
+    if(!matches.length&&employee){
+      const nameParts=employee.split(/\s+/).map(normaliseOcrToken).filter(x=>x.length>2);
+      matches=clean.filter(w=>nameParts.includes(w.token));
+    }
+    return matches.length?matches.reduce((sum,w)=>sum+cy(w),0)/matches.length:null;
+  }
   const OCR_MONTHS={JANUARY:0,FEBRUARY:1,MARCH:2,APRIL:3,MAY:4,JUNE:5,JULY:6,AUGUST:7,SEPTEMBER:8,OCTOBER:9,NOVEMBER:10,DECEMBER:11,
                     JAN:0,FEB:1,MAR:2,APR:3,JUN:5,JUL:6,AUG:7,SEP:8,SEPT:8,OCT:9,NOV:10,DEC:11};
   const OCR_WEEKDAYS={SUN:0,SUNDAY:0,MON:1,MONDAY:1,TUE:2,TUES:2,TUESDAY:2,WED:3,WEDNESDAY:3,THU:4,THUR:4,THURS:4,THURSDAY:4,FRI:5,FRIDAY:5,SAT:6,SATURDAY:6};
@@ -2115,8 +2129,6 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
   }
   function scanAssignmentsFromWords(words,periodEnd){
     const valid=validScanCodes(),start=addRosterDays(periodEnd,-13),assign=Array(14).fill('');
-    const employee=String(current.settings.employeeName||'').trim().toUpperCase();
-    const service=String(current.settings.serviceNumber||'').trim();
     const cleanWords=(words||[])
       .filter(w=>Number(w.confidence??w.conf??0)>25)
       .map(w=>({...w,rawToken:normaliseOcrToken(w.text),token:scanCodeForToken(w.text,valid)||normaliseOcrToken(w.text),box:w.bbox||{x0:0,y0:0,x1:0,y1:0}}));
@@ -2169,12 +2181,7 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
 
     // Locate the user's row. Prefer the exact service number because surnames and
     // initials can appear elsewhere on dense multi-person rosters.
-    let identityHits=service?cleanWords.filter(w=>w.token===normaliseOcrToken(service)):[];
-    if(!identityHits.length&&employee){
-      const nameParts=employee.split(/\s+/).map(normaliseOcrToken).filter(x=>x.length>2);
-      identityHits=cleanWords.filter(w=>nameParts.includes(w.token));
-    }
-    let targetY=identityHits.length?identityHits.reduce((sum,w)=>sum+cy(w),0)/identityHits.length:null;
+    const targetY=scanTargetRowY(cleanWords);
 
     // Detect whether date anchors form a horizontal grid header. Do not apply grid
     // logic to individual/list rosters where dates run vertically down the page.
@@ -2216,7 +2223,7 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
           const step=anchors.reduce((s,a)=>s+(a.idx-meanI)*(a.x-meanX),0)/denom;
           const base=meanX-step*meanI;
           const colHalf=Math.max(18,Math.abs(step)*0.46);
-          const yTol=Math.max(18,Math.min(32,medianH*1.6));
+          const yTol=Math.max(12,Math.min(20,medianH*1.2));
           for(let i=0;i<14;i++){
             const x0=base+step*i;
             // Only known shift codes are eligible. Time values are intentionally
@@ -2387,7 +2394,18 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
 
       // Try the full user/shift region only after the cycle is known.
       results.push(await ocrRosterRegion(T,centreRows,'Reading shifts',status));
-      const combinedWords=mergeScanWords(results);
+      let combinedWords=mergeScanWords(results);
+      const targetY=scanTargetRowY(combinedWords);
+      if(targetY!==null){
+        // Read the identified employee row separately at higher detail. This is
+        // especially useful for small codes on a monitor and avoids using a
+        // neighbouring person's code to fill an otherwise blank day.
+        const rowHeight=Math.max(120,Math.round(H*.06));
+        const rowTop=Math.max(0,Math.min(H-rowHeight,Math.round(targetY-rowHeight/2)));
+        const targetRow=makeScanVariant(canvas,0,rowTop,W,rowHeight,3600,1.32);
+        results.push(await ocrRosterRegion(T,targetRow,'Confirming your shift codes',status));
+        combinedWords=mergeScanWords(results);
+      }
       const assignments=scanAssignmentsFromWords(combinedWords,pe);
       const confidence=scanConfidence(assignments);
 
@@ -2667,7 +2685,7 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
     saveCurrent();
     const payload={
       app:'PTA ShiftMate',
-      version:'2.5.24-scanner-grid-align',
+      version:'2.5.25-scanner-row-focus',
       exportedAt:new Date().toISOString(),
       current:AppStorage.loadCurrent(),
       cycles:AppStorage.loadCycles()
