@@ -2188,20 +2188,28 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
     };
 
     const readActualsRows=()=>{
-      rows.forEach(row=>{
+      const datedRows=rows.map(row=>{
         const line=row.words.map(w=>String(w.text||'')).join(' ').replace(/\s+/g,' ').trim();
-        const d=dateForLine(line);if(!d)return;
+        const d=dateForLine(line);if(!d)return null;
         const idx=Math.round((new Date(d.getFullYear(),d.getMonth(),d.getDate())-new Date(start.getFullYear(),start.getMonth(),start.getDate()))/86400000);
-        if(idx<0||idx>13)return;
-        // Blank Actuals rows contain only their date. A code is accepted only
-        // from the Shift Code column and only when it shares that date's line.
+        if(idx<0||idx>13)return null;
         const dateSide=row.words.filter(w=>listCodeColumnX===null||w.box.x0<listCodeColumnX);
         const dateY=dateSide.length?dateSide.reduce((sum,w)=>sum+cy(w),0)/dateSide.length:row.y;
-        const listYTol=Math.max(6,Math.min(14,medianH*.75));
-        const codes=row.words.filter(w=>allowed.has(w.token)&&(listCodeColumnX===null||w.box.x0>=listCodeColumnX)&&Math.abs(cy(w)-dateY)<=listYTol);
+        return {row,idx,dateY};
+      }).filter(Boolean);
+      datedRows.forEach(entry=>{
+        // Blank Actuals rows contain only their date. A code is accepted only
+        // from the Shift Code column and only when that date is its nearest
+        // date line. This safely handles the first row near the report heading.
+        const listYTol=Math.max(12,Math.min(24,medianH*1.4));
+        const codes=cleanWords.filter(w=>{
+          if(!allowed.has(w.token)||(listCodeColumnX!==null&&w.box.x0<listCodeColumnX)||Math.abs(cy(w)-entry.dateY)>listYTol)return false;
+          const nearest=datedRows.reduce((best,other)=>Math.abs(cy(w)-other.dateY)<Math.abs(cy(w)-best.dateY)?other:best,datedRows[0]);
+          return nearest===entry;
+        });
         if(!codes.length)return;
         codes.sort((a,b)=>a.box.x0-b.box.x0||Number(b.confidence??b.conf??0)-Number(a.confidence??a.conf??0));
-        assign[idx]=codes[0].token;
+        assign[entry.idx]=codes[0].token;
       });
     };
 
@@ -2731,7 +2739,7 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
     saveCurrent();
     const payload={
       app:'PTA ShiftMate',
-      version:'2.5.28-scanner-actuals-safe',
+      version:'2.5.29-scanner-actuals-align',
       exportedAt:new Date().toISOString(),
       current:AppStorage.loadCurrent(),
       cycles:AppStorage.loadCycles()
