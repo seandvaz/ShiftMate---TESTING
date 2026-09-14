@@ -2161,6 +2161,13 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
     });
     rows.forEach(r=>r.words.sort((a,b)=>a.box.x0-b.box.x0));
 
+    // Individual Actuals Rosters label a dedicated "Shift Code" column. Its
+    // left edge distinguishes codes from date numbers such as 20, 21 and 22,
+    // which are also valid ShiftMate code values on other roster formats.
+    const shiftCodeHeadings=cleanWords.filter(w=>w.token==='SHIFT'||w.token==='SHIFTCODE');
+    const listCodeColumnX=shiftCodeHeadings.length?Math.min(...shiftCodeHeadings.map(w=>w.box.x0))-Math.max(8,medianH*.5):null;
+    const actualsRoster=shiftCodeHeadings.length>0&&cleanWords.some(w=>w.token==='ACTUALS'||w.token==='ACTUALSROSTERS');
+
     const dateForLine=line=>{
       const hints=[periodEnd.getFullYear()-1,periodEnd.getFullYear(),periodEnd.getFullYear()+1];
       for(const y of hints){
@@ -2179,6 +2186,28 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
       }
       return null;
     };
+
+    const readActualsRows=()=>{
+      rows.forEach(row=>{
+        const line=row.words.map(w=>String(w.text||'')).join(' ').replace(/\s+/g,' ').trim();
+        const d=dateForLine(line);if(!d)return;
+        const idx=Math.round((new Date(d.getFullYear(),d.getMonth(),d.getDate())-new Date(start.getFullYear(),start.getMonth(),start.getDate()))/86400000);
+        if(idx<0||idx>13)return;
+        // Blank Actuals rows contain only their date. A code is accepted only
+        // from the Shift Code column and only when it shares that date's line.
+        const dateSide=row.words.filter(w=>listCodeColumnX===null||w.box.x0<listCodeColumnX);
+        const dateY=dateSide.length?dateSide.reduce((sum,w)=>sum+cy(w),0)/dateSide.length:row.y;
+        const listYTol=Math.max(6,Math.min(14,medianH*.75));
+        const codes=row.words.filter(w=>allowed.has(w.token)&&(listCodeColumnX===null||w.box.x0>=listCodeColumnX)&&Math.abs(cy(w)-dateY)<=listYTol);
+        if(!codes.length)return;
+        codes.sort((a,b)=>a.box.x0-b.box.x0||Number(b.confidence??b.conf??0)-Number(a.confidence??a.conf??0));
+        assign[idx]=codes[0].token;
+      });
+    };
+
+    // The individual Actuals Roster has one date per line and needs no person
+    // lookup or grid fitting. Keeping this path separate makes blank dates safe.
+    if(actualsRoster){readActualsRows();return assign}
 
     // Date anchors that survived as individual OCR tokens. These are ideal for
     // multi-person grid rosters because their x coordinate identifies a day column.
@@ -2257,7 +2286,13 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
       const d=dateForLine(line);if(!d)return;
       const idx=Math.round((new Date(d.getFullYear(),d.getMonth(),d.getDate())-new Date(start.getFullYear(),start.getMonth(),start.getDate()))/86400000);
       if(idx<0||idx>13)return;
-      const codes=row.words.filter(w=>allowed.has(w.token));
+      // Blank Actuals rows have no table line. If OCR merges a nearby working
+      // row into that date's text, accept a code only when it shares the date
+      // line's vertical position as well as being in the Shift Code column.
+      const dateSide=row.words.filter(w=>listCodeColumnX===null||w.box.x0<listCodeColumnX);
+      const dateY=dateSide.length?dateSide.reduce((sum,w)=>sum+cy(w),0)/dateSide.length:row.y;
+      const listYTol=Math.max(6,Math.min(14,medianH*.75));
+      const codes=row.words.filter(w=>allowed.has(w.token)&&(listCodeColumnX===null||w.box.x0>=listCodeColumnX)&&Math.abs(cy(w)-dateY)<=listYTol);
       if(!codes.length)return;
       // Shift code is normally the first valid code after the date. If OCR has merged
       // columns, confidence breaks ties; unknown tokens such as T20/T21 are ignored.
@@ -2696,7 +2731,7 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
     saveCurrent();
     const payload={
       app:'PTA ShiftMate',
-      version:'2.5.26-scanner-home-line',
+      version:'2.5.28-scanner-actuals-safe',
       exportedAt:new Date().toISOString(),
       current:AppStorage.loadCurrent(),
       cycles:AppStorage.loadCycles()
