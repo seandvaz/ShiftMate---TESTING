@@ -2681,6 +2681,15 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
     const section=document.createElement('section');section.className='pay-history-section';section.innerHTML=`<h3>${title}</h3>`;
     cycles.forEach(c=>section.appendChild(makePayCard(c)));wrap.appendChild(section);
   }
+  function addPaidRosterArchive(wrap,cycles){
+    if(!cycles.length)return;
+    const archive=document.createElement('details');archive.className='pay-archive';
+    archive.innerHTML=`<summary><span>Archived paid rosters</span><small>${cycles.length} paid ${cycles.length===1?'roster':'rosters'}</small></summary>`;
+    const body=document.createElement('div');body.className='pay-archive-body';
+    const byFy={};cycles.forEach(c=>{const fy=financialYearFor(parseDate(c.startDate)).label;(byFy[fy]??=[]).push(c)});
+    Object.entries(byFy).sort((a,b)=>b[0].localeCompare(a[0])).forEach(([fy,items])=>addPayGroup(body,fy,items));
+    archive.appendChild(body);wrap.appendChild(archive);
+  }
 
   function renderPayCycleList(){
     const wrap=$('#payCycleList');if(!wrap)return;wrap.innerHTML='';
@@ -2688,9 +2697,8 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
     addPayGroup(wrap,'Awaiting Pay',cycles.filter(c=>smartStatus(c)==='awaiting'));
     addPayGroup(wrap,'Current Cycle',cycles.filter(c=>smartStatus(c)==='current'));
     addPayGroup(wrap,'Future Cycles',cycles.filter(c=>smartStatus(c)==='future'));
-    const history=cycles.filter(c=>['paid','past'].includes(smartStatus(c))).sort((a,b)=>b.startDate.localeCompare(a.startDate));
-    const byFy={};history.forEach(c=>{const fy=financialYearFor(parseDate(c.startDate)).label;(byFy[fy]??=[]).push(c)});
-    Object.entries(byFy).sort((a,b)=>b[0].localeCompare(a[0])).forEach(([fy,items])=>addPayGroup(wrap,`Pay History · ${fy}`,items));
+    addPayGroup(wrap,'Past cycles – needs actual deposit',cycles.filter(c=>smartStatus(c)==='past'));
+    addPaidRosterArchive(wrap,cycles.filter(c=>smartStatus(c)==='paid').sort((a,b)=>b.startDate.localeCompare(a.startDate)));
     if(!wrap.children.length)wrap.innerHTML='<div class="empty-state">No pay cycles saved yet.</div>';
   }
 
@@ -2739,7 +2747,7 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
     saveCurrent();
     const payload={
       app:'PTA ShiftMate',
-      version:'2.5.29-scanner-actuals-align',
+      version:'2.5.30-pay-archive',
       exportedAt:new Date().toISOString(),
       current:AppStorage.loadCurrent(),
       cycles:AppStorage.loadCycles()

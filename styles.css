@@ -1206,6 +1206,15 @@ main{
 
 .pay-cycle-list{display:grid;gap:14px}.pay-history-section{display:grid;gap:8px}
 .pay-history-section h3{margin:2px 2px 0;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
+.pay-archive{border:1px solid var(--line);border-radius:12px;background:var(--card-soft);overflow:hidden}
+.pay-archive summary{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px;cursor:pointer;font-weight:800;list-style:none}
+.pay-archive summary::-webkit-details-marker{display:none}
+.pay-archive summary::before{content:'›';font-size:22px;line-height:.6;transform:rotate(0deg);transition:transform .18s ease;color:var(--muted)}
+.pay-archive[open] summary::before{transform:rotate(90deg)}
+.pay-archive summary span{margin-right:auto}
+.pay-archive summary small{color:var(--muted);font-size:11px;font-weight:700}
+.pay-archive-body{display:grid;gap:12px;padding:0 10px 10px;border-top:1px solid var(--line)}
+.pay-archive-body .pay-history-section{padding-top:8px}
 .read-only-audit{cursor:default}
 .bottom-nav{grid-template-columns:repeat(5,minmax(0,1fr))}.bottom-nav .nav-button{font-size:11px;white-space:nowrap}
 
