@@ -3156,5 +3156,46 @@ input,select,textarea{background:linear-gradient(180deg,#10171b,#172128);border-
 .calendar-day.today{outline-color:var(--accent)!important;box-shadow:0 0 0 2px #05090b,0 0 12px rgba(57,216,239,.35)!important}.calendar-day.selected{outline-color:var(--good)!important}
 .status-pill.current{background:#1d5140;color:#a8f0c2;border:1px solid #478f69}.status-pill.awaiting{background:#5b4820;color:#ffdc8b;border:1px solid #987832}.status-pill.paid{background:#244b61;color:#bceaff;border:1px solid #4b88a5}.home-doc-link{color:#86eff7;text-shadow:0 0 10px rgba(57,216,239,.2)}.home-settings-summary{color:var(--ink)}.test-build-badge{background:#761f2c;border:1px solid #d15a67;box-shadow:0 2px 7px rgba(0,0,0,.4)}@media(min-width:920px){.bottom-nav{border-color:#6c7e83;border-radius:0 0 12px 12px}}
 
+/* ShiftMate TEST v2.5.32 — tactile console construction pass */
+main{padding:14px 15px 20px}
+.card,.day-card,.saved-card,.pay-archive,.calendar-card,.settings-card{
+  position:relative;isolation:isolate;border:2px solid #0b1013;outline:1px solid #66777d;border-radius:18px;
+  background:linear-gradient(135deg,#34424a 0%,#202b31 18%,#161e23 72%,#0e1519 100%);
+  box-shadow:inset 0 1px 0 rgba(237,244,245,.15),inset 2px 0 0 rgba(255,255,255,.035),inset 0 -3px 0 #070b0e,0 5px 0 #06090b,0 13px 22px rgba(0,0,0,.38);
+}
+.card::after,.day-card::after,.saved-card::after,.pay-archive::after{
+  content:'';pointer-events:none;position:absolute;z-index:-1;inset:5px;border:1px solid rgba(144,163,167,.20);border-radius:12px;
+  box-shadow:inset 0 0 18px rgba(0,0,0,.22);
+}
+.card::before,.day-card::before,.saved-card::before,.pay-archive::before{height:3px;opacity:.55}
+.screen-heading{padding:1px 1px 8px;border-bottom:1px solid rgba(118,139,145,.36);margin-bottom:10px}
+.screen-heading h2,#home h2{font-weight:850;text-shadow:0 2px 0 #070a0b}
+.upcoming-card{padding:15px 12px 13px}.upcoming-head{padding:0 5px 7px}
+.current-card{padding:15px 14px!important}.current-card .home-net,.pay-main-net{
+  border:1px solid #437660!important;border-radius:12px;background:radial-gradient(ellipse at 50% 0,#244e3b,#10271f 70%)!important;
+  box-shadow:inset 0 1px 0 rgba(147,255,190,.18),inset 0 0 22px rgba(0,0,0,.28),0 0 15px rgba(69,207,135,.10);
+}
+.current-card .home-net{padding:10px 11px!important}.current-card .home-net strong{font-size:clamp(28px,7vw,38px)!important}
+.home-doc-card{padding:14px 16px!important}.home-doc-actions{gap:10px!important;margin-top:10px!important}
+.home-doc-link{padding:9px 10px!important;border:1px solid #3f6872!important;border-radius:10px!important;background:linear-gradient(145deg,#233942,#14262c)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.10),inset 0 -2px 0 rgba(0,0,0,.3),0 2px 0 #070b0d}
+.home-cycle-actions{margin:14px 0!important}.home-scan-cycle{min-height:54px!important;font-size:16px!important;letter-spacing:.05em}
+.home-settings-summary{padding:14px!important}
+.week-day,.calendar-day{border:2px solid #0b1114!important;outline:1px solid #586a70;border-radius:11px!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.12),inset 0 -3px 0 rgba(0,0,0,.42),0 3px 0 #06090b!important}
+.week-day.working,.calendar-day.working,.calendar-day.actual.shift-arvo,.week-day.actual.shift-arvo{box-shadow:inset 0 0 0 1px rgba(97,239,252,.38),inset 0 1px 0 rgba(255,255,255,.14),inset 0 -3px 0 rgba(0,0,0,.42),0 0 10px rgba(57,216,239,.17),0 3px 0 #06090b!important}
+.day-card{padding:12px!important}.day-head{padding-bottom:8px;border-bottom:1px solid rgba(117,139,146,.38)}
+.roster-summary>div,.pay-quick-grid>div,.home-stats-grid>div,.saved-meta div,.metric{
+  border:1px solid #4b5f67!important;border-radius:10px!important;background:linear-gradient(145deg,#2d3c44,#19242a)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.07),inset 0 -3px 5px rgba(0,0,0,.24)!important;
+}
+.pay-main-net{padding:16px!important;margin:14px 0!important}.pay-main-net strong{font-size:clamp(36px,10vw,54px)!important}
+.pay-breakdown summary,.allowance-breakdown summary,.pay-archive summary,.settings-section>summary{
+  min-height:50px;border:1px solid #4d6068;border-radius:10px;background:linear-gradient(145deg,#2a3941,#172126);box-shadow:inset 0 1px 0 rgba(255,255,255,.09),inset 0 -2px 0 rgba(0,0,0,.36),0 2px 0 #070a0c;padding:12px!important;
+}
+.settings-section{border:0!important;background:transparent!important}.settings-section[open]>summary{border-color:#5bcedd;box-shadow:inset 0 0 12px rgba(57,216,239,.12),inset 0 -2px 0 rgba(0,0,0,.36),0 2px 0 #070a0c}
+.settings-section>div{margin-top:8px;padding:10px;border:1px solid #44575f;border-radius:12px;background:rgba(9,14,17,.38)}
+.bottom-nav{padding:8px 9px calc(8px + env(safe-area-inset-bottom))!important;border-top:2px solid #0a0f12!important;outline:1px solid #52646b}
+.bottom-nav .nav-button{min-height:60px!important;border-radius:10px!important;font-size:10px!important}
+.bottom-nav .nav-button.active{transform:translateY(-2px)}
+.test-build-badge{font-size:10px!important;padding:4px 8px!important;letter-spacing:.12em!important}
+
 /* Shift Swap calendar and multi-date controls */
 .swap-calendar-wrap{margin:12px 0}.swap-calendar{max-height:310px;overflow:auto;border:1px solid var(--border,#ddd);border-radius:14px;padding:8px}.swap-calendar .calendar-month-block{margin-bottom:10px}.swap-calendar .calendar-day{min-height:48px}.swap-calendar .calendar-day strong{font-size:.72rem}.swap-multi-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:12px 0}.swap-entry-card{border:1px solid var(--border,#ddd);border-radius:14px;padding:12px;margin:10px 0}.swap-entry-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.swap-entry-columns{display:grid;grid-template-columns:1fr 1fr;gap:12px}.swap-roster-note{padding:10px 12px;border-radius:12px;background:var(--surface-2,#f5f5f5);margin:10px 0}.swap-entry-card input,.swap-entry-card select{width:100%}@media(max-width:650px){.swap-entry-columns{grid-template-columns:1fr}.swap-multi-head{align-items:flex-start;flex-direction:column}}
