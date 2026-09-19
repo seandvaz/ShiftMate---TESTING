@@ -54,3 +54,16 @@ input,select,textarea{border:1px solid #62777e!important;border-radius:5px!impor
 /* Modal sheets remain functional but use the same equipment housing. */
 .share-sheet{background:rgba(3,6,8,.78)!important}.share-sheet-card{border:2px solid #090e11!important;outline:1px solid #708287!important;border-radius:10px!important;background:linear-gradient(145deg,#34434a,#172126)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.13),inset 0 -4px 0 #05080a,0 18px 50px rgba(0,0,0,.6)!important}.share-sheet-card>button:not(.ghost){border-color:#53666d!important;background:linear-gradient(145deg,#2d3b42,#172126)!important}
 @media(max-width:380px){main{padding-left:10px!important;padding-right:10px!important}#roster .roster-week-days .roster-control-module{grid-template-columns:61px minmax(0,1fr) 52px;gap:0 6px}.roster-week-module summary{font-size:16px}.roster-week-module summary small{font-size:9px}}
+
+/* v2.6.1 — structure and colour locked to the approved Home concept */
+.eyebrow,.pay-history-section h3,.calendar-scroll-month,.roster-week-module summary{color:var(--console-cyan)!important}
+.screen.active::before{display:block;margin:0 1px 15px;padding:13px 15px 12px;border:2px solid #070b0d;outline:1px solid #718388;border-radius:7px;background:linear-gradient(145deg,#314047,#151e23);color:#9af7ff;font-size:25px;line-height:1;font-weight:950;letter-spacing:.105em;text-align:center;text-shadow:0 0 9px rgba(102,232,245,.38),0 2px 0 #030506;box-shadow:inset 0 1px 0 rgba(255,255,255,.16),inset 0 -4px 0 rgba(0,0,0,.44),0 4px 0 #040709,0 9px 17px rgba(0,0,0,.34)}
+#home.active::before{content:'HOME'}#calendar.active::before{content:'CALENDAR'}#roster.active::before{content:'ROSTER'}#pay.active::before{content:'PAY'}#settings.active::before{content:'SETTINGS'}
+#home.active{display:flex!important;flex-direction:column}#home::before{order:0}#home .current-card{order:1}#home .upcoming-card{order:2}#home .home-doc-card{order:3}#home .home-cycle-actions{order:4}#home .home-settings-summary{order:5}
+#home .current-card{margin-bottom:15px!important}#home .upcoming-card{margin-bottom:15px!important}#home .home-doc-card{margin-bottom:15px!important}
+#home .current-card>div:first-child .eyebrow{font-size:12px!important}#home .current-card>div:first-child{padding:5px 0 10px;border-bottom:1px solid rgba(160,182,185,.3)}
+#calendar .calendar-scroll-head>div,#settings>.settings-card>.screen-heading{display:none!important}
+#calendar .calendar-scroll-head{justify-content:flex-end!important;padding-bottom:8px!important}
+.card,.day-card,.saved-card,.pay-archive,.calendar-card,.settings-card{background-image:radial-gradient(circle at 10px 10px,#05080a 0 2px,#718086 2.5px 3.5px,transparent 4px),radial-gradient(circle at calc(100% - 10px) 10px,#05080a 0 2px,#718086 2.5px 3.5px,transparent 4px),radial-gradient(circle at 10px calc(100% - 10px),#05080a 0 2px,#718086 2.5px 3.5px,transparent 4px),radial-gradient(circle at calc(100% - 10px) calc(100% - 10px),#05080a 0 2px,#718086 2.5px 3.5px,transparent 4px),linear-gradient(135deg,#3b4a51 0%,#26333a 14%,#171f24 60%,#10161a 100%)!important}
+.home-doc-link,.primary,.bottom-nav .nav-button.active{color:#c8fbff!important}
+@media(max-width:380px){.screen.active::before{font-size:21px;margin-bottom:13px}.bottom-nav .nav-button{font-size:9px!important}}
