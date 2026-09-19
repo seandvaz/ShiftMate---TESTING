@@ -273,16 +273,26 @@ select option{color:#fff;background:#173b55}
 .test-build-badge{z-index:2147483600!important;padding:4px 9px!important;color:#fff!important;border:1px solid #ff9aa2!important;background:#a63f4a!important;box-shadow:0 2px 8px rgba(47,15,20,.3)!important;font-size:10px!important;letter-spacing:.12em!important}
 
 @media(max-width:430px){
-  main{padding-left:10px!important;padding-right:10px!important}
-  #home.active{gap:13px!important}
+  main{padding:9px 10px 18px!important}
+  #home.active{gap:9px!important}
+  #home.active::before{min-height:42px!important;margin:0 2px 8px!important;padding:7px 12px!important;border-width:5px!important;border-radius:12px!important;font-size:25px!important;box-shadow:inset 0 0 0 2px #09243a,inset 0 2px 0 rgba(255,255,255,.15),0 3px 0 #5d7d93,0 6px 12px rgba(30,63,84,.22)!important}
+  #home .home-pay-console{padding:9px!important}
+  #home .home-pay-heading{gap:2px!important;padding:11px 14px 3px!important;border-radius:9px 9px 0 0!important}
+  #home .home-pay-heading .eyebrow{font-size:12px!important}
+  #home .home-pe-select{min-height:48px!important;font-size:clamp(28px,8.8vw,36px)!important;padding-right:34px!important}
+  #home .home-pay-heading::after{right:16px!important;bottom:18px!important;font-size:16px!important}
+  #home .home-net{padding:0 14px 11px!important;border-radius:0 0 9px 9px!important}
+  #home .home-net strong{font-size:clamp(38px,11.5vw,46px)!important}
+  #home .home-roster-status{min-height:44px!important;margin-top:8px!important;padding:7px 10px!important;font-size:11px!important}
+  #home .home-roster-status::before{font-size:12px!important}
+  #home .home-doc-card,#home .home-settings-summary{padding:9px!important}
+  #home .home-doc-card>.eyebrow,#home .home-settings-summary>.eyebrow{margin-bottom:6px!important;padding:5px 8px!important;font-size:11px!important}
   #home .home-doc-actions{gap:6px!important}
-  #home .home-doc-link{min-height:116px!important;padding-inline:3px!important}
-  #home .home-pe-select{font-size:clamp(30px,9.6vw,40px)!important;padding-right:38px!important}
-  #home .home-pay-heading::after{right:19px!important;bottom:27px!important;font-size:18px!important}
-  .home-action-icon{font-size:34px!important}
+  #home .home-doc-link{grid-template-rows:30px auto!important;min-height:82px!important;padding:7px 3px!important;font-size:10px!important;border-radius:9px!important}
+  .home-action-icon{font-size:27px!important}
   .home-settings-chips{gap:5px!important}
-  .setting-chip{min-height:69px!important;gap:4px!important;padding-inline:3px!important}
-  .setting-icon{font-size:19px!important}
+  .setting-chip{min-height:52px!important;gap:4px!important;padding:5px 3px!important;border-radius:8px!important}
+  .setting-icon{font-size:17px!important}.setting-chip .status-lamp{width:20px!important;height:12px!important}.setting-chip small{font-size:7px!important}.setting-chip b{font-size:10px!important}
   #roster .roster-week-days .roster-control-module{grid-template-columns:64px minmax(0,1fr) 74px!important;gap:0 6px!important;padding-inline:6px!important}
   #roster .roster-week-days button.plain-roster-action{width:31px!important;height:34px!important}
   .roster-week-days .shift-face-code{font-size:16px!important;padding-left:10px!important}
