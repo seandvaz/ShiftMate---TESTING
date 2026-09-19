@@ -8,11 +8,11 @@
 <meta content="ShiftMate TEST" name="apple-mobile-web-app-title"/>
 <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"/>
 <title>ShiftMate TEST</title>
-<link href="styles.css?v=2.6.1-console-layout" rel="stylesheet"/>
-<link href="console-ui.css?v=2.6.1-console-layout" rel="stylesheet"/>
-<link href="apple-touch-icon.png?v=2.6.1-console-layout" rel="apple-touch-icon"/>
-<link href="manifest.json?v=2.6.1-console-layout" rel="manifest"/>
-<meta content="#05090b" name="theme-color"/>
+<link href="styles.css?v=2.7.0-corporate-console" rel="stylesheet"/>
+<link href="console-ui.css?v=2.7.0-corporate-console" rel="stylesheet"/>
+<link href="apple-touch-icon.png?v=2.7.0-corporate-console" rel="apple-touch-icon"/>
+<link href="manifest.json?v=2.7.0-corporate-console" rel="manifest"/>
+<meta content="#9eb8ca" name="theme-color"/>
 </head>
 <body>
 <div class="test-build-badge">TEST CLEANUP</div>
@@ -20,18 +20,21 @@
 <div class="app-shell">
 <main>
 <section class="screen active" id="home">
-<div class="card upcoming-card fortnight-card">
-<div class="upcoming-head fortnight-head"><div><span class="eyebrow">Roster</span><h2>Fortnight</h2><small class="field-note" id="homeFortnightRange"></small></div></div>
-<div aria-label="Fourteen day roster" class="week-strip fortnight-strip" id="homeWeekStrip"></div>
-</div>
-<div class="card current-card">
-<div><span class="eyebrow">Next payday</span><select aria-label="Select pay cycle" class="home-pe-select" id="homeCycleSelect"></select><small class="cycle-range-sub" id="homeCycleRange">—</small></div>
+<div class="card current-card home-pay-console">
+<div class="home-pay-heading"><span class="eyebrow">Next payday</span><select aria-label="Select pay cycle" class="home-pe-select" id="homeCycleSelect"></select><small class="cycle-range-sub" id="homeCycleRange">—</small></div>
 <div class="home-net"><span>Estimated deposit</span><strong id="homeNet">$0.00</strong><small id="homeCurrentPayday">Payday —</small></div>
 <div class="home-roster-status" id="homeRosterStatus">0 shifts entered • 0.0 hrs</div>
 </div>
-<div class="card home-doc-card"><span class="eyebrow">Documentation</span><div class="home-doc-actions"><button aria-label="Generate leave form" class="home-doc-link" id="homeGenerateLeave" type="button">Generate Leave Form</button><button aria-label="Generate shift swap form" class="home-doc-link" id="homeGenerateSwap" type="button">Shift Swap</button></div></div>
-<div class="home-cycle-actions"><button class="secondary home-scan-cycle" id="homeScanRoster" type="button">Scan Roster</button></div>
+<div class="card home-doc-card"><span class="eyebrow">Quick actions</span><div class="home-doc-actions">
+<button aria-label="Scan roster" class="home-doc-link home-scan-cycle" id="homeScanRoster" type="button"><span class="home-action-icon" aria-hidden="true">⌗</span><span>Scan Roster</span></button>
+<button aria-label="Generate leave form" class="home-doc-link" id="homeGenerateLeave" type="button"><span class="home-action-icon" aria-hidden="true">▤</span><span>Generate<br/>Leave Form</span></button>
+<button aria-label="Generate shift swap form" class="home-doc-link" id="homeGenerateSwap" type="button"><span class="home-action-icon" aria-hidden="true">⇄</span><span>Shift Swap</span></button>
+</div></div>
 <button aria-label="Open settings" class="card home-settings-summary" id="homeSettingsSummary" type="button"><span class="eyebrow">Active settings</span><div class="home-settings-chips" id="homeSettingsChips"></div></button>
+<div class="card upcoming-card fortnight-card" hidden>
+<div class="upcoming-head fortnight-head"><div><span class="eyebrow">Roster</span><h2>Fortnight</h2><small class="field-note" id="homeFortnightRange"></small></div></div>
+<div aria-label="Fourteen day roster" class="week-strip fortnight-strip" id="homeWeekStrip"></div>
+</div>
 </section>
 <section class="screen" id="roster">
 <div class="card">
@@ -302,7 +305,7 @@
 </details>
 <details class="settings-section">
 <summary><span>About</span><small>ShiftMate app information</small></summary>
-<div class="settings-note settings-wide"><strong>ShiftMate TEST</strong><br/>Version 2.6.1 CONSOLE LAYOUT</div>
+<div class="settings-note settings-wide"><strong>ShiftMate TEST</strong><br/>Version 2.7.0 CORPORATE CONSOLE</div>
 </details>
 <div class="action-grid settings-actions">
 <button class="primary" id="saveCurrent">Save settings</button>
@@ -403,16 +406,16 @@
 </div>
 
 <nav class="bottom-nav">
-<button class="nav-button active" data-go="home"><span class="nav-icon">⌂</span><span>Home</span></button>
-<button class="nav-button" data-go="calendar"><span class="nav-icon">▦</span><span>Calendar</span></button>
-<button class="nav-button" data-go="roster"><span class="nav-icon">≡</span><span>Roster</span></button>
-<button class="nav-button" data-go="pay"><span class="nav-icon">$</span><span>Pay</span></button>
-<button class="nav-button" data-go="settings"><span class="nav-icon">⚙</span><span>Settings</span></button>
+<button aria-label="Home" class="nav-button active" data-go="home" type="button"><svg class="nav-icon" aria-hidden="true" viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5v8a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span>Home</span></button>
+<button aria-label="Calendar" class="nav-button" data-go="calendar" type="button"><svg class="nav-icon" aria-hidden="true" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4m10-4v4M3 10h18M7 14h2m3 0h2m3 0h1M7 18h2m3 0h2"/></svg><span>Calendar</span></button>
+<button aria-label="Roster" class="nav-button" data-go="roster" type="button"><svg class="nav-icon" aria-hidden="true" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3.5h6v3H9zM8 10h8m-8 4h8m-8 4h5"/></svg><span>Roster</span></button>
+<button aria-label="Pay" class="nav-button" data-go="pay" type="button"><svg class="nav-icon" aria-hidden="true" viewBox="0 0 24 24"><ellipse cx="9" cy="7" rx="6" ry="3"/><path d="M3 7v4c0 1.7 2.7 3 6 3 1.1 0 2.1-.1 3-.4M3 11v4c0 1.7 2.7 3 6 3m4-7c0-1.7 2.2-3 5-3s5 1.3 5 3-2.2 3-5 3-5-1.3-5-3Zm0 0v4c0 1.7 2.2 3 5 3s5-1.3 5-3v-4m-10 4v3c0 1.7 2.2 3 5 3s5-1.3 5-3v-3"/></svg><span>Pay</span></button>
+<button aria-label="Settings" class="nav-button" data-go="settings" type="button"><svg class="nav-icon" aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="m19 13.5 2-1.5-2-1.5-.5-1.3.5-2.4-2.4-.9-1.5 1-1.3-.5L12 5l-1.8 2.4-1.3.5-2.4-1-1.4 2.2 1.4 1.8-.3 1.4L4 14l1.1 2.4 2.4.1 1 .9.2 2.5 2.6.3 1.4-2 1.4-.3 2.1 1.4 1.9-1.8-.8-2.4z"/></svg><span>Settings</span></button>
 </nav>
 <script src="agreementData.js?v=8.3"></script>
 <script src="shiftData.js?v=1.0.14"></script>
 <script src="payCalculator.js?v=1.0.14"></script>
 <script src="storage.js?v=8.3"></script>
-<script src="app.js?v=2.6.1-console-layout"></script>
+<script src="app.js?v=2.7.0-corporate-console"></script>
 </body>
 </html>

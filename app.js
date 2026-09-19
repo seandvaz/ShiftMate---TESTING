@@ -1100,7 +1100,7 @@
   function renderHomeCycleSelector(){
     const select=$('#homeCycleSelect');if(!select)return;
     const cycles=availableCycles().sort((a,b)=>a.startDate.localeCompare(b.startDate));
-    select.innerHTML=cycles.map(c=>`<option value="${c.id}">${peLabel(c.startDate)}</option>`).join('');
+    select.innerHTML=cycles.map(c=>`<option value="${c.id}">${paydayFor(c.startDate).toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'})}</option>`).join('');
     let selected=activeDashboardCycle();
     if(!selected)selected=cycles[cycles.length-1]||null;
     if(selected){selectedPayCycleId=selected.id;select.value=selected.id}
@@ -1138,12 +1138,10 @@
     const homeLabel=lineNames[current.settings.homeLine]||current.settings.homeLine||'—';
     const rosterLine=Number(current.settings.rosterLineNumber)||0,lineActive=Boolean(current.settings.classification&&current.settings.homeLine&&rosterLine>0);
     const deductions=['lease','gesb','postTax','extraTax'].filter(k=>Math.abs(Number(current.settings[k])||0)>0).length;
-    const target=Math.min(5,Math.max(1,Number(current.settings.otTarget)||1));
-    wrap.innerHTML=`<span class="setting-chip"><b>${current.settings.classification||'—'}</b></span>
-      <span class="setting-chip"><small>Home</small><b>${homeLabel}</b></span>
-      <span class="setting-chip state"><i class="status-lamp ${lineActive?'on':'off'}"></i><small>Line</small><b>${lineActive?rosterLine:'Off'}</b></span>
-      <span class="setting-chip state"><i class="status-lamp ${deductions?'on':'off'}"></i><small>Deductions</small><b>${deductions?`${deductions} active`:'Off'}</b></span>
-      <span class="setting-chip"><small>OT target</small><b>${target}</b></span>`;
+    wrap.innerHTML=`<span class="setting-chip"><i class="setting-icon" aria-hidden="true">◒</i><b>${current.settings.classification||'—'}</b></span>
+      <span class="setting-chip"><i class="setting-icon" aria-hidden="true">⌂</i><span><small>Home</small><b>${homeLabel}</b></span></span>
+      <span class="setting-chip state"><i class="setting-icon" aria-hidden="true">⚙</i><span><small>Line</small><b>${lineActive?rosterLine:'Off'}</b></span></span>
+      <span class="setting-chip state"><i class="status-lamp ${deductions?'on':'off'}" aria-hidden="true"></i><span><small>Deductions</small><b>${deductions?`${deductions} active`:'Off'}</b></span></span>`;
   }
   const leaveOrder=['A/L','Sick','LSL','LWOP'];
   const rosterLineOptions=(selected='')=>Object.entries(window.ROSTER_LINES||{}).map(([value,label])=>`<option value="${value}" ${value===selected?'selected':''}>${label}</option>`).join('');
@@ -2755,7 +2753,7 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
     saveCurrent();
     const payload={
       app:'PTA ShiftMate',
-      version:'2.6.1-console-layout',
+      version:'2.7.0-corporate-console',
       exportedAt:new Date().toISOString(),
       current:AppStorage.loadCurrent(),
       cycles:AppStorage.loadCycles()
@@ -3256,7 +3254,7 @@ function installDismissibleSheets(){
   });
 }
 
-const syncViewport=()=>{const vv=window.visualViewport;document.documentElement.style.setProperty('--app-vh',`${vv?.height||window.innerHeight}px`);const nav=document.querySelector('.bottom-nav');if(nav)document.documentElement.style.setProperty('--bottom-nav-h',`${Math.ceil(nav.getBoundingClientRect().height)}px`);requestAnimationFrame(()=>{if(nav){nav.style.bottom='0px';nav.style.left='0px';nav.style.right='0px'}sizeCalendarViewport()})};
+const syncViewport=()=>{const vv=window.visualViewport;document.documentElement.style.setProperty('--app-vh',`${vv?.height||window.innerHeight}px`);const nav=document.querySelector('.bottom-nav');if(nav)document.documentElement.style.setProperty('--bottom-nav-h',`${Math.ceil(nav.getBoundingClientRect().height)}px`);requestAnimationFrame(sizeCalendarViewport)};
   window.addEventListener('resize',syncViewport,{passive:true});window.addEventListener('orientationchange',syncViewport,{passive:true});window.addEventListener('pageshow',syncViewport,{passive:true});document.addEventListener('visibilitychange',()=>{if(!document.hidden)syncViewport()});window.visualViewport?.addEventListener('resize',syncViewport,{passive:true});window.visualViewport?.addEventListener('scroll',syncViewport,{passive:true});installDismissibleSheets();
   installShiftDetailsPortal();
   requestAnimationFrame(()=>requestAnimationFrame(syncViewport));
