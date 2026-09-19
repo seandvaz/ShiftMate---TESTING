@@ -1,5 +1,5 @@
-const CACHE='shiftmate-2.5.32-tactile-console';
-const SHELL=['./','./index.html','./styles.css','./app.js','./shiftData.js','./payCalculator.js','./agreementData.js','./storage.js','./icon-192.png','./icon-512.png','./apple-touch-icon.png','./manifest.json','./leave-form-template.png'];
+const CACHE='shiftmate-2.6.0-console-system';
+const SHELL=['./','./index.html','./styles.css','./console-ui.css','./app.js','./shiftData.js','./payCalculator.js','./agreementData.js','./storage.js','./icon-192.png','./icon-512.png','./apple-touch-icon.png','./manifest.json','./leave-form-template.png'];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE).then(c=>c.addAll(SHELL)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
 self.addEventListener('fetch',event=>{

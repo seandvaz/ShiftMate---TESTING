@@ -1533,6 +1533,16 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
 
     const wrap=$('#dayList');wrap.innerHTML='';
     const start=parseDate(current.startDate);
+    const weekBodies=[0,1].map(week=>{
+      const days=current.days.slice(week*7,week*7+7);
+      const entered=days.filter(day=>Boolean(day?.code)&&day?.type!=='Off').length;
+      const section=document.createElement('details');
+      section.className='roster-week-module';
+      section.open=week===0;
+      section.innerHTML=`<summary><span>Week ${week+1}</span><small>${entered} shift${entered===1?'':'s'} entered</small><b aria-hidden="true">⌄</b></summary><div class="roster-week-days"></div>`;
+      wrap.appendChild(section);
+      return section.querySelector('.roster-week-days');
+    });
 
     current.days.forEach((row,i)=>{
       const date=new Date(start);date.setDate(start.getDate()+i);
@@ -1558,10 +1568,8 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
       card.dataset.scheduledStart=row.scheduledStart||'';
       card.dataset.scheduledFinish=row.scheduledFinish||'';
       card.innerHTML=`<div class="day-head"><div><b>${date.toLocaleDateString('en-AU',{weekday:'short',day:'numeric',month:'short'})}</b><small>Day ${i+1}</small></div><span class="day-pay">$0.00</span></div>
-      <div class="day-main">
-        <label class="shift-picker"><span class="shift-face-code">${row.code?(/^\d+$/.test(row.code)?`T${row.code}`:row.code):'OFF'}</span><select class="shift-code" aria-label="Select shift">${opts(row.code,initialLine,date)}</select></label>
-        <button type="button" class="ot-toggle plain-roster-action ${row.type==='Picked-up OT'?'active':''}">OT</button><button type="button" class="details-button plain-roster-action" aria-label="Shift details">•••</button>
-      </div>
+      <div class="day-main"><label class="shift-picker"><span class="shift-face-code">${row.code?(/^\d+$/.test(row.code)?`T${row.code}`:row.code):'OFF'}</span><select class="shift-code" aria-label="Select shift">${opts(row.code,initialLine,date)}</select></label></div>
+      <div class="roster-day-actions"><button type="button" class="ot-toggle plain-roster-action ${row.type==='Picked-up OT'?'active':''}">OT</button><button type="button" class="details-button plain-roster-action" aria-label="Shift details">•••</button></div>
       <div class="shift-time">Choose a shift to show the default time.</div>
       <button class="roster-detail-backdrop" type="button" aria-label="Close shift details"></button>
       <div class="day-details">
@@ -1586,7 +1594,7 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
           <label>Public holiday worked benefit<select class="ph-benefit"><option value="lieu" ${(row.phBenefit||'lieu')==='lieu'?'selected':''}>Leave in lieu</option><option value="cash" ${row.phBenefit==='cash'?'selected':''}>Cash payment</option></select><small class="field-note">Defaults to leave in lieu; change only if cash payment applies.</small></label>
         </div>
       </div>`;
-      wrap.appendChild(card);
+      weekBodies[Math.floor(i/7)].appendChild(card);
       const offlineWrap=card.querySelector('.offline-shift-wrap');
       const offlineSelect=card.querySelector('.offline-shift-code');
       if(row.offlineShiftCode){
@@ -2747,7 +2755,7 @@ const perthShiftLabels={PN:'Perth Assist Arvo',PA:'Perth Afternoon',PD:'Perth As
     saveCurrent();
     const payload={
       app:'PTA ShiftMate',
-      version:'2.5.32-tactile-console',
+      version:'2.6.0-console-system',
       exportedAt:new Date().toISOString(),
       current:AppStorage.loadCurrent(),
       cycles:AppStorage.loadCycles()
